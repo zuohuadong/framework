@@ -124,12 +124,6 @@ class AdminServiceProvider extends ServiceProvider {
                             ]
                         ]
                     ],
-                    'menu' => [
-                        'title' => '菜单管理',
-                        'active' => 'admin/menu*',
-                        'url'   => 'admin/menu',
-                        'icon'  => 'fa-paper-plane',
-                    ],
                     'content' => [
                         'title' => '内容管理',
                         'active' => [
@@ -163,14 +157,21 @@ class AdminServiceProvider extends ServiceProvider {
                             'admin/theme*',
                             'admin/flash*',
                             'admin/ad*',
+                            'admin/menu*',
                         ],
                         'icon'  => 'fa-table',
                         'sub' => [
                             [
-                                'title' => '主题',
+                                'title' => '主题管理',
                                 'active' => 'admin/theme*',
                                 'url' => 'admin/theme',
                             ],
+                            [
+                                'title' => '菜单管理',
+                                'active' => 'admin/menu*',
+                                'url'   => 'admin/menu',
+                                'icon'  => 'fa-paper-plane',
+                            ]
                         ]
                     ],
                 ]
