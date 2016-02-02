@@ -28,15 +28,9 @@
                                         <td>{{ $theme->getAlias() }}</td>
                                         <td>
                                             @if($theme->isDefault())
-                                                <form action="{{ url('admin/theme/' . $theme->getAlias()) }}" method="post">
-                                                    <input type="hidden" name="_method" value="put">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-info btn-sm">
-                                                            <i class="fa fa-check"></i>更新模板缓存
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                <button class="btn btn-info btn-sm" disabled>
+                                                    <i class="fa fa-check"></i>当前默认模板
+                                                </button>
                                             @else
                                                 <form action="{{ url('admin/theme/' . $theme->getAlias()) }}" method="post">
                                                     <input type="hidden" name="_method" value="put">
