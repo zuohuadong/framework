@@ -39,7 +39,7 @@ class Article extends Model {
     /**
      * @var string
      */
-    protected $showTemplate = 'default::article.show';
+    protected $showTemplate = 'themes::article.show';
     /**
      * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
      */
