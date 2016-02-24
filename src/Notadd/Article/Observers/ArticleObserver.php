@@ -35,8 +35,8 @@ class ArticleObserver {
         if($thumbImage) {
             if($thumbImage instanceof UploadedFile) {
                 $hash = hash_file('md5', $thumbImage->getPathname(), false);
-                $dictionary = $this->pathSplit($hash, '4,4,4', Collection::make([
-                    'upload'
+                $dictionary = $this->pathSplit($hash, '12', Collection::make([
+                    'uploads'
                 ]))->implode(DIRECTORY_SEPARATOR);
                 if(!$this->file->isDirectory(app_path($dictionary))) {
                     $this->file->makeDirectory(app_path($dictionary), 0777, true, true);
@@ -45,8 +45,8 @@ class ArticleObserver {
                 if(!$this->file->exists($dictionary . DIRECTORY_SEPARATOR . $file)) {
                     $thumbImage->move($dictionary, $file);
                 }
-                $article->setAttribute('thumb_image', $this->pathSplit($hash, '4,4,4,20', Collection::make([
-                    'upload'
+                $article->setAttribute('thumb_image', $this->pathSplit($hash, '12,20', Collection::make([
+                    'uploads'
                 ]))->implode('/') . '.' . $thumbImage->getClientOriginalExtension());
             }
         }
@@ -69,8 +69,8 @@ class ArticleObserver {
         if($thumbImage) {
             if($thumbImage instanceof UploadedFile) {
                 $hash = hash_file('md5', $thumbImage->getPathname(), false);
-                $dictionary = $this->pathSplit($hash, '4,4,4', Collection::make([
-                    'upload'
+                $dictionary = $this->pathSplit($hash, '12', Collection::make([
+                    'uploads'
                 ]))->implode(DIRECTORY_SEPARATOR);
                 if(!$this->file->isDirectory(app_path($dictionary))) {
                     $this->file->makeDirectory(app_path($dictionary), 0777, true, true);
@@ -79,8 +79,8 @@ class ArticleObserver {
                 if(!$this->file->exists($dictionary . DIRECTORY_SEPARATOR . $file)) {
                     $thumbImage->move($dictionary, $file);
                 }
-                $article->setAttribute('thumb_image', $this->pathSplit($hash, '4,4,4,20', Collection::make([
-                    'upload'
+                $article->setAttribute('thumb_image', $this->pathSplit($hash, '12,20', Collection::make([
+                    'uploads'
                 ]))->implode('/') . '.' . $thumbImage->getClientOriginalExtension());
             }
         }
