@@ -7,6 +7,7 @@
  */
 namespace Notadd\Theme;
 use Illuminate\Container\Container;
+use Illuminate\Support\Collection;
 use Notadd\Theme\Contracts\Theme as ThemeContract;
 /**
  * Class Theme
@@ -46,6 +47,10 @@ class Theme implements ThemeContract {
      */
     private $imagePath;
     /**
+     * @var \Illuminate\Support\Collection
+     */
+    private $publishData;
+    /**
      * @var string
      */
     private $sassPath;
@@ -65,6 +70,7 @@ class Theme implements ThemeContract {
     public function __construct($title, $alias) {
         $this->alias = $alias;
         $this->application = Container::getInstance();
+        $this->publishData = new Collection();
         $this->setting = $this->application->make('setting');
         $this->title = $title;
     }
@@ -140,10 +146,23 @@ class Theme implements ThemeContract {
     }
     /**
      * @param $path
-     * @return mixed|void
+     * @return string
      */
     public function useLessPath($path) {
         $this->lessPath = $path;
+    }
+    /**
+     * @return string
+     */
+    public function getPublishData() {
+        return $this->publishData;
+    }
+    /**
+     * @param $key
+     * @param $value
+     */
+    public function usePublishPath($key, $value) {
+        $this->publishData->put($key, $value);
     }
     /**
      * @return string
@@ -153,7 +172,6 @@ class Theme implements ThemeContract {
     }
     /**
      * @param $path
-     * @return mixed|void
      */
     public function useSassPath($path) {
         $this->sassPath = $path;
