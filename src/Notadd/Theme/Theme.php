@@ -152,7 +152,7 @@ class Theme implements ThemeContract {
         $this->lessPath = $path;
     }
     /**
-     * @return string
+     * @return \Illuminate\Support\Collection
      */
     public function getPublishData() {
         return $this->publishData;

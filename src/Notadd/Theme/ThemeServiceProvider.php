@@ -43,6 +43,15 @@ class ThemeServiceProvider extends ServiceProvider {
                     $this->loadViewsFrom($theme->getViewPath(), 'themes');
                 }
                 $this->loadViewsFrom($theme->getViewPath(), $alias);
+                $publishData = $theme->getPublishData();
+                if($publishData->count()) {
+                    $publishData->each(function($item, $key) {
+                        $this->publishes([
+                            $key,
+                            $item
+                        ], 'theme');
+                    });
+                }
             });
         });
         $this->getBlade()->directive('css', function($expression) {
