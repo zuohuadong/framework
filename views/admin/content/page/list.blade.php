@@ -17,7 +17,8 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="col-md-5">页面标题</td>
+                                    <th class="col-md-3">页面标题</td>
+                                    <th class="col-md-2">路由</th>
                                     <th class="col-md-3">创建时间</td>
                                     <th class="col-md-4">操作</td>
                                 </tr>
@@ -28,6 +29,7 @@
                                         <td>
                                             <a href="{{ url('page/' . $page->id) }}" target="_blank"><strong>{{ $page->title }}</strong></a>
                                         </td>
+                                        <td>{{ $page->alias }}</td>
                                         <td>{{ $page->created_at }}</td>
                                         <td>
                                             <form action="{{ URL('admin/page/'.$page->id) }}" method="POST" style="display: inline;">

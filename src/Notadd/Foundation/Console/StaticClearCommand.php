@@ -36,7 +36,7 @@ class StaticClearCommand extends Command {
      * @return void
      */
     public function fire() {
-        $statics = $this->files->glob($this->notadd->publicPath() . DIRECTORY_SEPARATOR . 'cache' . '/*');
+        $statics = $this->files->glob($this->notadd->publicPath() . DIRECTORY_SEPARATOR . 'caches' . '/*');
         foreach($statics as $static) {
             $this->files->deleteDirectory($static);
         }

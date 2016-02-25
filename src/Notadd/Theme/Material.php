@@ -154,8 +154,8 @@ class Material implements MaterialContract {
         $this->dispatcher->listen('kernel.handled', function() use($code, $files) {
             $dictionary = new Collection();
             $dictionary->push($this->application->publicPath());
-            $dictionary->push('cache');
-            $dictionary = $this->pathSplit($code, '2,2,2,2,2,2', $dictionary);
+            $dictionary->push('caches');
+            $dictionary = $this->pathSplit($code, '12', $dictionary);
             $dictionary = $dictionary->implode(DIRECTORY_SEPARATOR);
             $file = $dictionary . DIRECTORY_SEPARATOR . Str::substr($code, 12, 20) . '.css';
             $key = 'cache.style.' . $code;
@@ -169,8 +169,8 @@ class Material implements MaterialContract {
                 file_put_contents($file, $content);
             }
         });
-        return $this->pathSplit($code, '2,2,2,2,2,2,20', Collection::make([
-            'cache'
+        return $this->pathSplit($code, '12,20', Collection::make([
+            'caches'
         ]))->implode('/') . '.css';
     }
     /**
@@ -185,8 +185,8 @@ class Material implements MaterialContract {
         $this->dispatcher->listen('kernel.handled', function() use($code, $files) {
             $dictionary = new Collection();
             $dictionary->push($this->application->publicPath());
-            $dictionary->push('cache');
-            $dictionary = $this->pathSplit($code, '2,2,2,2,2,2', $dictionary);
+            $dictionary->push('caches');
+            $dictionary = $this->pathSplit($code, '12', $dictionary);
             $dictionary = $dictionary->implode(DIRECTORY_SEPARATOR);
             if(!$this->files->isDirectory($dictionary)) {
                 $this->files->makeDirectory($dictionary, 0755, true, true);
@@ -200,8 +200,8 @@ class Material implements MaterialContract {
                 file_put_contents($file, $content);
             }
         });
-        return $this->pathSplit($code, '2,2,2,2,2,2,20', Collection::make([
-            'cache'
+        return $this->pathSplit($code, '12,20', Collection::make([
+            'caches'
         ]))->implode('/') . '.js';
     }
     /**

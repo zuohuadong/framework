@@ -7,6 +7,8 @@
  */
 namespace Notadd\Article;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Article\Models\Article as ArticleModel;
+use Notadd\Article\Observers\ArticleObserver;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 /**
  * Class ArticleServiceProvider
@@ -27,6 +29,7 @@ class ArticleServiceProvider extends ServiceProvider {
             });
             $this->getRouter()->resource('article', 'ArticleController');
         });
+        ArticleModel::observe(ArticleObserver::class);
     }
     /**
      * @return void

@@ -59,11 +59,11 @@ class Category {
             $model = ArticleModel::whereIn('category_id', $list->toArray());
         }
         $data = $model->paginate(15);;
-        //$list = Collection::make();
-        //foreach($data as $value) {
-        //    $list->push(new Article($value->getAttribute('id')));
-        //}
-        return $data;
+        $list = Collection::make();
+        foreach($data as $value) {
+            $list->push(new Article($value->getAttribute('id')));
+        }
+        return $list;
     }
     /**
      * @param \Illuminate\Support\Collection $list
