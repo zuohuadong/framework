@@ -82,7 +82,7 @@ class Server {
      * @return array|mixed
      */
     protected function loadFiledConfiguration() {
-        $file = realpath($this->application->storagePath() . '/framework/notadd') . DIRECTORY_SEPARATOR . 'config.php';
+        $file = realpath($this->application->storagePath() . '/notadd') . DIRECTORY_SEPARATOR . 'config.php';
         if(file_exists($file)) {
             return require $file;
         } else {
@@ -119,7 +119,7 @@ class Server {
                 'stores' => [
                     'file' => [
                         'driver' => 'file',
-                        'path' => $this->application->storagePath() . '/framework/cache',
+                        'path' => $this->application->storagePath() . '/cache',
                     ],
                 ],
                 'prefix' => 'flarum',
@@ -137,7 +137,7 @@ class Server {
                 'lifetime' => 120,
                 'expire_on_close' => false,
                 'encrypt' => false,
-                'files' => $this->application->storagePath() . '/framework/sessions',
+                'files' => $this->application->storagePath() . '/sessions',
                 'connection' => null,
                 'table' => 'sessions',
                 'lottery' => [2, 100],
@@ -148,7 +148,7 @@ class Server {
             ],
             'view' => [
                 'paths' => [],
-                'compiled' => $this->application->storagePath() . '/framework/views',
+                'compiled' => $this->application->storagePath() . '/views',
             ]
         ];
     }

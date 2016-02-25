@@ -553,19 +553,19 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @return bool
      */
     public function isDownForMaintenance() {
-        return file_exists($this->storagePath() . '/framework/down');
+        return file_exists($this->storagePath() . '/notadd/down');
     }
     /**
      * @return bool
      */
     public function isInstalled() {
-        return file_exists($this->storagePath() . '/framework/notadd/installed');
+        return file_exists($this->storagePath() . '/notadd/installed');
     }
     /**
      * @return bool
      */
     public function inDebugMode() {
-        return file_exists($this->storagePath() . '/framework/notadd/debug');
+        return file_exists($this->storagePath() . '/notadd/debug');
     }
     /**
      * @param int $code

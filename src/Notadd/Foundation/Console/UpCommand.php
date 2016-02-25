@@ -23,7 +23,7 @@ class UpCommand extends Command {
      * @return void
      */
     public function fire() {
-        @unlink($this->notadd->storagePath() . '/framework/down');
+        @unlink($this->notadd->storagePath() . '/notadd/down');
         $this->info('Application is now live.');
     }
 }

@@ -23,7 +23,7 @@ class DownCommand extends Command {
      * @return void
      */
     public function fire() {
-        touch($this->notadd->storagePath() . '/framework/down');
+        touch($this->notadd->storagePath() . '/notadd/down');
         $this->comment('Application is now in maintenance mode.');
     }
 }
