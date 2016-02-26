@@ -122,7 +122,7 @@ class Server {
                         'path' => $this->application->storagePath() . '/cache',
                     ],
                 ],
-                'prefix' => 'flarum',
+                'prefix' => 'notadd',
             ],
             'filesystems' => [
                 'default' => 'local',
