@@ -153,6 +153,6 @@
     @css('admin::less.default.bootstrap-colorpicker')
 @endsection
 @section('admin-js')
-    @js('admin::js.default.upload-preview')
-    @js('admin::js.default.bootstrap-colorpicker')
+    <script src="{{ asset('statics/admin/js/upload-preview.js') }}"></script>
+    <script src="{{ asset('statics/admin/js/bootstrap-colorpicker.min.js') }}"></script>
 @endsection

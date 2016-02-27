@@ -129,11 +129,10 @@
         <p class="right">{{ config('app.version') }}</p>
     </footer>
 </div>
-@js('admin::js.layout.jquery.jquery')
-@js('admin::js.layout.perfect-scrollbar.jquery')
-@js('admin::js.layout.bootstrap.bootstrap')
+<script src="{{ asset('statics/admin/js/jquery-2.1.3.min.js') }}"></script>
+<script src="{{ asset('statics/admin/js/perfect-scrollbar.jquery.min.js') }}"></script>
+<script src="{{ asset('statics/admin/js/bootstrap.min.js') }}"></script>
 @yield('admin-js')
-@js('admin::js.default.admin.app')
-@output('js')
+<script src="{{ asset('statics/admin/js/app.js') }}"></script>
 </body>
 </html>
