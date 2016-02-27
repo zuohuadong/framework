@@ -36,7 +36,7 @@ class WeChatProvider extends Provider implements ProviderContract {
         if(in_array('snsapi_login', $this->scopes)) {
             $path = 'qrconnect';
         }
-        return $this->buildAuthUrlFromBase("https://open.weixin.qq.com/connect/oauth2/{$path}", $state);
+        return $this->buildAuthUrlFromBase("https://open.weixin.qq.com/connect/{$path}", $state);
     }
     /**
      * @param string $url
