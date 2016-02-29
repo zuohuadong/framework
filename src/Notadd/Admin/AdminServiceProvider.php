@@ -174,6 +174,20 @@ class AdminServiceProvider extends ServiceProvider {
                             ]
                         ]
                     ],
+                    'develop' => [
+                        'title' => '开发者工具',
+                        'active' => [
+                            'admin/migration*'
+                        ],
+                        'icon'  => 'fa-shekel',
+                        'sub' => [
+                            [
+                                'title' => 'Migration工具',
+                                'active' => 'admin/migration*',
+                                'url' => 'admin/migration'
+                            ],
+                        ]
+                    ]
                 ]
             ],
         ]);
