@@ -54,7 +54,10 @@ class PageServiceProvider extends ServiceProvider {
             $this->getView()->share('__call', $this->getPage());
         });
         $this->getBlade()->directive('call', function($expression) {
-            return "<?php \$__call->call{$expression}; ?>";
+            return "<?php \$__tmp = \$__call->call{$expression}; foreach(\$__tmp as \$key=>\$value): ?>";
+        });
+        $this->getBlade()->directive('endcall', function($expression) {
+            return "<?php endforeach; ?>";
         });
     }
     /**
