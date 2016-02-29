@@ -85,7 +85,7 @@ class Factory implements FactoryContract {
         return $this->list->get($alias);
     }
     /**
-     * @return mixed
+     * @return \Illuminate\Support\Collection
      */
     public function getThemeList() {
         return $this->list;
