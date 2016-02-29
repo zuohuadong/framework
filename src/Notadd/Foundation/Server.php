@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use Notadd\Admin\AdminServiceProvider;
 use Notadd\Article\ArticleServiceProvider;
 use Notadd\Category\CategoryServiceProvider;
+use Notadd\Develop\DevelopServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\ConsoleServiceProvider;
 use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
@@ -73,6 +74,7 @@ class Server {
             $this->application->register(HttpServiceProvider::class);
             $this->application->register(PageServiceProvider::class);
             $this->application->register(AdminServiceProvider::class);
+            $this->application->register(DevelopServiceProvider::class);
         } else {
             $this->application->register(InstallServiceProvider::class);
         }
