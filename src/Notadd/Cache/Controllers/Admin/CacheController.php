@@ -52,6 +52,8 @@ class CacheController extends AbstractAdminController {
      */
     public function clearCache() {
         $this->artisan->call('cache:clear');
+        $this->artisan->call('static:clear');
+        $this->artisan->call('view:clear');
         return $this->redirect->back();
     }
     /**

@@ -22,6 +22,9 @@ class MigrationController extends AbstractAdminController {
     public function index() {
         return $this->view('admin::develop.migration');
     }
+    /**
+     * @param \Illuminate\Http\Request $request
+     */
     public function store(Request $request) {
         $command = $this->getCommand('make:migration');
         $data = new Collection();
