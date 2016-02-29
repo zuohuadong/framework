@@ -7,16 +7,19 @@
  */
 namespace Notadd\Page;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Foundation\Traits\InjectBladeTrait;
 use Notadd\Foundation\Traits\InjectEventsTrait;
+use Notadd\Foundation\Traits\InjectPageTrait;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 use Notadd\Foundation\Traits\InjectSettingTrait;
+use Notadd\Foundation\Traits\InjectViewTrait;
 use Notadd\Page\Models\Page as PageModel;
 /**
  * Class PageServiceProvider
  * @package Notadd\Page
  */
 class PageServiceProvider extends ServiceProvider {
-    use InjectEventsTrait, InjectSettingTrait, InjectRouterTrait;
+    use InjectBladeTrait, InjectEventsTrait, InjectPageTrait, InjectRouterTrait, InjectSettingTrait, InjectViewTrait;
     /**
      * @return void
      */
@@ -47,6 +50,12 @@ class PageServiceProvider extends ServiceProvider {
             $this->getRouter()->resource('page', 'PageController');
         });
         $this->loadViewsFrom($this->app->basePath() . '/resources/views/pages/', 'page');
+        $this->getEvents()->listen('router.matched', function () {
+            $this->getView()->share('__call', $this->getPage());
+        });
+        $this->getBlade()->directive('call', function($expression) {
+            return "<?php \$__call->call{$expression}; ?>";
+        });
     }
     /**
      * @return void

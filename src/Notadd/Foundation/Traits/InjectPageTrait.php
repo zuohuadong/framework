@@ -11,7 +11,7 @@ use Illuminate\Container\Container;
  * Class InjectPageTrait
  * @package Notadd\Foundation\Traits
  */
-class InjectPageTrait {
+trait InjectPageTrait {
     /**
      * @var \Notadd\Page\Factory
      */
