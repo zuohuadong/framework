@@ -20,10 +20,12 @@ class MigrationController extends AbstractAdminController {
      * @return \Illuminate\Contracts\View\View
      */
     public function index() {
+        $this->share('message', $this->session->get('message'));
         return $this->view('admin::develop.migration');
     }
     /**
      * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request) {
         $command = $this->getCommand('make:migration');
@@ -37,6 +39,6 @@ class MigrationController extends AbstractAdminController {
         $input = new ArrayInput($data->toArray());
         $output = new BufferedOutput();
         $command->run($input, $output);
-        echo $output->fetch();
+        return $this->redirect->to('admin/migration')->with('message', $output->fetch());
     }
 }

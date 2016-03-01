@@ -7,6 +7,7 @@
  */
 namespace Notadd\Develop;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Develop\Controllers\Admin\MigrateController;
 use Notadd\Develop\Controllers\Admin\MigrationController;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 /**
@@ -20,7 +21,8 @@ class DevelopServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
-            $this->getRouter()->resource('migration', MigrationController::class);
+            $this->getRouter()->resource('migrate', MigrateController::class, ['only' => ['store']]);
+            $this->getRouter()->resource('migration', MigrationController::class, ['only' => ['index', 'store']]);
         });
     }
     /**
