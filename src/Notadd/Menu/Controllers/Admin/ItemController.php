@@ -99,11 +99,8 @@ class ItemController extends AbstractAdminController {
      */
     public function store(MenuCreateRequest $request) {
         $menu = new Menu();
-        if($menu->create($request->all())) {
-            return $this->redirect->back();
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $menu->create($request->all());
+        return $this->redirect->back();
     }
     /**
      * @param \Notadd\Menu\Requests\MenuCreateRequest $request
@@ -112,10 +109,7 @@ class ItemController extends AbstractAdminController {
      */
     public function update(MenuCreateRequest $request, $id) {
         $menu = Menu::findOrFail($id);
-        if($menu->update($request->all())) {
-            return $this->redirect->back();
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $menu->update($request->all());
+        return $this->redirect->back();
     }
 }
