@@ -16,6 +16,7 @@ use Notadd\Admin\AdminServiceProvider;
 use Notadd\Article\ArticleServiceProvider;
 use Notadd\Category\CategoryServiceProvider;
 use Notadd\Develop\DevelopServiceProvider;
+use Notadd\Editor\EditorServiceProvider;
 use Notadd\Flash\FlashServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\ConsoleServiceProvider;
@@ -70,6 +71,7 @@ class Server {
         if($this->application->isInstalled()) {
             $this->application->register(ThemeServiceProvider::class);
             $this->application->register(MenuServiceProvider::class);
+            $this->application->register(EditorServiceProvider::class);
             $this->application->register(FlashServiceProvider::class);
             $this->application->register(CategoryServiceProvider::class);
             $this->application->register(ArticleServiceProvider::class);
