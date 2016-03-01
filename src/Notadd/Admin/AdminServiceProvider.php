@@ -167,10 +167,14 @@ class AdminServiceProvider extends ServiceProvider {
                                 'url' => 'admin/theme',
                             ],
                             [
-                                'title' => '菜单管理',
+                                'title' => '菜单组件',
                                 'active' => 'admin/menu*',
                                 'url'   => 'admin/menu',
-                                'icon'  => 'fa-paper-plane',
+                            ],
+                            [
+                                'title' => '幻灯片组件',
+                                'active' => 'admin/flash*',
+                                'url' => 'admin/flash',
                             ]
                         ]
                     ],
