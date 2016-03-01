@@ -24,6 +24,10 @@ class ItemController extends AbstractAdminController {
         $this->share('item', FlashItem::findOrFail($id));
         return $this->view('flash.item.edit');
     }
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function status($id) {
         $item = FlashItem::findOrFail($id);
         $item->update(['enabled' => !$item->enabled]);
@@ -38,6 +42,11 @@ class ItemController extends AbstractAdminController {
         $item = $item->create($request->all());
         return $this->redirect->to('admin/flash/item/' . $item->id . '/edit');
     }
+    /**
+     * @param $id
+     * @param \Notadd\Flash\Requests\FlashItemRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update($id, FlashItemRequest $request) {
         $item = FlashItem::findOrFail($id);
         $item->update($request->all());
