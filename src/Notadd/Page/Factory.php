@@ -12,6 +12,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Notadd\Article\Models\Article;
 use Notadd\Article\Models\ArticleRecommend;
+use Notadd\Flash\Models\FlashItem;
 use Notadd\Page\Models\Page as Model;
 /**
  * Class Factory
