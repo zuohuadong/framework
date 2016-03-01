@@ -123,8 +123,9 @@ class Factory {
      * @param array $opinions
      */
     protected function callFlash($opinions = []) {
-
-        return void;
+        $group = $opinions['group'];
+        $flashes = FlashItem::whereGroupId($group)->get();
+        return $flashes;
     }
     /**
      * @param $id
