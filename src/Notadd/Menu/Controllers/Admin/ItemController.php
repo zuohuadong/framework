@@ -112,12 +112,6 @@ class ItemController extends AbstractAdminController {
      */
     public function update(MenuCreateRequest $request, $id) {
         $menu = Menu::findOrFail($id);
-        if($request->hasFile('icon_image') && $request->file('icon_image')->isValid()) {
-            $file_name = Str::random() . '.' . $request->file('icon_image')->getClientOriginalExtension();
-            $request->file('icon_image')->move('uploads/menus/', $file_name);
-            $request->offsetSet('icon_image', 'uploads/menus/' . $file_name);
-        }
-        $request->files->replace();
         if($menu->update($request->all())) {
             return $this->redirect->back();
         } else {
