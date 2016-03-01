@@ -106,7 +106,7 @@
     </div>
 @endsection
 @section('admin-js')
-    <script src="{{ asset('editor/ueditor/ueditor.config.js') }}"></script>
-    <script src="{{ asset('editor/ueditor/ueditor.all.min.js') }}"></script>
+    <script src="{{ asset('statics/ueditor/ueditor.config.js') }}"></script>
+    <script src="{{ asset('statics/ueditor/ueditor.all.min.js') }}"></script>
     <script src="{{ asset('statics/admin/js/upload-preview.js') }}"></script>
 @endsection

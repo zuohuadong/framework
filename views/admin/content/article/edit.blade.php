@@ -157,8 +157,8 @@
     @css('admin::less.default.datetimepicker')
 @endsection
 @section('admin-js')
-    <script src="{{ asset('editor/ueditor/ueditor.config.js') }}"></script>
-    <script src="{{ asset('editor/ueditor/ueditor.all.min.js') }}"></script>
+    <script src="{{ asset('statics/ueditor/ueditor.config.js') }}"></script>
+    <script src="{{ asset('statics/ueditor/ueditor.all.min.js') }}"></script>
     <script src="{{ asset('statics/admin/js/upload-preview.js') }}"></script>
     <script src="{{ asset('statics/admin/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('statics/admin/js/bootstrap-datetimepicker.zh-CN.js') }}"></script>

@@ -31,33 +31,6 @@ interface Theme {
     /**
      * @return mixed
      */
-    public function getFontPath();
-    /**
-     * @param $path
-     * @return mixed
-     */
-    public function useFontPath($path);
-    /**
-     * @return mixed
-     */
-    public function getJsPath();
-    /**
-     * @param $path
-     * @return mixed
-     */
-    public function useJsPath($path);
-    /**
-     * @return mixed
-     */
-    public function getImagePath();
-    /**
-     * @param $path
-     * @return mixed
-     */
-    public function useImagePath($path);
-    /**
-     * @return mixed
-     */
     public function getViewPath();
     /**
      * @param $path
