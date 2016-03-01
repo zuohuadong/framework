@@ -142,9 +142,9 @@
     </div>
 @endsection
 @section('admin-css')
-    <link rel="stylesheet" href="{{ asset('themes/admin/css/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/bootstrap-colorpicker.min.css') }}">
 @endsection
 @section('admin-js')
-    <script src="{{ asset('themes/admin/js/jquery.uploadPreview.js') }}"></script>
-    <script src="{{ asset('themes/admin/js/bootstrap-colorpicker.min.js') }}"></script>
+    <script src="{{ asset('statics/admin/js/jquery.uploadPreview.js') }}"></script>
+    <script src="{{ asset('statics/admin/js/bootstrap-colorpicker.min.js') }}"></script>
 @endsection

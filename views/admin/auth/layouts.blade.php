@@ -8,10 +8,10 @@
     <meta name="keywords" content="appboard, webapp, admin, dashboard, template, ui">
     <meta name="description" content="Appboard - Admin Template with Angularjs">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{ asset('themes/admin/css/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('themes/admin/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('themes/admin/css/main.css') }}">
-    <script src="{{ asset('themes/admin/js/matchMedia.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/main.css') }}">
+    <script src="{{ asset('statics/admin/js/matchMedia.js') }}"></script>
 </head>
 <body class="app theme-one body-full">
 <div class="main-container clearfix">
@@ -21,9 +21,9 @@
         <p class="right">v{{ app()->version() }}</p>
     </footer>
 </div>
-<script src="{{ asset('themes/admin/js/jquery-2.1.3.min.js') }}"></script>
-<script src="{{ asset('themes/admin/js/perfect-scrollbar.jquery.min.js') }}"></script>
-<script src="{{ asset('themes/admin/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('themes/admin/js/app.js') }}"></script>
+<script src="{{ asset('statics/admin/js/jquery-2.1.3.min.js') }}"></script>
+<script src="{{ asset('statics/admin/js/perfect-scrollbar.jquery.min.js') }}"></script>
+<script src="{{ asset('statics/admin/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('statics/admin/js/app.js') }}"></script>
 </body>
 </html>
