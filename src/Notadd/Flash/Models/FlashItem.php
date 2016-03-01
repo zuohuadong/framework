@@ -27,6 +27,6 @@ class FlashItem extends Model {
      * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
      */
     public function group() {
-        return $this->belongsTo('App\Flash\Models\Flash', 'group_id');
+        return $this->belongsTo(Flash::class, 'group_id');
     }
 }

@@ -7,7 +7,10 @@
  */
 namespace Notadd\Flash;
 use Illuminate\Support\ServiceProvider;
-use Notadd\Flash\Controllers\Admin\FlashController;
+use Notadd\Flash\Controllers\Admin\GroupController;
+use Notadd\Flash\Controllers\Admin\ItemController;
+use Notadd\Flash\Models\FlashItem;
+use Notadd\Flash\Observers\FlashItemObserver;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 /**
  * Class FlashServiceProvider
@@ -20,8 +23,11 @@ class FlashServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
-            $this->getRouter()->resource('flash', FlashController::class);
+            $this->getRouter()->resource('flash', GroupController::class);
+            $this->getRouter()->resource('flash/item', ItemController::class);
+            $this->getRouter()->post('flash/item/{id}/status', ItemController::class . '@status');
         });
+        FlashItem::observe(FlashItemObserver::class);
     }
     /**
      * @return void
