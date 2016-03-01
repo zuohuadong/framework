@@ -61,7 +61,6 @@ class Factory implements FactoryContract {
         $default = new Theme('默认模板', 'default');
         $default->useCssPath(realpath($this->application->frameworkPath() . '/less'));
         $default->useLessPath(realpath($this->application->frameworkPath() . '/less'));
-        $default->useImagePath(realpath($this->application->frameworkPath() . '/images/default'));
         $default->useViewPath(realpath($this->application->frameworkPath() . '/views/default'));
         $default->usePublishPath(framework_path('statics/admin'), public_path('statics/admin'));
         $default->usePublishPath(framework_path('statics/ueditor'), public_path('statics/ueditor'));
@@ -69,7 +68,6 @@ class Factory implements FactoryContract {
         $admin = new Theme('后台模板', 'admin');
         $admin->useCssPath(realpath($this->application->frameworkPath() . '/less'));
         $admin->useLessPath(realpath($this->application->frameworkPath() . '/less'));
-        $admin->useImagePath(realpath($this->application->frameworkPath() . '/images/admin'));
         $admin->useViewPath(realpath($this->application->frameworkPath() . '/views/admin'));
         $list->put('admin', $admin);
         $this->application->make('events')->fire(new GetThemeList($this->application, $list));
