@@ -15,6 +15,8 @@ use Notadd\Foundation\Traits\InjectRouterTrait;
 use Notadd\Foundation\Traits\InjectSettingTrait;
 use Notadd\Foundation\Traits\InjectThemeTrait;
 use Notadd\Foundation\Traits\InjectViewTrait;
+use Notadd\Theme\Controllers\Admin\PublishController;
+use Notadd\Theme\Controllers\Admin\ThemeController;
 /**
  * Class ThemeServiceProvider
  * @package Notadd\Theme
@@ -25,14 +27,13 @@ class ThemeServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group(['namespace' => 'Notadd\Theme\Controllers'], function () {
-            $this->getRouter()->group(['middleware' => 'auth.admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
-                $this->getRouter()->post('theme/cookie', function() {
-                    $default = $this->getRequest()->input('theme');
-                    $this->getCookie()->queue($this->getCookie()->forever('admin-theme', $default));
-                });
-                $this->getRouter()->resource('theme', 'ThemeController');
+        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->getRouter()->post('theme/cookie', function() {
+                $default = $this->getRequest()->input('theme');
+                $this->getCookie()->queue($this->getCookie()->forever('admin-theme', $default));
             });
+            $this->getRouter()->resource('theme', ThemeController::class);
+            $this->getRouter()->resource('theme/publish', PublishController::class);
         });
         $default = $this->getSetting()->get('site.theme', 'default');
         $this->getEvents()->listen('router.matched', function () use ($default) {
@@ -45,11 +46,13 @@ class ThemeServiceProvider extends ServiceProvider {
                 $this->loadViewsFrom($theme->getViewPath(), $alias);
                 $publishData = $theme->getPublishData();
                 if($publishData->count()) {
-                    $publishData->each(function($item, $key) {
+                    $publishData->each(function($item, $key) use($alias) {
                         $this->publishes([
-                            $key,
-                            $item
+                            $key => $item
                         ], 'theme');
+                        $this->publishes([
+                            $key => $item
+                        ], $alias);
                     });
                 }
             });

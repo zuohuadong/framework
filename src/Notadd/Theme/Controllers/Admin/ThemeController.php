@@ -43,6 +43,7 @@ class ThemeController extends AbstractAdminController {
     public function index() {
         $themes = $this->theme->getThemeList()->toArray();
         unset($themes['admin']);
+        $this->share('message', $this->session->get('message'));
         $this->share('themes', $themes);
         return $this->view('theme.index');
     }
