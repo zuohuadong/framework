@@ -31,9 +31,9 @@ class MigrationController extends AbstractAdminController {
         $command = $this->getCommand('make:migration');
         $data = new Collection();
         $data->put('name', $request->get('name'));
-        if($request->exists('create')) {
+        if($request->get('create')) {
             $data->put('--create', $request->get('create'));
-        } elseif($request->exists('table')) {
+        } elseif($request->get('table')) {
             $data->put('--table', $request->get('table'));
         }
         $input = new ArrayInput($data->toArray());
