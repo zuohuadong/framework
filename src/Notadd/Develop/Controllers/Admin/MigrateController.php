@@ -14,7 +14,6 @@ class MigrateController extends AbstractAdminController {
         $output = new BufferedOutput();
         $command->run($input, $output);
         $this->share('message', $output->fetch());
-        dd($output->fetch());
         return $this->redirect->to('admin/migration');
     }
 }
