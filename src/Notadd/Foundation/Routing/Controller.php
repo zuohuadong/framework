@@ -7,6 +7,7 @@
  */
 namespace Notadd\Foundation\Routing;
 use BadMethodCallException;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Contracts\View\Factory as ViewFactory;
@@ -78,7 +79,7 @@ abstract class Controller extends IlluminateController {
      * @return \Notadd\Foundation\Console\Command
      */
     public function getCommand($command) {
-        return $this->app->make('Illuminate\Contracts\Console\Kernel')->find($command);
+        return $this->app->make(Kernel::class)->find($command);
     }
     /**
      * @param array $parameters

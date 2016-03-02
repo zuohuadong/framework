@@ -11,6 +11,7 @@ use Illuminate\Cache\MemcachedConnector;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Cache\Console\CacheTableCommand;
 use Notadd\Cache\Console\ClearCommand;
+use Notadd\Cache\Controllers\Admin\CacheController;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 /**
  * Class CacheServiceProvider
@@ -26,15 +27,11 @@ class CacheServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group([
-            'middleware' => 'auth.admin',
-            'namespace' => 'Notadd\Cache\Controllers\Admin',
-            'prefix' => 'admin'
-        ], function () {
-            $this->getRouter()->get('cache', 'CacheController@index');
-            $this->getRouter()->post('cache', 'CacheController@clearCache');
-            $this->getRouter()->post('cache/static', 'CacheController@clearStatic');
-            $this->getRouter()->post('cache/view', 'CacheController@clearView');
+        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->getRouter()->get('cache', CacheController::class . '@index');
+            $this->getRouter()->post('cache', CacheController::class . '@clearCache');
+            $this->getRouter()->post('cache/static', CacheController::class . '@clearStatic');
+            $this->getRouter()->post('cache/view', CacheController::class . '@clearView');
         });
     }
     /**

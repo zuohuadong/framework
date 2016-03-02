@@ -10,6 +10,8 @@ use Illuminate\Support\ServiceProvider;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 use Notadd\Install\Console\InstallCommand;
 use Notadd\Install\Contracts\Prerequisite;
+use Notadd\Install\Controllers\InstallController;
+use Notadd\Install\Controllers\PrerequisiteController;
 use Notadd\Install\Prerequisites\Composite;
 use Notadd\Install\Prerequisites\PhpExtensions;
 use Notadd\Install\Prerequisites\PhpVersion;
@@ -25,8 +27,8 @@ class InstallServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->loadViewsFrom(realpath(__DIR__ . '/../../../views/install'), 'install');
-        $this->getRouter()->get('/', 'Notadd\Install\Controllers\PrerequisiteController@render');
-        $this->getRouter()->post('/', 'Notadd\Install\Controllers\InstallController@handle');
+        $this->getRouter()->get('/', PrerequisiteController::class . '@render');
+        $this->getRouter()->post('/', InstallController::class . '@handle');
     }
     /**
      * @return void
