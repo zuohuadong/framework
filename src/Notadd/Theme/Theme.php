@@ -33,19 +33,7 @@ class Theme implements ThemeContract {
     /**
      * @var string
      */
-    private $fontPath;
-    /**
-     * @var string
-     */
-    private $jsPath;
-    /**
-     * @var string
-     */
     private $lessPath;
-    /**
-     * @var string
-     */
-    private $imagePath;
     /**
      * @var \Illuminate\Support\Collection
      */
@@ -98,45 +86,6 @@ class Theme implements ThemeContract {
      */
     public function useCssPath($path) {
         $this->cssPath = $path;
-    }
-    /**
-     * @return string
-     */
-    public function getFontPath() {
-        return $this->fontPath;
-    }
-    /**
-     * @param string $path
-     * @return mixed|void
-     */
-    public function useFontPath($path) {
-        $this->fontPath = $path;
-    }
-    /**
-     * @return string
-     */
-    public function getImagePath() {
-        return $this->imagePath;
-    }
-    /**
-     * @param string $path
-     * @return mixed|void
-     */
-    public function useImagePath($path) {
-        $this->imagePath = $path;
-    }
-    /**
-     * @return string
-     */
-    public function getJsPath() {
-        return $this->jsPath;
-    }
-    /**
-     * @param $path
-     * @return mixed|void
-     */
-    public function useJsPath($path) {
-        $this->jsPath = $path;
     }
     /**
      * @return string

@@ -12,6 +12,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Notadd\Article\Models\Article;
 use Notadd\Article\Models\ArticleRecommend;
+use Notadd\Flash\Models\FlashItem;
 use Notadd\Page\Models\Page as Model;
 /**
  * Class Factory
@@ -49,34 +50,32 @@ class Factory {
     }
     /**
      * @param $type
-     * @param string $template
-     * @param array  $opinions
+     * @param array $opinions
      * @return null|void
      */
-    public function call($type, $template = '', $opinions = []) {
+    public function call($type, $opinions = []) {
         switch($type) {
             case "ad":
-                return $this->callAd($template, $opinions);
+                return $this->callAd($opinions);
             case "article":
-                return $this->callArticle($template, $opinions);
+                return $this->callArticle($opinions);
             case "flash":
-                return $this->callFalsh($template, $opinions);
-            default :
+                return $this->callFlash($opinions);
+            default:
                 return null;
         }
     }
     /**
-     * @param $template
      * @param array $opinions
      */
-    protected function callAd($template, $opinions = []) {
+    protected function callAd($opinions = []) {
+        return void;
     }
     /**
-     * @param $template
      * @param array $opinions
      * @return mixed
      */
-    protected function callArticle($template, $opinions = []) {
+    protected function callArticle($opinions = []) {
         $articles = Collection::make();
         if(isset($opinions['category'])) {
             if(is_array($opinions['category'])) {
@@ -119,13 +118,15 @@ class Factory {
                 }
             }
         }
-        return $this->view->make($template)->withArticles($articles);
+        return $articles;
     }
     /**
-     * @param $template
      * @param array $opinions
      */
-    protected function callFalsh($template, $opinions = []) {
+    protected function callFlash($opinions = []) {
+        $group = $opinions['group'];
+        $flashes = FlashItem::whereGroupId($group)->get();
+        return $flashes;
     }
     /**
      * @param $id

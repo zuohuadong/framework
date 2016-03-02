@@ -87,11 +87,8 @@ class GroupController extends AbstractAdminController {
      */
     public function store(MenuGroupCreateRequest $request) {
         $group = new MenuGroup();
-        if($group->create($request->all())) {
-            return $this->redirect->back();
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $group->create($request->all());
+        return $this->redirect->back();
     }
     /**
      * @param \Notadd\Menu\Requests\MenuGroupEditRequest $request
@@ -100,10 +97,7 @@ class GroupController extends AbstractAdminController {
      */
     public function update(MenuGroupEditRequest $request, $id) {
         $group = MenuGroup::findOrFail($id);
-        if($group->update($request->all())) {
-            return $this->redirect->to("admin/menu");
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $group->update($request->all());
+        return $this->redirect->to("admin/menu");
     }
 }

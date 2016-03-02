@@ -79,11 +79,8 @@ class CategoryController extends AbstractAdminController {
      */
     public function store(CategoryCreateRequest $request) {
         $category = new Category();
-        if($category->create($request->all())) {
-            return $this->redirect->back();
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $category->create($request->all());
+        return $this->redirect->back();
     }
     /**
      * @param \Notadd\Category\Requests\CategoryEditRequest $request
@@ -92,10 +89,7 @@ class CategoryController extends AbstractAdminController {
      */
     public function update(CategoryEditRequest $request, $id) {
         $category = Category::findOrFail($id);
-        if($category->update($request->all())) {
-            return $this->redirect->back();
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $category->update($request->all());
+        return $this->redirect->back();
     }
 }

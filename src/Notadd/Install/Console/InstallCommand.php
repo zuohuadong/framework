@@ -71,7 +71,7 @@ class InstallCommand extends Command {
             'password' => bcrypt($this->data->get('admin_password')),
         ]);
         $auth->login($user);
-        touch($this->notadd->storagePath() . '/framework/notadd/installed');
+        touch($this->notadd->storagePath() . '/notadd/installed');
     }
     /**
      * @return void
@@ -168,7 +168,7 @@ class InstallCommand extends Command {
             ]
         ];
         file_put_contents(
-            realpath($this->notadd->storagePath() . '/framework/notadd') . DIRECTORY_SEPARATOR . 'config.php',
+            realpath($this->notadd->storagePath() . '/notadd') . DIRECTORY_SEPARATOR . 'config.php',
             '<?php return '.var_export($config, true).';'
         );
     }

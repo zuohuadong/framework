@@ -8,6 +8,8 @@
 namespace Notadd\Menu;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Menu\Models\Menu;
+use Notadd\Menu\Observers\MenuItemObserver;
 /**
  * Class MenuServiceProvider
  * @package Notadd\Menu
@@ -29,6 +31,7 @@ class MenuServiceProvider extends ServiceProvider {
                 $this->getRouter()->post('menu/item/{id}/sorting', 'ItemController@sorting');
             });
         });
+        Menu::observe(MenuItemObserver::class);
     }
     /**
      * @return array

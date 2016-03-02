@@ -80,7 +80,7 @@ class Menu extends Model {
      * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
      */
     public function group() {
-        return $this->belongsTo('App\Menu\Models\MenuGroup', 'group_id');
+        return $this->belongsTo(MenuGroup::class, 'group_id');
     }
     /**
      * @return mixed

@@ -11,6 +11,7 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Auth\Controllers\Admin\ThirdController;
 use Notadd\Auth\Social\SocialManager;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 use Notadd\Foundation\Traits\InjectSettingTrait;
@@ -24,12 +25,10 @@ class AuthServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group([
-            'namespace' => 'Notadd\Auth\Controllers\Admin',
-            'prefix' => 'admin'
-        ], function () {
-            $this->getRouter()->get('third', 'ConfigController@getThird');
-            $this->getRouter()->post('third', 'ConfigController@postThird');
+        $this->getRouter()->group(['prefix' => 'admin'], function () {
+            $this->getRouter()->resource('third', ThirdController::class, [
+                'only' => ['index', 'store']
+            ]);
         });
     }
     /**

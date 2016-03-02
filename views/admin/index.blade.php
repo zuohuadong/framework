@@ -39,6 +39,10 @@
                                 <td>{{ $_SERVER['SERVER_SOFTWARE'] }}</td>
                             </tr>
                             <tr>
+                                <td class="text-right"><strong>数据库引擎：</strong></td>
+                                <td>{{ $mysql_version }}</td>
+                            </tr>
+                            <tr>
                                 <td class="text-right"><strong>PHP版本：</strong></td>
                                 <td>{{ PHP_VERSION }}</td>
                             </tr>

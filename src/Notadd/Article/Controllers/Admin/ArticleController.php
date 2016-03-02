@@ -118,10 +118,7 @@ class ArticleController extends AbstractAdminController {
         $article = Article::findOrFail($id);
         $request->offsetSet('user_id', $this->app->make('auth')->user()->id);
         $request->offsetSet('created_at', new Carbon($request->offsetGet('created_at')));
-        if($article->update($request->all())) {
-            return $this->redirect->to('admin/article');
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $article->update($request->all());
+        return $this->redirect->to('admin/article');
     }
 }

@@ -4,7 +4,6 @@
     <div class="page clearfix">
         <ol class="breadcrumb breadcrumb-small">
             <li>后台首页</li>
-            <li>后台首页</li>
             <li><a href="{{ url('admin/page') }}">页面管理</a></li>
             @foreach($crumbs as $crumb)
                 <li><a href="{{ url('admin/page/' . $crumb->id) }}">{{ $crumb->title }}</a></li>
@@ -38,5 +37,5 @@
     </div>
 @endsection
 @section('admin-js')
-    <script src="{{ asset('themes/admin/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('statics/admin/js/jquery-ui.min.js') }}"></script>
 @endsection

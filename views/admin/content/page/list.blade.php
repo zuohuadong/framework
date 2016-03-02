@@ -18,7 +18,7 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-3">页面标题</td>
-                                    <th class="col-md-2">路由</th>
+                                    <th class="col-md-2">别名</th>
                                     <th class="col-md-3">创建时间</td>
                                     <th class="col-md-4">操作</td>
                                 </tr>
@@ -55,7 +55,7 @@
                             <input type="hidden" name="parent_id" value="{{ $id }}">
                             <table class="table table-hover">
                                 <tr>
-                                    <td class="col-md-5"><strong>当前级别有{{ $count }}个分类</strong></td>
+                                    <td class="col-md-5"><strong>当前级别有{{ $count }}个页面</strong></td>
                                     <td class="col-md-3">
                                         <input class="form-control input-sm" name="title" placeholder="输入页面名称"></td>
                                     <td class="col-md-4">

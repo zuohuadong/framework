@@ -98,7 +98,6 @@ class AdminServiceProvider extends ServiceProvider {
                             'admin/cache*',
                             'admin/seo*',
                             'admin/site*',
-                            'admin/third*',
                         ],
                         'icon'  => 'fa-cogs',
                         'sub' => [
@@ -117,11 +116,6 @@ class AdminServiceProvider extends ServiceProvider {
                                 'active' => 'admin/cache*',
                                 'url' => 'admin/cache',
                             ],
-                            [
-                                'title' => '第三方登录',
-                                'active' => 'admin/third*',
-                                'url' => 'admin/third',
-                            ]
                         ]
                     ],
                     'content' => [
@@ -158,6 +152,7 @@ class AdminServiceProvider extends ServiceProvider {
                             'admin/flash*',
                             'admin/ad*',
                             'admin/menu*',
+                            'admin/third*',
                         ],
                         'icon'  => 'fa-table',
                         'sub' => [
@@ -167,13 +162,36 @@ class AdminServiceProvider extends ServiceProvider {
                                 'url' => 'admin/theme',
                             ],
                             [
-                                'title' => '菜单管理',
+                                'title' => '菜单组件',
                                 'active' => 'admin/menu*',
                                 'url'   => 'admin/menu',
-                                'icon'  => 'fa-paper-plane',
+                            ],
+                            [
+                                'title' => '幻灯片组件',
+                                'active' => 'admin/flash*',
+                                'url' => 'admin/flash',
+                            ],
+                            [
+                                'title' => '社交组件',
+                                'active' => 'admin/third*',
+                                'url' => 'admin/third',
                             ]
                         ]
                     ],
+                    'develop' => [
+                        'title' => '开发者工具',
+                        'active' => [
+                            'admin/migration*'
+                        ],
+                        'icon'  => 'fa-shekel',
+                        'sub' => [
+                            [
+                                'title' => 'Migration工具',
+                                'active' => 'admin/migration*',
+                                'url' => 'admin/migration'
+                            ],
+                        ]
+                    ]
                 ]
             ],
         ]);

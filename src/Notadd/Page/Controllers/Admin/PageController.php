@@ -153,7 +153,7 @@ class PageController extends AbstractAdminController {
     public function store(PageCreateRequest $request) {
         if($request->input('parent_id')) {
             if(!Page::whereId($request->input('parent_id'))->count()) {
-                return $this->app->make('redirect')->back()->withInput()->withErrors('父页面不存在，创建子页面失败！');
+                return $this->redirect->back();
             }
         }
         Page::create($request->all());
@@ -172,10 +172,7 @@ class PageController extends AbstractAdminController {
             $request->offsetSet('thumb_image', 'uploads/pages/thumbs/' . $file_name);
         }
         $request->files->replace();
-        if($page->update($request->all())) {
-            return $this->redirect->to('admin/page/' . $id . '/edit');
-        } else {
-            return $this->redirect->back()->withInput()->withErrors('保存失败！');
-        }
+        $page->update($request->all());
+        return $this->redirect->to('admin/page/' . $id . '/edit');
     }
 }

@@ -15,6 +15,9 @@ use Illuminate\Support\Arr;
 use Notadd\Admin\AdminServiceProvider;
 use Notadd\Article\ArticleServiceProvider;
 use Notadd\Category\CategoryServiceProvider;
+use Notadd\Develop\DevelopServiceProvider;
+use Notadd\Editor\EditorServiceProvider;
+use Notadd\Flash\FlashServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\ConsoleServiceProvider;
 use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
@@ -68,11 +71,14 @@ class Server {
         if($this->application->isInstalled()) {
             $this->application->register(ThemeServiceProvider::class);
             $this->application->register(MenuServiceProvider::class);
+            $this->application->register(EditorServiceProvider::class);
+            $this->application->register(FlashServiceProvider::class);
             $this->application->register(CategoryServiceProvider::class);
             $this->application->register(ArticleServiceProvider::class);
             $this->application->register(HttpServiceProvider::class);
             $this->application->register(PageServiceProvider::class);
             $this->application->register(AdminServiceProvider::class);
+            $this->application->register(DevelopServiceProvider::class);
         } else {
             $this->application->register(InstallServiceProvider::class);
         }
@@ -82,7 +88,7 @@ class Server {
      * @return array|mixed
      */
     protected function loadFiledConfiguration() {
-        $file = realpath($this->application->storagePath() . '/framework/notadd') . DIRECTORY_SEPARATOR . 'config.php';
+        $file = realpath($this->application->storagePath() . '/notadd') . DIRECTORY_SEPARATOR . 'config.php';
         if(file_exists($file)) {
             return require $file;
         } else {
@@ -119,10 +125,10 @@ class Server {
                 'stores' => [
                     'file' => [
                         'driver' => 'file',
-                        'path' => $this->application->storagePath() . '/framework/cache',
+                        'path' => $this->application->storagePath() . '/cache',
                     ],
                 ],
-                'prefix' => 'flarum',
+                'prefix' => 'notadd',
             ],
             'filesystems' => [
                 'default' => 'local',
@@ -137,7 +143,7 @@ class Server {
                 'lifetime' => 120,
                 'expire_on_close' => false,
                 'encrypt' => false,
-                'files' => $this->application->storagePath() . '/framework/sessions',
+                'files' => $this->application->storagePath() . '/sessions',
                 'connection' => null,
                 'table' => 'sessions',
                 'lottery' => [2, 100],
@@ -148,7 +154,7 @@ class Server {
             ],
             'view' => [
                 'paths' => [],
-                'compiled' => $this->application->storagePath() . '/framework/views',
+                'compiled' => $this->application->storagePath() . '/views',
             ]
         ];
     }

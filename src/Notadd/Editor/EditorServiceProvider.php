@@ -7,15 +7,19 @@
  */
 namespace Notadd\Editor;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Editor\Controllers\UploadController;
+use Notadd\Foundation\Traits\InjectRouterTrait;
 /**
  * Class EditorServiceProvider
  * @package Notadd\Editor
  */
 class EditorServiceProvider extends ServiceProvider {
+    use InjectRouterTrait;
     /**
      * @return void
      */
     public function boot() {
+        $this->getRouter()->resource('upload', UploadController::class);
     }
     /**
      * @return void

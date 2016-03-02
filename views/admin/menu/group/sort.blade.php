@@ -33,5 +33,5 @@
     </div>
 @endsection
 @section('admin-js')
-    <script src="{{ asset('themes/admin/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('statics/admin/js/jquery-ui.min.js') }}"></script>
 @endsection
