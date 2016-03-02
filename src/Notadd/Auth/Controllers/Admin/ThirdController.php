@@ -12,12 +12,11 @@ use Notadd\Admin\Controllers\AbstractAdminController;
  * Class ConfigController
  * @package Notadd\Auth\Controllers\Admin
  */
-class ConfigController extends AbstractAdminController {
+class ThirdController extends AbstractAdminController {
     /**
      * @return \Illuminate\Contracts\View\View
      */
-    public function getThird() {
-        $this->share('third_enable', $this->setting->get('third.enable'));
+    public function index() {
         $this->share('third_qq_enable', $this->setting->get('third.qq.enable'));
         $this->share('third_qq_key', $this->setting->get('third.qq.key'));
         $this->share('third_qq_secret', $this->setting->get('third.qq.secret'));
@@ -30,14 +29,13 @@ class ConfigController extends AbstractAdminController {
         $this->share('third_weixin_key', $this->setting->get('third.weixin.key'));
         $this->share('third_weixin_secret', $this->setting->get('third.weixin.secret'));
         $this->share('third_weixin_callback', $this->setting->get('third.weixin.callback'));
-        return $this->view('auth.config');
+        return $this->view('auth.third');
     }
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postThird(Request $request) {
-        $this->setting->set('third.enable', $request->get('third_enable'));
+    public function store(Request $request) {
         $this->setting->set('third.qq.enable', $request->get('third_qq_enable'));
         $this->setting->set('third.qq.key', $request->get('third_qq_key'));
         $this->setting->set('third.qq.secret', $request->get('third_qq_secret'));

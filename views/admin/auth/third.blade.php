@@ -1,35 +1,16 @@
 @extends('admin::layouts')
-@section('title')第三方登录@endsection
+@section('title')社交组件 - 社交账号登陆@endsection
 @section('content')
     <div class="page clearfix">
         <ol class="breadcrumb breadcrumb-small">
             <li>后台首页</li>
-            <li class="active"><a href="{{ url('admin/third')}}">第三方登录</a></li>
+            <li class="active"><a href="{{ url('admin/third')}}">社交账号登录</a></li>
         </ol>
         <div class="page-wrap">
             <div class="row">
                 <div class="col-md-12">
                     <form action="{{ url('admin/third') }}" autocomplete="off" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <div class="panel panel-lined clearfix mb20">
-                            <div class="panel-heading mb20"><i>全局设置</i></div>
-                            <div class="form-horizontal col-md-12">
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">第三方功能开启</label>
-                                    <div class="col-md-6">
-                                        <div class="btn-group" data-toggle="buttons">
-                                            @if($third_enable)
-                                                <label class="btn btn-primary active"><input name="third_enable" type="radio" value="1" checked>开启</label>
-                                                <label class="btn btn-primary"><input name="third_enable" type="radio" value="0">关闭</label>
-                                            @else
-                                                <label class="btn btn-primary"><input name="third_enable" type="radio" value="1">开启</label>
-                                                <label class="btn btn-primary active"><input name="third_enable" type="radio" value="0" checked>关闭</label>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="panel panel-lined clearfix mb20">
                             <div class="panel-heading mb20"><i>QQ登陆设置</i></div>
                             <div class="form-horizontal col-md-12">
@@ -38,11 +19,11 @@
                                     <div class="col-md-6">
                                         <div class="btn-group" data-toggle="buttons">
                                             @if($third_qq_enable)
-                                                <label class="btn btn-primary active"><input name="third_qq_enable" type="radio" value="1" checked>开启</label>
-                                                <label class="btn btn-primary"><input name="third_qq_enable" type="radio" value="0">关闭</label>
+                                                <label class="btn btn-primary btn-sm active"><input name="third_qq_enable" type="radio" value="1" checked>开启</label>
+                                                <label class="btn btn-primary btn-sm"><input name="third_qq_enable" type="radio" value="0">关闭</label>
                                             @else
-                                                <label class="btn btn-primary"><input name="third_qq_enable" type="radio" value="1">开启</label>
-                                                <label class="btn btn-primary active"><input name="third_qq_enable" type="radio" value="0" checked>关闭</label>
+                                                <label class="btn btn-primary btn-sm"><input name="third_qq_enable" type="radio" value="1">开启</label>
+                                                <label class="btn btn-primary btn-sm active"><input name="third_qq_enable" type="radio" value="0" checked>关闭</label>
                                             @endif
                                         </div>
                                     </div>
@@ -66,8 +47,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel panel-lined clearfix mb20">
                             <div class="panel-heading mb20"><i>微博登陆设置</i></div>
                             <div class="form-horizontal col-md-12">
                                 <div class="form-group">
@@ -75,11 +54,11 @@
                                     <div class="col-md-6">
                                         <div class="btn-group" data-toggle="buttons">
                                             @if($third_weibo_enable)
-                                                <label class="btn btn-primary active"><input name="third_weibo_enable" type="radio" value="1" checked>开启</label>
-                                                <label class="btn btn-primary"><input name="third_weibo_enable" type="radio" value="0">关闭</label>
+                                                <label class="btn btn-primary btn-sm active"><input name="third_weibo_enable" type="radio" value="1" checked>开启</label>
+                                                <label class="btn btn-primary btn-sm"><input name="third_weibo_enable" type="radio" value="0">关闭</label>
                                             @else
-                                                <label class="btn btn-primary"><input name="third_weibo_enable" type="radio" value="1">开启</label>
-                                                <label class="btn btn-primary active"><input name="third_weibo_enable" type="radio" value="0" checked>关闭</label>
+                                                <label class="btn btn-primary btn-sm"><input name="third_weibo_enable" type="radio" value="1">开启</label>
+                                                <label class="btn btn-primary btn-sm active"><input name="third_weibo_enable" type="radio" value="0" checked>关闭</label>
                                             @endif
                                         </div>
                                     </div>
@@ -103,8 +82,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel panel-lined clearfix mb20">
                             <div class="panel-heading mb20"><i>微信登陆设置</i></div>
                             <div class="form-horizontal col-md-12">
                                 <div class="form-group">
@@ -112,11 +89,11 @@
                                     <div class="col-md-6">
                                         <div class="btn-group" data-toggle="buttons">
                                             @if($third_weixin_enable)
-                                                <label class="btn btn-primary active"><input name="third_weixin_enable" type="radio" value="1" checked>开启</label>
-                                                <label class="btn btn-primary"><input name="third_weixin_enable" type="radio" value="0">关闭</label>
+                                                <label class="btn btn-primary btn-sm active"><input name="third_weixin_enable" type="radio" value="1" checked>开启</label>
+                                                <label class="btn btn-primary btn-sm"><input name="third_weixin_enable" type="radio" value="0">关闭</label>
                                             @else
-                                                <label class="btn btn-primary"><input name="third_weixin_enable" type="radio" value="1">开启</label>
-                                                <label class="btn btn-primary active"><input name="third_weixin_enable" type="radio" value="0" checked>关闭</label>
+                                                <label class="btn btn-primary btn-sm"><input name="third_weixin_enable" type="radio" value="1">开启</label>
+                                                <label class="btn btn-primary btn-sm active"><input name="third_weixin_enable" type="radio" value="0" checked>关闭</label>
                                             @endif
                                         </div>
                                     </div>
@@ -140,8 +117,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel panel-lined clearfix mb20">
                             <div class="form-horizontal col-md-12 mt20">
                                 <div class="form-group">
                                     <label class="col-md-4 control-label"></label>

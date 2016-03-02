@@ -98,7 +98,6 @@ class AdminServiceProvider extends ServiceProvider {
                             'admin/cache*',
                             'admin/seo*',
                             'admin/site*',
-                            'admin/third*',
                         ],
                         'icon'  => 'fa-cogs',
                         'sub' => [
@@ -117,11 +116,6 @@ class AdminServiceProvider extends ServiceProvider {
                                 'active' => 'admin/cache*',
                                 'url' => 'admin/cache',
                             ],
-                            [
-                                'title' => '第三方登录',
-                                'active' => 'admin/third*',
-                                'url' => 'admin/third',
-                            ]
                         ]
                     ],
                     'content' => [
@@ -158,6 +152,7 @@ class AdminServiceProvider extends ServiceProvider {
                             'admin/flash*',
                             'admin/ad*',
                             'admin/menu*',
+                            'admin/third*',
                         ],
                         'icon'  => 'fa-table',
                         'sub' => [
@@ -175,6 +170,11 @@ class AdminServiceProvider extends ServiceProvider {
                                 'title' => '幻灯片组件',
                                 'active' => 'admin/flash*',
                                 'url' => 'admin/flash',
+                            ],
+                            [
+                                'title' => '社交组件',
+                                'active' => 'admin/third*',
+                                'url' => 'admin/third',
                             ]
                         ]
                     ],
