@@ -6,6 +6,7 @@
  * @datetime 2015-10-18 16:28
  */
 namespace Notadd\Foundation\Auth;
+use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
 /**
@@ -18,24 +19,31 @@ trait ThrottlesLogins {
      * @return bool
      */
     protected function hasTooManyLoginAttempts(Request $request) {
-        return app(RateLimiter::class)->tooManyAttempts($request->input($this->loginUsername()) . $request->ip(), $this->maxLoginAttempts(), $this->lockoutTime() / 60);
+        return app(RateLimiter::class)->tooManyAttempts($this->getThrottleKey($request), $this->maxLoginAttempts(), $this->lockoutTime() / 60);
     }
     /**
      * @param \Illuminate\Http\Request $request
      * @return int
      */
     protected function incrementLoginAttempts(Request $request) {
-        app(RateLimiter::class)->hit($request->input($this->loginUsername()) . $request->ip());
+        app(RateLimiter::class)->hit($this->getThrottleKey($request));
+    }
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return mixed
+     */
+    protected function retriesLeft(Request $request) {
+        return app(RateLimiter::class)->retriesLeft($this->getThrottleKey($request), $this->maxLoginAttempts());
     }
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function sendLockoutResponse(Request $request) {
-        $seconds = app(RateLimiter::class)->availableIn($request->input($this->loginUsername()) . $request->ip());
-        return redirect($this->loginPath())->withInput($request->only($this->loginUsername(), 'remember'))->withErrors([
-                $this->loginUsername() => $this->getLockoutErrorMessage($seconds),
-            ]);
+        $seconds = app(RateLimiter::class)->availableIn($this->getThrottleKey($request));
+        return redirect()->back()->withInput($request->only($this->loginUsername(), 'remember'))->withErrors([
+            $this->loginUsername() => $this->getLockoutErrorMessage($seconds),
+        ]);
     }
     /**
      * @param int $seconds
@@ -49,7 +57,14 @@ trait ThrottlesLogins {
      * @return void
      */
     protected function clearLoginAttempts(Request $request) {
-        app(RateLimiter::class)->clear($request->input($this->loginUsername()) . $request->ip());
+        app(RateLimiter::class)->clear($this->getThrottleKey($request));
+    }
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return string
+     */
+    protected function getThrottleKey(Request $request) {
+        return mb_strtolower($request->input($this->loginUsername())) . '|' . $request->ip();
     }
     /**
      * @return int
@@ -62,5 +77,11 @@ trait ThrottlesLogins {
      */
     protected function lockoutTime() {
         return property_exists($this, 'lockoutTime') ? $this->lockoutTime : 60;
+    }
+    /**
+     * @param \Illuminate\Http\Request $request
+     */
+    protected function fireLockoutEvent(Request $request) {
+        event(new Lockout($request));
     }
 }

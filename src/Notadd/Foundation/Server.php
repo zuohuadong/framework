@@ -19,12 +19,9 @@ use Notadd\Develop\DevelopServiceProvider;
 use Notadd\Editor\EditorServiceProvider;
 use Notadd\Flash\FlashServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
-use Notadd\Foundation\Console\ConsoleServiceProvider;
-use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
 use Notadd\Foundation\Console\Kernel as ConsoleKernel;
 use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
-use Notadd\Foundation\Install\Kernel as InstallKernel;
 use Notadd\Foundation\Exceptions\Handler;
 use Notadd\Install\InstallServiceProvider;
 use Notadd\Menu\MenuServiceProvider;
@@ -111,13 +108,33 @@ class Server {
                 'log' => 'daily'
             ],
             'auth' => [
-                'driver' => 'eloquent',
-                'model' => User::class,
-                'table' => 'users',
-                'password' => [
-                    'email' => 'admin::emails.password',
-                    'table' => 'password_resets',
-                    'expire' => 60,
+                'defaults' => [
+                    'guard' => 'web',
+                    'passwords' => 'users',
+                ],
+                'guards' => [
+                    'web' => [
+                        'driver' => 'session',
+                        'provider' => 'users',
+                    ],
+                    'api' => [
+                        'driver' => 'token',
+                        'provider' => 'users',
+                    ],
+                ],
+                'providers' => [
+                    'users' => [
+                        'driver' => 'eloquent',
+                        'model' => User::class,
+                    ],
+                ],
+                'passwords' => [
+                    'users' => [
+                        'provider' => 'users',
+                        'email' => 'auth.emails.password',
+                        'table' => 'password_resets',
+                        'expire' => 60,
+                    ],
                 ],
             ],
             'cache' => [

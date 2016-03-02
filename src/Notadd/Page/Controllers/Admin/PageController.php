@@ -166,12 +166,12 @@ class PageController extends AbstractAdminController {
      */
     public function update(PageEditRequest $request, $id) {
         $page = Page::findOrFail($id);
-        if($request->hasFile('thumb_image') && $request->file('thumb_image')->isValid()) {
-            $file_name = Str::random() . '.' . $request->file('thumb_image')->getClientOriginalExtension();
-            $request->file('thumb_image')->move('uploads/pages/thumbs/', $file_name);
-            $request->offsetSet('thumb_image', 'uploads/pages/thumbs/' . $file_name);
-        }
-        $request->files->replace();
+        //if($request->hasFile('thumb_image') && $request->file('thumb_image')->isValid()) {
+        //    $file_name = Str::random() . '.' . $request->file('thumb_image')->getClientOriginalExtension();
+        //    $request->file('thumb_image')->move('uploads/pages/thumbs/', $file_name);
+         //   $request->offsetSet('thumb_image', 'uploads/pages/thumbs/' . $file_name);
+        //}
+        //$request->files->replace();
         $page->update($request->all());
         return $this->redirect->to('admin/page/' . $id . '/edit');
     }

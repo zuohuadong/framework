@@ -6,6 +6,7 @@
  * @datetime 2015-10-30 16:29
  */
 namespace Notadd\Page;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Foundation\Traits\InjectBladeTrait;
 use Notadd\Foundation\Traits\InjectEventsTrait;
@@ -50,7 +51,7 @@ class PageServiceProvider extends ServiceProvider {
             $this->getRouter()->resource('page', 'PageController');
         });
         $this->loadViewsFrom($this->app->basePath() . '/resources/views/pages/', 'page');
-        $this->getEvents()->listen('router.matched', function () {
+        $this->getEvents()->listen(RouteMatched::class, function () {
             $this->getView()->share('__call', $this->getPage());
         });
         $this->getBlade()->directive('call', function($expression) {

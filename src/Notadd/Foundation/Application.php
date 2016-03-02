@@ -25,8 +25,6 @@ use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Pipeline\PipelineServiceProvider;
 use Illuminate\Queue\QueueServiceProvider;
 use Illuminate\Redis\RedisServiceProvider;
-use Illuminate\Routing\ControllerServiceProvider;
-use Illuminate\Routing\GeneratorServiceProvider;
 use Illuminate\Session\SessionServiceProvider;
 use Illuminate\View\ViewServiceProvider;
 use Illuminate\Support\Arr;
@@ -303,19 +301,16 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @return void
      */
     public function registerConfiguredProviders() {
-        $this->register(ConsoleServiceProvider::class);
-        $this->register(ConsoleSupportServiceProvider::class);
         $this->register(AuthServiceProvider::class);
-        $this->register(PasswordResetServiceProvider::class);
         $this->register(BroadcastServiceProvider::class);
         $this->register(BusServiceProvider::class);
         $this->register(CacheServiceProvider::class);
-        $this->register(ControllerServiceProvider::class);
+        $this->register(ConsoleServiceProvider::class);
+        $this->register(ConsoleSupportServiceProvider::class);
+        $this->register(FormRequestServiceProvider::class);
         $this->register(CookieServiceProvider::class);
         $this->register(DatabaseServiceProvider::class);
         $this->register(EncryptionServiceProvider::class);
-        $this->register(ScheduleServiceProvider::class);
-        $this->register(GeneratorServiceProvider::class);
         $this->register(FilesystemServiceProvider::class);
         $this->register(HashServiceProvider::class);
         $this->register(MailServiceProvider::class);
@@ -323,12 +318,11 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this->register(PipelineServiceProvider::class);
         $this->register(QueueServiceProvider::class);
         $this->register(RedisServiceProvider::class);
+        $this->register(PasswordResetServiceProvider::class);
         $this->register(SessionServiceProvider::class);
         $this->register(TranslationServiceProvider::class);
         $this->register(ValidationServiceProvider::class);
         $this->register(ViewServiceProvider::class);
-        $this->register(ComposerServiceProvider::class);
-        $this->register(FormRequestServiceProvider::class);
         $this->register(ExtensionServiceProvider::class);
         $this->register(SettingServiceProvider::class);
         $this->register(SearchEngineServiceProvider::class);

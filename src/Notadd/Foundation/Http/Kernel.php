@@ -51,11 +51,21 @@ class Kernel implements KernelContract {
      */
     protected $middleware = [
         CheckForMaintenanceMode::class,
-        EncryptCookies::class,
-        AddQueuedCookiesToResponse::class,
-        StartSession::class,
-        ShareErrorsFromSession::class,
-        VerifyCsrfToken::class,
+    ];
+    /**
+     * @var array
+     */
+    protected $middlewareGroups = [
+        'web' => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+        ],
+        'api' => [
+            'throttle:60,1',
+        ],
     ];
     /**
      * @var array

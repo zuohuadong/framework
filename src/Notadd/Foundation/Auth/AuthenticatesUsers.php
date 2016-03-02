@@ -6,6 +6,7 @@
  * @datetime 2015-10-18 16:28
  */
 namespace Notadd\Foundation\Auth;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 /**
  * Class AuthenticatesUsers
@@ -32,19 +33,20 @@ trait AuthenticatesUsers {
             'password' => 'required',
         ]);
         $throttles = $this->isUsingThrottlesLoginsTrait();
-        if($throttles && $this->hasTooManyLoginAttempts($request)) {
+        if($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
         $credentials = $this->getCredentials($request);
-        if($this->app->make('auth')->attempt($credentials, $request->has('remember'))) {
+        if($this->app->make('auth')->guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
-        if($throttles) {
+        if($throttles && !$lockedOut) {
             $this->incrementLoginAttempts($request);
         }
-        return redirect($this->loginPath())->withInput($request->only($this->loginUsername(), 'remember'))->withErrors([
-                $this->loginUsername() => $this->getFailedLoginMessage(),
-            ]);
+        return redirect()->back()->withInput($request->only($this->loginUsername(), 'remember'))->withErrors([
+            $this->loginUsername() => $this->getFailedLoginMessage(),
+        ]);
     }
     /**
      * @param \Illuminate\Http\Request $request
@@ -56,7 +58,7 @@ trait AuthenticatesUsers {
             $this->clearLoginAttempts($request);
         }
         if(method_exists($this, 'authenticated')) {
-            return $this->authenticated($request, $this->app->make('auth')->user());
+            return $this->authenticated($request, $this->app->make('auth')->guard($this->getGuard())->user());
         }
         return redirect()->intended($this->redirectPath());
     }
@@ -77,7 +79,7 @@ trait AuthenticatesUsers {
      * @return \Illuminate\Http\Response
      */
     public function getLogout() {
-        $this->app->make('auth')->logout();
+        $this->app->make('auth')->guard($this->getGuard())->logout();
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
     /**
@@ -85,6 +87,13 @@ trait AuthenticatesUsers {
      */
     public function loginPath() {
         return property_exists($this, 'loginPath') ? $this->loginPath : '/auth/login';
+    }
+    /**
+     * @return string
+     */
+    public function guestMiddleware() {
+        $guard = $this->getGuard();
+        return $guard ? 'guest:' . $guard : 'guest';
     }
     /**
      * @return string
@@ -97,5 +106,11 @@ trait AuthenticatesUsers {
      */
     protected function isUsingThrottlesLoginsTrait() {
         return in_array(ThrottlesLogins::class, class_uses_recursive(get_class($this)));
+    }
+    /**
+     * @return null
+     */
+    protected function getGuard() {
+        return property_exists($this, 'guard') ? $this->guard : null;
     }
 }

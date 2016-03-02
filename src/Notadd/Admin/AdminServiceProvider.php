@@ -6,6 +6,8 @@
  * @datetime 2015-10-29 18:19
  */
 namespace Notadd\Admin;
+use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Admin\Events\GetAdminMenu;
 use Notadd\Foundation\Traits\InjectConfigTrait;
@@ -19,9 +21,9 @@ use Notadd\Foundation\Traits\InjectRouterTrait;
 class AdminServiceProvider extends ServiceProvider {
     use InjectConfigTrait, InjectEventsTrait, InjectRequestTrait, InjectRouterTrait;
     /**
-     * @return void
+     * @param \Illuminate\Contracts\Auth\Access\Gate $gate
      */
-    public function boot() {
+    public function boot(Gate $gate) {
         $this->initAdminConfig();
         $this->loadViewsFrom(realpath($this->app->basePath() . '/../template/admin/views'), 'admin');
         $this->getRouter()->group(['namespace' => 'Notadd\Admin\Controllers'], function () {
@@ -38,7 +40,7 @@ class AdminServiceProvider extends ServiceProvider {
                 $this->getRouter()->get('password', 'AuthController@getPassword');
             });
         });
-        $this->getEvents()->listen('router.matched', function () {
+        $this->getEvents()->listen(RouteMatched::class, function () {
             $this->getEvents()->fire(new GetAdminMenu($this->app, $this->getConfig()));
             if($this->getRequest()->is('admin*')) {
                 $menu = $this->getConfig()->get('admin');

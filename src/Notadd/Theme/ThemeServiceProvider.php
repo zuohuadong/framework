@@ -6,6 +6,7 @@
  * @datetime 2015-10-29 16:31
  */
 namespace Notadd\Theme;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Foundation\Traits\InjectBladeTrait;
 use Notadd\Foundation\Traits\InjectCookieTrait;
@@ -36,7 +37,7 @@ class ThemeServiceProvider extends ServiceProvider {
             $this->getRouter()->resource('theme/publish', PublishController::class);
         });
         $default = $this->getSetting()->get('site.theme', 'default');
-        $this->getEvents()->listen('router.matched', function () use ($default) {
+        $this->getEvents()->listen(RouteMatched::class, function () use ($default) {
             $this->getView()->share('__theme', $this->getTheme());
             $this->getTheme()->getThemeList()->each(function(Theme $theme) use($default) {
                 $alias = $theme->getAlias();
