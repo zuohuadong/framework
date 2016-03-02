@@ -8,12 +8,13 @@
 namespace Notadd\Admin\Controllers;
 use Notadd\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Notadd\Foundation\Auth\Models\User;
+use Notadd\Foundation\Auth\ThrottlesLogins;
 /**
  * Class AuthController
  * @package Notadd\Admin\Controllers
  */
 class AuthController extends AbstractAdminController {
-    use AuthenticatesAndRegistersUsers;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
     /**
      * @var array
      */

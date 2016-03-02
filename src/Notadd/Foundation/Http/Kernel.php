@@ -51,17 +51,17 @@ class Kernel implements KernelContract {
      */
     protected $middleware = [
         CheckForMaintenanceMode::class,
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
+        ShareErrorsFromSession::class,
+        VerifyCsrfToken::class,
     ];
     /**
      * @var array
      */
     protected $middlewareGroups = [
         'web' => [
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
         ],
         'api' => [
             'throttle:60,1',
@@ -82,6 +82,9 @@ class Kernel implements KernelContract {
     public function __construct(Application $app, Router $router) {
         $this->app = $app;
         $this->router = $router;
+        foreach ($this->middlewareGroups as $key => $middleware) {
+            $router->middlewareGroup($key, $middleware);
+        }
         foreach($this->routeMiddleware as $key => $middleware) {
             $router->middleware($key, $middleware);
         }
