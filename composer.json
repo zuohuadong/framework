@@ -19,6 +19,7 @@
         "illuminate/console": "5.2.*",
         "illuminate/container": "5.2.*",
         "illuminate/contracts": "5.2.*",
+        "illuminate/database": "5.2.*",
         "illuminate/cookie": "5.2.*",
         "illuminate/encryption": "5.2.*",
         "illuminate/events": "5.2.*",
