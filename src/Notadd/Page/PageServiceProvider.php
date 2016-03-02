@@ -14,6 +14,8 @@ use Notadd\Foundation\Traits\InjectPageTrait;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 use Notadd\Foundation\Traits\InjectSettingTrait;
 use Notadd\Foundation\Traits\InjectViewTrait;
+use Notadd\Page\Controllers\Admin\PageController as AdminPageController;
+use Notadd\Page\Controllers\PageController;
 use Notadd\Page\Models\Page as PageModel;
 /**
  * Class PageServiceProvider
@@ -25,31 +27,27 @@ class PageServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getEvents()->listen('router.before', function() {
-            $pages = PageModel::whereEnabled(true)->get();
-            foreach($pages as $value) {
-                if($this->getSetting()->get('site.home') !== 'page_' . $value->id) {
-                    if($value->alias) {
-                        $page = new Page($value->id);
-                        $this->getRouter()->get($page->getRouting(), function() use ($page) {
-                            return $this->app->call('Notadd\Page\Controllers\PageController@show', ['id' => $page->getPageId()]);
-                        });
-                    }
+        $pages = PageModel::whereEnabled(true)->get();
+        foreach($pages as $value) {
+            if($this->getSetting()->get('site.home') !== 'page_' . $value->id) {
+                if($value->alias) {
+                    $page = new Page($value->id);
+                    $this->getRouter()->get($page->getRouting(), function() use ($page) {
+                        return $this->app->call(PageController::class . '@show', ['id' => $page->getPageId()]);
+                    });
                 }
             }
+        }
+        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->getRouter()->resource('page', AdminPageController::class);
+            $this->getRouter()->post('page/{id}/delete', AdminPageController::class . '@delete');
+            $this->getRouter()->get('page/{id}/move', AdminPageController::class . '@move');
+            $this->getRouter()->post('page/{id}/moving', AdminPageController::class . '@moving');
+            $this->getRouter()->post('page/{id}/restore', AdminPageController::class . '@restore');
+            $this->getRouter()->get('page/{id}/sort', AdminPageController::class . '@sort');
+            $this->getRouter()->post('page/{id}/sorting', AdminPageController::class . '@sorting');
         });
-        $this->getRouter()->group(['namespace' => 'Notadd\Page\Controllers'], function () {
-            $this->getRouter()->group(['middleware' => 'auth.admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
-                $this->getRouter()->resource('page', 'PageController');
-                $this->getRouter()->post('page/{id}/delete', 'PageController@delete');
-                $this->getRouter()->get('page/{id}/move', 'PageController@move');
-                $this->getRouter()->post('page/{id}/moving', 'PageController@moving');
-                $this->getRouter()->post('page/{id}/restore', 'PageController@restore');
-                $this->getRouter()->get('page/{id}/sort', 'PageController@sort');
-                $this->getRouter()->post('page/{id}/sorting', 'PageController@sorting');
-            });
-            $this->getRouter()->resource('page', 'PageController');
-        });
+        $this->getRouter()->resource('page', PageController::class);
         $this->loadViewsFrom($this->app->basePath() . '/resources/views/pages/', 'page');
         $this->getEvents()->listen(RouteMatched::class, function () {
             $this->getView()->share('__call', $this->getPage());
