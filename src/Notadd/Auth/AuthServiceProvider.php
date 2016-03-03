@@ -51,7 +51,7 @@ class AuthServiceProvider extends ServiceProvider {
                     'client_secret' => $this->getSetting()->get('third.weibo.secret'),
                     'redirect' => $this->getSetting()->get('third.weibo.callback'),
                 ],
-                'weixin' => [
+                'wechat' => [
                     'client_id' => $this->getSetting()->get('third.weixin.key'),
                     'client_secret' => $this->getSetting()->get('third.weixin.secret'),
                     'redirect' => $this->getSetting()->get('third.weixin.callback'),
