@@ -32,7 +32,7 @@
             $(this).removeClass("active");
         });
         $this.parent("li").addClass("active");
-        $.post('http://' + document.domain + '/admin/theme/cookie', {theme:$this.data("theme")}, function(data) {});
+        $.post(location.protocol + '/admin/theme/cookie', {theme:$this.data("theme")}, function(data) {});
     });
     $(window).on("load", function () {
         $('[data-toggle="nav-accordion"]').each(function (index, element) {
