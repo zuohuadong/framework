@@ -99,6 +99,10 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * @var string
      */
+    protected $publicPath;
+    /**
+     * @var string
+     */
     protected $storagePath;
     /**
      * The application namespace.
@@ -233,9 +237,14 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @return string
      */
     public function publicPath() {
-        return realpath($this->basePath . DIRECTORY_SEPARATOR . 'public');
+        return $this->publicPath ? realpath($this->publicPath) : realpath($this->basePath . DIRECTORY_SEPARATOR . 'public');
     }
+    /**
+     * @param $path
+     * @return $this
+     */
     public function usePublicPath($path) {
+        $this->publicPath = realpath($path);
         $this->instance('path.public', $path);
         return $this;
     }
