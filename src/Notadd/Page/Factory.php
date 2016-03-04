@@ -68,14 +68,14 @@ class Factory {
     /**
      * @param array $opinions
      */
-    protected function callAd($opinions = []) {
+    public function callAd($opinions = []) {
         return void;
     }
     /**
      * @param array $opinions
      * @return mixed
      */
-    protected function callArticle($opinions = []) {
+    public function callArticle($opinions = []) {
         $articles = Collection::make();
         if(isset($opinions['category'])) {
             if(is_array($opinions['category'])) {
@@ -123,7 +123,7 @@ class Factory {
     /**
      * @param array $opinions
      */
-    protected function callFlash($opinions = []) {
+    public function callFlash($opinions = []) {
         $group = $opinions['group'];
         $flashes = FlashItem::whereGroupId($group)->get();
         return $flashes;
