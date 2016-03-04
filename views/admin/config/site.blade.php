@@ -34,49 +34,49 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">网站名称</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="title" value="{{ app('request')->old('title', $title) }}">
+                                    <input type="text" class="form-control input-sm" name="title" value="{{ app('request')->old('title', $title) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">网站域名</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="domain" value="{{ app('request')->old('domain', $domain) }}">
+                                    <input type="text" class="form-control input-sm" name="domain" value="{{ app('request')->old('domain', $domain) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">备案信息</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="beian" value="{{ app('request')->old('beian', $beian) }}">
+                                    <input type="text" class="form-control input-sm" name="beian" value="{{ app('request')->old('beian', $beian) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">站长邮箱</label>
                                 <div class="col-md-4">
-                                    <input type="email" class="form-control" name="email" value="{{ app('request')->old('email', $email) }}">
+                                    <input type="email" class="form-control input-sm" name="email" value="{{ app('request')->old('email', $email) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">统计代码</label>
                                 <div class="col-md-4">
-                                    <textarea class="form-control" name="statistics" rows="10">{{ app('request')->old('statistics', $statistics) }}</textarea>
+                                    <textarea class="form-control input-sm" name="statistics" rows="10">{{ app('request')->old('statistics', $statistics) }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">版权信息</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="copyright" value="{{ app('request')->old('copyright', $copyright) }}">
+                                    <input type="text" class="form-control input-sm" name="copyright" value="{{ app('request')->old('copyright', $copyright) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">公司名称</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="company" value="{{ app('request')->old('company', $company) }}">
+                                    <input type="text" class="form-control input-sm" name="company" value="{{ app('request')->old('company', $company) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">首页设置</label>
                                 <div class="col-md-4">
-                                    <select class="form-control" name="home">
+                                    <select class="form-control input-sm" name="home">
                                         @if($home == 'default')
                                             <option value="default" selected>默认首页</option>
                                         @else

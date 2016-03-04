@@ -34,19 +34,19 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">SEO标题</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="title" value="{{ app('request')->old('title', $title) }}">
+                                    <input type="text" class="form-control input-sm" name="title" value="{{ app('request')->old('title', $title) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">SEO关键字</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" name="keyword" value="{{ app('request')->old('keyword', $keyword) }}">
+                                    <input type="text" class="form-control input-sm" name="keyword" value="{{ app('request')->old('keyword', $keyword) }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">SEO描述</label>
                                 <div class="col-md-4">
-                                    <textarea class="form-control" name="description" rows="10">{{ app('request')->old('description', $description) }}</textarea>
+                                    <textarea class="form-control input-sm" name="description" rows="10">{{ app('request')->old('description', $description) }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
