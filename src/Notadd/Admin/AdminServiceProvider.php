@@ -59,6 +59,19 @@ class AdminServiceProvider extends ServiceProvider {
                                 } else {
                                     $menu[$top_key]['sub'][$one_key]['active'] = '';
                                 }
+                                foreach($one['sub'] as $two_key=>$two) {
+                                    $active = false;
+                                    foreach((array)$two['active'] as $rule) {
+                                        if($this->getRequest()->is($rule)) {
+                                            $active = true;
+                                        }
+                                    }
+                                    if($active) {
+                                        $menu[$top_key]['sub'][$one_key]['sub'][$two_key]['active'] = 'open';
+                                    } else {
+                                        $menu[$top_key]['sub'][$one_key]['sub'][$two_key]['active'] = '';
+                                    }
+                                }
                             } else {
                                 if($this->getRequest()->is($one['active'])) {
                                     $menu[$top_key]['sub'][$one_key]['active'] = 'active';

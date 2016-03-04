@@ -56,17 +56,25 @@
                         @foreach($top['sub'] as $one)
                             @if(isset($one['sub']))
                                 <li class="{{ $one['active'] }}">
-                                    <a href="javascript:;"><i class="fa {{ $one['icon'] }} icon"></i><span class="text">{{ $one['title'] }}</span><i class="arrow fa fa-angle-right right"></i></a>
+                                    <a href="javascript:;">
+                                        <i class="fa {{ $one['icon'] }} icon"></i>
+                                        <span class="text">{{ $one['title'] }}</span>
+                                        <i class="arrow fa fa-angle-right right"></i>
+                                    </a>
                                     <ul class="inner-drop list-unstyled">
                                         @foreach($one['sub'] as $two)
-                                            <li class="{{ (app('request')->is($two['active']) ? 'active' : '') }}">
-                                                <a href="{{ url($two['url']) }}">{{ $two['title'] }}</a></li>
+                                            <li class="{{ $two['active'] ? 'active' : '' }}">
+                                                <a href="{{ url($two['url']) }}">{{ $two['title'] }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </li>
                             @else
                                 <li class="{{ $one['active'] }}">
-                                    <a href="{{ url($one['url']) }}"><i class="fa {{ $one['icon'] }} icon"></i><span class="text">{{ $one['title'] }}</span></a>
+                                    <a href="{{ url($one['url']) }}">
+                                        <i class="fa {{ $one['icon'] }} icon"></i>
+                                        <span class="text">{{ $one['title'] }}</span>
+                                    </a>
                                 </li>
                             @endif
                         @endforeach
