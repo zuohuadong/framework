@@ -20,6 +20,7 @@ use Notadd\Editor\EditorServiceProvider;
 use Notadd\Flash\FlashServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\Kernel as ConsoleKernel;
+use Notadd\Foundation\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
 use Notadd\Foundation\Exceptions\Handler;
@@ -76,6 +77,7 @@ class Server {
             $this->application->register(PageServiceProvider::class);
             $this->application->register(AdminServiceProvider::class);
             $this->application->register(DevelopServiceProvider::class);
+            $this->application->register(ExtensionServiceProvider::class);
         } else {
             $this->application->register(InstallServiceProvider::class);
         }

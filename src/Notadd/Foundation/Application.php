@@ -13,7 +13,6 @@ use RuntimeException;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
 use Illuminate\Bus\BusServiceProvider;
-use Illuminate\Console\ScheduleServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Cookie\CookieServiceProvider;
@@ -34,11 +33,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Routing\RoutingServiceProvider;
 use Notadd\Cache\CacheServiceProvider;
-use Notadd\Foundation\Composer\ComposerServiceProvider;
 use Notadd\Foundation\Console\ConsoleServiceProvider;
 use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
 use Notadd\Foundation\Database\DatabaseServiceProvider;
-use Notadd\Foundation\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\FormRequestServiceProvider;
 use Notadd\Foundation\Translation\TranslationServiceProvider;
 use Notadd\Foundation\Validation\ValidationServiceProvider;
@@ -332,7 +329,6 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this->register(TranslationServiceProvider::class);
         $this->register(ValidationServiceProvider::class);
         $this->register(ViewServiceProvider::class);
-        $this->register(ExtensionServiceProvider::class);
         $this->register(SettingServiceProvider::class);
         $this->register(SearchEngineServiceProvider::class);
     }
