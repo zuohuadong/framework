@@ -10,7 +10,8 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
-use Notadd\Article\Models\Article;
+use Notadd\Article\Article;
+use Notadd\Article\Models\Article as ArticleModel;
 use Notadd\Article\Models\ArticleRecommend;
 use Notadd\Flash\Models\FlashItem;
 use Notadd\Page\Models\Page as Model;
@@ -49,6 +50,21 @@ class Factory {
         return Model::all();
     }
     /**
+     * @param $category
+     * @param $limit
+     * @return \Illuminate\Support\Collection
+     */
+    public function article($category, $limit) {
+        $articles = new Collection();
+        $data = ArticleModel::whereCategroyId($category)->limit($limit)->get();
+        foreach($data as $item) {
+            $id = $item->getAttribute('id');
+            $article = new Article($id);
+            $articles->push($article);
+        }
+        return $articles;
+    }
+    /**
      * @param $type
      * @param array $opinions
      * @return null|void
@@ -67,9 +83,10 @@ class Factory {
     }
     /**
      * @param array $opinions
+     * @return string
      */
     public function callAd($opinions = []) {
-        return void;
+        return '';
     }
     /**
      * @param array $opinions
@@ -79,9 +96,9 @@ class Factory {
         $articles = Collection::make();
         if(isset($opinions['category'])) {
             if(is_array($opinions['category'])) {
-                $articles = Article::whereIn('category_id', $opinions['category']);
+                $articles = ArticleModel::whereIn('category_id', $opinions['category']);
             } else {
-                $articles = Article::whereCategoryId($opinions['category']);
+                $articles = ArticleModel::whereCategoryId($opinions['category']);
             }
             if(isset($opinions['offset']) && $opinions['offset'] > 0) {
                 $articles->skip($opinions['offset']);
@@ -150,7 +167,7 @@ class Factory {
         $articles = $articles->orderBy('created_at', 'desc')->get();
         if(isset($config['thumbnail']) && is_array($config['thumbnail'])) {
             foreach($articles as $k=>$article) {
-                $article = Article::find($article->article_id);
+                $article = ArticleModel::find($article->article_id);
                 if($article) {
                     preg_match_all("/<img([^>]*)\s*src=('|\")([^'\"]+)('|\")/", $article->content, $matches);
                     $hash = '';
