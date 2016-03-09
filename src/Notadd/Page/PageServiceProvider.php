@@ -17,6 +17,7 @@ use Notadd\Foundation\Traits\InjectViewTrait;
 use Notadd\Page\Controllers\Admin\PageController as AdminPageController;
 use Notadd\Page\Controllers\PageController;
 use Notadd\Page\Models\Page as PageModel;
+use Notadd\Page\Observers\PageObserver;
 /**
  * Class PageServiceProvider
  * @package Notadd\Page
@@ -60,7 +61,7 @@ class PageServiceProvider extends ServiceProvider {
         });
         $this->getBlade()->directive('article', function($expression) {
             $segments = explode(',', preg_replace("/[\(\)\\\"\']/", '', $expression));
-            return "<?php \$__tmp = \$__call->article(['group'=>" . trim($segments[0]) . "]); foreach(\$__tmp as \$" . trim($segments[1]) . "=>\$" . trim($segments[2]) . "): ?>";
+            return "<?php \$__tmp = \$__call->article(" . trim($segments[0]) . ", " . trim($segments[1]) ."); foreach(\$__tmp as \$" . trim($segments[2]) . "=>\$" . trim($segments[3]) . "): ?>";
         });
         $this->getBlade()->directive('endarticle', function($expression) {
             return "<?php endforeach; ?>";
@@ -72,6 +73,7 @@ class PageServiceProvider extends ServiceProvider {
         $this->getBlade()->directive('endflash', function($expression) {
             return "<?php endforeach; ?>";
         });
+        PageModel::observe(PageObserver::class);
     }
     /**
      * @return void

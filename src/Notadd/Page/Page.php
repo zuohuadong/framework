@@ -109,13 +109,19 @@ class Page {
         return $list;
     }
     /**
-     * @return mixed
+     * @return string
      */
     public function getTemplate() {
         return $this->model->getAttribute('template');
     }
     /**
-     * @return mixed
+     * @return string
+     */
+    public function getThumbImage() {
+        return $this->model->getAttribute('thumb_image');
+    }
+    /**
+     * @return string
      */
     public function getTitle() {
         return $this->model->getAttribute('title');
