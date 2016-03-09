@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">完成大图</label>
+                                <label class="col-md-3 control-label">完整大图</label>
                                 <div class="col-md-6">
                                     <span class="btn btn-success btn-file">
                                         <i class="fa fa-image"></i>
