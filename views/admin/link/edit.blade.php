@@ -4,8 +4,8 @@
     <div class="page clearfix">
         <ol class="breadcrumb breadcrumb-small">
             <li>后台首页</li>
-            <li><a href="{{ url('admin/menu') }}">友情链接管理</a></li>
-            <li class="active"><a href="{{ url('admin/menu/link/' . $link->id . '/edit') }}">编辑：{{ $link->title }}</a>
+            <li><a href="{{ url('admin/link') }}">友情链接管理</a></li>
+            <li class="active"><a href="{{ url('admin/link/' . $link->id . '/edit') }}">编辑：{{ $link->title }}</a>
             </li>
         </ol>
         <div class="page-wrap">
