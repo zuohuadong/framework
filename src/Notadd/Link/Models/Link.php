@@ -15,5 +15,11 @@ class Link extends Model {
     /**
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'title',
+        'icon',
+        'link',
+        'description',
+        'is_enabled'
+    ];
 }
