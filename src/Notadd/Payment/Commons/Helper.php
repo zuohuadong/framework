@@ -69,7 +69,7 @@ class Helper {
         if(0 === strpos($className, '\\')) {
             $className = substr($className, 1);
         }
-        if(0 === strpos($className, 'Omnipay\\')) {
+        if(0 === strpos($className, 'Notadd\\Payment\\')) {
             return trim(str_replace('\\', '_', substr($className, 8, -7)), '_');
         }
         return '\\' . $className;
@@ -86,7 +86,7 @@ class Helper {
         if(false === strpos($shortName, '\\')) {
             $shortName .= '\\';
         }
-        return '\\Omnipay\\' . $shortName . 'Gateway';
+        return '\\Notadd\\Payment\\' . $shortName . 'Gateway';
     }
     /**
      * @param $value
