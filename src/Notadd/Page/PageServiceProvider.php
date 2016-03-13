@@ -66,13 +66,6 @@ class PageServiceProvider extends ServiceProvider {
         $this->getBlade()->directive('endarticle', function($expression) {
             return "<?php endforeach; ?>";
         });
-        $this->getBlade()->directive('flash', function($expression) {
-            $segments = explode(',', preg_replace("/[\(\)\\\"\']/", '', $expression));
-            return "<?php \$__tmp = \$__call->callFlash(['group'=>" . trim($segments[0]) . "]); foreach(\$__tmp as \$" . trim($segments[1]) . "=>\$" . trim($segments[2]) . "): ?>";
-        });
-        $this->getBlade()->directive('endflash', function($expression) {
-            return "<?php endforeach; ?>";
-        });
         PageModel::observe(PageObserver::class);
     }
     /**
