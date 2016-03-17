@@ -193,7 +193,7 @@ abstract class AbstractGateway implements GatewayContract {
      * @return \GuzzleHttp\Client
      */
     protected function getDefaultHttpClient() {
-        return new HttpClient('', array(
+        return new HttpClient(array(
                 'curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60),
             ));
     }

@@ -7,12 +7,14 @@
  */
 namespace Notadd\Payment;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Foundation\Traits\InjectConfigTrait;
 use Notadd\Payment\Factories\Gateway;
 /**
  * Class PaymentServiceProvider
  * @package Notadd\Payment
  */
 class PaymentServiceProvider extends ServiceProvider {
+    use InjectConfigTrait;
     /**
      * @var bool
      */
@@ -21,6 +23,19 @@ class PaymentServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+        $this->getConfig()->set('pay', [
+            'default' => 'alipay',
+            'gateways' => [
+                'alipay' => [
+                    'driver'  => 'Alipay_Express',
+                    'options' => [
+                        'solutionType'   => '',
+                        'landingPage'    => '',
+                        'headerImageUrl' => ''
+                    ]
+                ]
+            ]
+        ]);
     }
     /**
      * @return array

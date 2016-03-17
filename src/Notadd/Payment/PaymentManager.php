@@ -81,14 +81,14 @@ class PaymentManager {
      * @return mixed
      */
     protected function getDefault() {
-        return $this->app['config']['laravel-omnipay.default'];
+        return $this->app['config']['pay.default'];
     }
     /**
      * @param $name
      * @return mixed
      */
     protected function getConfig($name) {
-        return $this->app['config']["laravel-omnipay.gateways.{$name}"];
+        return $this->app['config']["pay.gateways.{$name}"];
     }
     /**
      * @return mixed|string
