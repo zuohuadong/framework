@@ -7,6 +7,7 @@
  */
 namespace Notadd\Payment;
 use BadMethodCallException;
+use Illuminate\Support\Str;
 use Notadd\Payment\Commons\CreditCard;
 use Notadd\Payment\Commons\Helper;
 use UnexpectedValueException;
@@ -63,7 +64,15 @@ class PaymentManager {
         $class = trim(Helper::getGatewayClassName($config['driver']), "\\");
         $reflection = new \ReflectionClass($class);
         foreach($config['options'] as $optionName => $value) {
-            $method = 'set' . ucfirst($optionName);
+            if(Str::contains($optionName, '_')) {
+                $data = explode('_', $optionName);
+                foreach($data as $k=>$v) {
+                    $data[$k] = ucfirst($v);
+                }
+                $method = 'set' . implode('', $data);
+            } else {
+                $method = 'set' . ucfirst($optionName);
+            }
             if($reflection->hasMethod($method)) {
                 $gateway->{$method}($value);
             }

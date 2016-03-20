@@ -25,6 +25,7 @@ class VerifyCsrfToken {
      */
     protected $except = [
         'admin/theme/cookie',
+        'notify/*'
     ];
     /**
      * @param \Illuminate\Contracts\Encryption\Encrypter $encrypter

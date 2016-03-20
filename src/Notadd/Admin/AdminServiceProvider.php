@@ -168,6 +168,7 @@ class AdminServiceProvider extends ServiceProvider {
                             'admin/ad*',
                             'admin/menu*',
                             'admin/third*',
+                            'admin/payment*',
                             'admin/link*',
                         ],
                         'icon'  => 'fa-table',
@@ -191,6 +192,11 @@ class AdminServiceProvider extends ServiceProvider {
                                 'title' => '社交组件',
                                 'active' => 'admin/third*',
                                 'url' => 'admin/third',
+                            ],
+                            [
+                                'title' => '支付组件',
+                                'active' => 'admin/payment*',
+                                'url' => 'admin/payment',
                             ],
                             [
                                 'title' => '友情链接组件',

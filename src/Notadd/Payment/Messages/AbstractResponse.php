@@ -7,6 +7,7 @@
  */
 namespace Notadd\Payment\Messages;
 use Notadd\Payment\Contracts\RedirectResponse;
+use Notadd\Payment\Contracts\Request as RequestContract;
 use Notadd\Payment\Contracts\Response as ResponseContract;
 use Notadd\Payment\Exceptions\RuntimeException;
 use Symfony\Component\HttpFoundation\RedirectResponse as HttpRedirectResponse;
@@ -26,15 +27,15 @@ abstract class AbstractResponse implements ResponseContract {
     protected $data;
     /**
      * AbstractResponse constructor.
-     * @param \Notadd\Payment\Contracts\Response $request
+     * @param \Notadd\Payment\Contracts\Request $request
      * @param $data
      */
-    public function __construct(ResponseContract $request, $data) {
+    public function __construct(RequestContract $request, $data) {
         $this->request = $request;
         $this->data = $data;
     }
     /**
-     * @return \Notadd\Payment\Contracts\Response
+     * @return \Notadd\Payment\Contracts\Request
      */
     public function getRequest() {
         return $this->request;
