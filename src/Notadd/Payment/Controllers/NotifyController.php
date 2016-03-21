@@ -53,10 +53,10 @@ class NotifyController extends Controller {
                 $response = $gateway->completePurchase($options)->send();
                 if($response->isPaid()) {
                     $data->put('is_success', true);
-                    $payment->save($data->toArray());
                 } else {
                     $data->put('is_success', false);
                 }
+                $payment->update($data->toArray());
                 return $this->redirect->to('');
                 break;
             case 'wechatpay':
@@ -73,11 +73,11 @@ class NotifyController extends Controller {
                 $response->send();
                 if ($response->isPaid()) {
                     $data->put('is_success', true);
-                    $payment->save($data->toArray());
-                    return true;
                 }else{
-                    return false;
+                    $data->put('is_success', false);
                 }
+                $payment->update($data->toArray());
+                return $data->get('is_success');
                 break;
         }
         return false;
