@@ -7,11 +7,6 @@
             <h1 class="site-logo h2 mb15"><a href="{{ url('/') }}"><span>{{ setting('site.company', 'Notadd CMS')  }}</span>&nbsp;内容管理系统</a></h1>
             <h3 class="text-normal h4 text-center">欢迎登陆后台管理系统</h3>
             <div class="form-container">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <strong>错误！</strong>请检查登陆账号是否填写正确。
-                    </div>
-                @endif
                 <form action="{{ url('admin/login') }}" class="form-horizontal" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group form-group-lg">

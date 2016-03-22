@@ -6,6 +6,7 @@
  * @datetime 2015-10-17 11:21
  */
 namespace Notadd\Foundation\Http;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Foundation\Http\FormRequest;
 use Notadd\Foundation\Traits\InjectEventsTrait;
@@ -25,7 +26,7 @@ class FormRequestServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getEvents()->listen('router.matched', function () {
+        $this->getEvents()->listen(RouteMatched::class, function () {
             $this->app->resolving(function (FormRequest $request, $app) {
                 $this->initializeRequest($request, $app['request']);
                 $request->setContainer($app)->setRedirector($app['Illuminate\Routing\Redirector']);

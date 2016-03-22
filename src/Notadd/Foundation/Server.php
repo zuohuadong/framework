@@ -19,16 +19,16 @@ use Notadd\Develop\DevelopServiceProvider;
 use Notadd\Editor\EditorServiceProvider;
 use Notadd\Flash\FlashServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
-use Notadd\Foundation\Console\ConsoleServiceProvider;
-use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
 use Notadd\Foundation\Console\Kernel as ConsoleKernel;
+use Notadd\Foundation\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
-use Notadd\Foundation\Install\Kernel as InstallKernel;
 use Notadd\Foundation\Exceptions\Handler;
 use Notadd\Install\InstallServiceProvider;
+use Notadd\Link\LinkServiceProvider;
 use Notadd\Menu\MenuServiceProvider;
 use Notadd\Page\PageServiceProvider;
+use Notadd\Payment\PaymentServiceProvider;
 use Notadd\Theme\ThemeServiceProvider;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -76,9 +76,12 @@ class Server {
             $this->application->register(CategoryServiceProvider::class);
             $this->application->register(ArticleServiceProvider::class);
             $this->application->register(HttpServiceProvider::class);
+            $this->application->register(LinkServiceProvider::class);
             $this->application->register(PageServiceProvider::class);
+            $this->application->register(PaymentServiceProvider::class);
             $this->application->register(AdminServiceProvider::class);
             $this->application->register(DevelopServiceProvider::class);
+            $this->application->register(ExtensionServiceProvider::class);
         } else {
             $this->application->register(InstallServiceProvider::class);
         }
@@ -111,13 +114,33 @@ class Server {
                 'log' => 'daily'
             ],
             'auth' => [
-                'driver' => 'eloquent',
-                'model' => User::class,
-                'table' => 'users',
-                'password' => [
-                    'email' => 'admin::emails.password',
-                    'table' => 'password_resets',
-                    'expire' => 60,
+                'defaults' => [
+                    'guard' => 'web',
+                    'passwords' => 'users',
+                ],
+                'guards' => [
+                    'web' => [
+                        'driver' => 'session',
+                        'provider' => 'users',
+                    ],
+                    'api' => [
+                        'driver' => 'token',
+                        'provider' => 'users',
+                    ],
+                ],
+                'providers' => [
+                    'users' => [
+                        'driver' => 'eloquent',
+                        'model' => User::class,
+                    ],
+                ],
+                'passwords' => [
+                    'users' => [
+                        'provider' => 'users',
+                        'email' => 'auth.emails.password',
+                        'table' => 'password_resets',
+                        'expire' => 60,
+                    ],
                 ],
             ],
             'cache' => [

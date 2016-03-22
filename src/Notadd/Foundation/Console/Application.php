@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 20:13
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Events\ArtisanStarting;
 use Illuminate\Contracts\Console\Application as ApplicationContract;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -38,7 +39,7 @@ class Application extends SymfonyApplication implements ApplicationContract {
         $this->notadd = $laravel;
         $this->setAutoExit(false);
         $this->setCatchExceptions(false);
-        $events->fire('artisan.start', [$this]);
+        $events->fire(new ArtisanStarting($this));
     }
     /**
      * @param string $command

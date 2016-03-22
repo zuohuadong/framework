@@ -28,7 +28,13 @@ trait RegistersUsers {
         if($validator->fails()) {
             $this->throwValidationException($request, $validator);
         }
-        $this->app->make('auth')->login($this->create($request->all()));
+        $this->app->make('auth')->guard($this->getGuard())->login($this->create($request->all()));
         return redirect($this->redirectPath());
+    }
+    /**
+     * @return null
+     */
+    protected function getGuard() {
+        return property_exists($this, 'guard') ? $this->guard : null;
     }
 }

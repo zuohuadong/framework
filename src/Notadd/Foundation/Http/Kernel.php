@@ -60,6 +60,16 @@ class Kernel implements KernelContract {
     /**
      * @var array
      */
+    protected $middlewareGroups = [
+        'web' => [
+        ],
+        'api' => [
+            'throttle:60,1',
+        ],
+    ];
+    /**
+     * @var array
+     */
     protected $routeMiddleware = [
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'auth.admin' => AuthenticateWithAdmin::class,
@@ -72,6 +82,9 @@ class Kernel implements KernelContract {
     public function __construct(Application $app, Router $router) {
         $this->app = $app;
         $this->router = $router;
+        foreach ($this->middlewareGroups as $key => $middleware) {
+            $router->middlewareGroup($key, $middleware);
+        }
         foreach($this->routeMiddleware as $key => $middleware) {
             $router->middleware($key, $middleware);
         }

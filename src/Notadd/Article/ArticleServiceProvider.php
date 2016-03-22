@@ -7,6 +7,8 @@
  */
 namespace Notadd\Article;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Article\Controllers\Admin\ArticleController as AdminArticleController;
+use Notadd\Article\Controllers\ArticleController;
 use Notadd\Article\Models\Article as ArticleModel;
 use Notadd\Article\Observers\ArticleObserver;
 use Notadd\Foundation\Traits\InjectRouterTrait;
@@ -20,15 +22,13 @@ class ArticleServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group(['namespace' => 'Notadd\Article\Controllers'], function () {
-            $this->getRouter()->group(['middleware' => 'auth.admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
-                $this->getRouter()->resource('article', 'ArticleController');
-                $this->getRouter()->post('article/{id}/delete', 'ArticleController@delete');
-                $this->getRouter()->post('article/{id}/restore', 'ArticleController@restore');
-                $this->getRouter()->post('article/select', 'ArticleController@select');
-            });
-            $this->getRouter()->resource('article', 'ArticleController');
+        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->getRouter()->resource('article', AdminArticleController::class);
+            $this->getRouter()->post('article/{id}/delete', AdminArticleController::class . '@delete');
+            $this->getRouter()->post('article/{id}/restore', AdminArticleController::class . '@restore');
+            $this->getRouter()->post('article/select', AdminArticleController::class . '@select');
         });
+        $this->getRouter()->resource('article', ArticleController::class);
         ArticleModel::observe(ArticleObserver::class);
     }
     /**

@@ -25,6 +25,7 @@ class VerifyCsrfToken {
      */
     protected $except = [
         'admin/theme/cookie',
+        'notify/*'
     ];
     /**
      * @param \Illuminate\Contracts\Encryption\Encrypter $encrypter
@@ -61,11 +62,15 @@ class VerifyCsrfToken {
      * @return bool
      */
     protected function tokensMatch($request) {
+        $sessionToken = $request->session()->token();
         $token = $request->input('_token') ?: $request->header('X-CSRF-TOKEN');
         if(!$token && $header = $request->header('X-XSRF-TOKEN')) {
             $token = $this->encrypter->decrypt($header);
         }
-        return Str::equals($request->session()->token(), $token);
+        if(!is_string($sessionToken) || !is_string($token)) {
+            return false;
+        }
+        return hash_equals((string)$request->session()->token(), (string)$token);
     }
     /**
      * @param \Illuminate\Http\Request $request

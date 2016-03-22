@@ -13,7 +13,6 @@ use RuntimeException;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
 use Illuminate\Bus\BusServiceProvider;
-use Illuminate\Console\ScheduleServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Cookie\CookieServiceProvider;
@@ -25,8 +24,6 @@ use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Pipeline\PipelineServiceProvider;
 use Illuminate\Queue\QueueServiceProvider;
 use Illuminate\Redis\RedisServiceProvider;
-use Illuminate\Routing\ControllerServiceProvider;
-use Illuminate\Routing\GeneratorServiceProvider;
 use Illuminate\Session\SessionServiceProvider;
 use Illuminate\View\ViewServiceProvider;
 use Illuminate\Support\Arr;
@@ -36,11 +33,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Routing\RoutingServiceProvider;
 use Notadd\Cache\CacheServiceProvider;
-use Notadd\Foundation\Composer\ComposerServiceProvider;
 use Notadd\Foundation\Console\ConsoleServiceProvider;
 use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
 use Notadd\Foundation\Database\DatabaseServiceProvider;
-use Notadd\Foundation\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\FormRequestServiceProvider;
 use Notadd\Foundation\Translation\TranslationServiceProvider;
 use Notadd\Foundation\Validation\ValidationServiceProvider;
@@ -98,6 +93,10 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @var callable|null
      */
     protected $monologConfigurator;
+    /**
+     * @var string
+     */
+    protected $publicPath;
     /**
      * @var string
      */
@@ -235,9 +234,14 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @return string
      */
     public function publicPath() {
-        return realpath($this->basePath . DIRECTORY_SEPARATOR . 'public');
+        return $this->publicPath ? realpath($this->publicPath) : realpath($this->basePath . DIRECTORY_SEPARATOR . 'public');
     }
+    /**
+     * @param $path
+     * @return $this
+     */
     public function usePublicPath($path) {
+        $this->publicPath = realpath($path);
         $this->instance('path.public', $path);
         return $this;
     }
@@ -303,19 +307,16 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @return void
      */
     public function registerConfiguredProviders() {
-        $this->register(ConsoleServiceProvider::class);
-        $this->register(ConsoleSupportServiceProvider::class);
         $this->register(AuthServiceProvider::class);
-        $this->register(PasswordResetServiceProvider::class);
         $this->register(BroadcastServiceProvider::class);
         $this->register(BusServiceProvider::class);
         $this->register(CacheServiceProvider::class);
-        $this->register(ControllerServiceProvider::class);
+        $this->register(ConsoleServiceProvider::class);
+        $this->register(ConsoleSupportServiceProvider::class);
+        $this->register(FormRequestServiceProvider::class);
         $this->register(CookieServiceProvider::class);
         $this->register(DatabaseServiceProvider::class);
         $this->register(EncryptionServiceProvider::class);
-        $this->register(ScheduleServiceProvider::class);
-        $this->register(GeneratorServiceProvider::class);
         $this->register(FilesystemServiceProvider::class);
         $this->register(HashServiceProvider::class);
         $this->register(MailServiceProvider::class);
@@ -323,13 +324,11 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this->register(PipelineServiceProvider::class);
         $this->register(QueueServiceProvider::class);
         $this->register(RedisServiceProvider::class);
+        $this->register(PasswordResetServiceProvider::class);
         $this->register(SessionServiceProvider::class);
         $this->register(TranslationServiceProvider::class);
         $this->register(ValidationServiceProvider::class);
         $this->register(ViewServiceProvider::class);
-        $this->register(ComposerServiceProvider::class);
-        $this->register(FormRequestServiceProvider::class);
-        $this->register(ExtensionServiceProvider::class);
         $this->register(SettingServiceProvider::class);
         $this->register(SearchEngineServiceProvider::class);
     }
