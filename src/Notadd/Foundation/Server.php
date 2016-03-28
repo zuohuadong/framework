@@ -18,6 +18,7 @@ use Notadd\Category\CategoryServiceProvider;
 use Notadd\Develop\DevelopServiceProvider;
 use Notadd\Editor\EditorServiceProvider;
 use Notadd\Flash\FlashServiceProvider;
+use Notadd\Foundation\Agent\AgentServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\Kernel as ConsoleKernel;
 use Notadd\Foundation\Extension\ExtensionServiceProvider;
@@ -69,6 +70,7 @@ class Server {
         $this->application->singleton(ConsoleKernelContract::class, ConsoleKernel::class);
         $this->application->singleton(ExceptionHandler::class, Handler::class);
         if($this->application->isInstalled()) {
+            $this->application->register(AgentServiceProvider::class);
             $this->application->register(ThemeServiceProvider::class);
             $this->application->register(MenuServiceProvider::class);
             $this->application->register(EditorServiceProvider::class);
