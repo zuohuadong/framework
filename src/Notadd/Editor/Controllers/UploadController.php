@@ -12,7 +12,6 @@ use Notadd\Foundation\Routing\Controller;
  */
 class UploadController extends Controller {
     public function index() {
-
     }
     public function store(Request $request) {
         dd($request);
