@@ -48,7 +48,7 @@ class Category {
      */
     public function getList() {
         if($this->model->hasParent()) {
-            $model = ArticleModel::whereCategoryId($this->model->getAttribute('id'));
+            $model = ArticleModel::whereCategoryId($this->model->getAttribute('id'))->orderBy('created_at', 'desc');
         } else {
             $relations = $this->getRelationCategoryList();
             $list = Collection::make();
@@ -56,7 +56,7 @@ class Category {
             foreach($relations as $relation) {
                 $list->push($relation->getId());
             }
-            $model = ArticleModel::whereIn('category_id', $list->toArray());
+            $model = ArticleModel::whereIn('category_id', $list->toArray())->orderBy('created_at', 'desc');
         }
         $data = $model->paginate(15);
         $list = Collection::make();
