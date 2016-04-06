@@ -14,10 +14,6 @@ use Notadd\Foundation\Routing\Controller;
  */
 class AbstractAdminController extends Controller {
     /**
-     * @var \Illuminate\Routing\Redirector
-     */
-    protected $redirect;
-    /**
      * @var \Illuminate\Session\SessionManager
      */
     protected $session;
@@ -26,8 +22,8 @@ class AbstractAdminController extends Controller {
      */
     public function __construct() {
         parent::__construct();
-        $this->session = $app->make('session');
-        $this->share('admin_theme', $request->cookie('admin-theme'));
+        $this->session = $this->app->make('session');
+        $this->share('admin_theme', $this->app->make('request')->cookie('admin-theme'));
     }
     /**
      * @param $template
