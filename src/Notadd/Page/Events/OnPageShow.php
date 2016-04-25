@@ -44,6 +44,18 @@ class OnPageShow {
         return $this->page->getModel();
     }
     /**
+     * @return \Notadd\Page\Page
+     */
+    public function getPageSelf() {
+        return $this->page;
+    }
+    /**
+     * @param \Notadd\Page\Page $page
+     */
+    public function setPage(Page $page) {
+        $this->page = $page;
+    }
+    /**
      * @param $key
      * @param $value
      */

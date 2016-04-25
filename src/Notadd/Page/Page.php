@@ -126,4 +126,12 @@ class Page {
     public function getTitle() {
         return $this->model->getAttribute('title');
     }
+    /**
+     * @param $id
+     * @param $model
+     */
+    public function replaceSelf($id, $model) {
+        $this->id = $id;
+        $this->model = $model;
+    }
 }
