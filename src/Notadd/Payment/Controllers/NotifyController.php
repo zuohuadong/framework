@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Notadd\Foundation\Routing\Controller;
 use Notadd\Payment\Models\Payment;
+/**
+ * Class NotifyController
+ * @package Notadd\Payment\Controllers
+ */
 class NotifyController extends Controller {
     /**
      * @var \Notadd\Payment\PaymentManager
@@ -20,8 +24,13 @@ class NotifyController extends Controller {
      */
     public function __construct() {
         parent::__construct();
-        $this->payment = $app->make('pay');
+        $this->payment = $this->app->make('pay');
     }
+    /**
+     * @param $type
+     * @param \Illuminate\Http\Request $request
+     * @return bool|\Illuminate\Http\RedirectResponse|mixed
+     */
     public function handle($type, Request $request) {
         if(!in_array($type, ['alipay', 'wechatpay'])) {
             return false;
