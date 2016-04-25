@@ -56,7 +56,7 @@ class Factory {
      */
     public function article($category, $limit) {
         $articles = new Collection();
-        $data = ArticleModel::whereCategoryId($category)->limit($limit)->get();
+        $data = ArticleModel::whereCategoryId($category)->limit($limit)->orderBy('created_at', 'desc')->get();
         foreach($data as $item) {
             $id = $item->getAttribute('id');
             $article = new Article($id);
