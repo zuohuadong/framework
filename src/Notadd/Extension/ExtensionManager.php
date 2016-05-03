@@ -5,7 +5,7 @@
  * @copyright (c) 2015, iBenchu.org
  * @datetime 2015-10-17 20:41
  */
-namespace Notadd\Foundation\Extension;
+namespace Notadd\Extension;
 use Illuminate\Contracts\Foundation\Application;
 /**
  * Class ExtensionManager

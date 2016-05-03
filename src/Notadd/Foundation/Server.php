@@ -21,7 +21,7 @@ use Notadd\Flash\FlashServiceProvider;
 use Notadd\Foundation\Agent\AgentServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\Kernel as ConsoleKernel;
-use Notadd\Foundation\Extension\ExtensionServiceProvider;
+use Notadd\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
 use Notadd\Foundation\Exceptions\Handler;

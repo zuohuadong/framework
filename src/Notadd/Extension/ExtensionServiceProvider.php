@@ -5,7 +5,7 @@
  * @copyright (c) 2015, iBenchu.org
  * @datetime 2015-10-17 20:39
  */
-namespace Notadd\Foundation\Extension;
+namespace Notadd\Extension;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Foundation\Traits\InjectExtensionTrait;
 use Symfony\Component\Finder\Finder;

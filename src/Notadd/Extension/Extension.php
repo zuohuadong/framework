@@ -5,7 +5,7 @@
  * @copyright (c) 2015, iBenchu.org
  * @datetime 2015-10-17 20:48
  */
-namespace Notadd\Foundation\Extension;
+namespace Notadd\Extension;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 /**
