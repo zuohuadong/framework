@@ -7,14 +7,16 @@
  */
 namespace Notadd\Extension;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Extension\Controllers\Admin\ExtensionController;
 use Notadd\Foundation\Traits\InjectExtensionTrait;
+use Notadd\Foundation\Traits\InjectRouterTrait;
 use Symfony\Component\Finder\Finder;
 /**
  * Class ExtensionServiceProvider
  * @package Notadd\Foundation\Extension
  */
 class ExtensionServiceProvider extends ServiceProvider {
-    use InjectExtensionTrait;
+    use InjectExtensionTrait, InjectRouterTrait;
     /**
      * @return void
      */
@@ -28,6 +30,9 @@ class ExtensionServiceProvider extends ServiceProvider {
                 }
             }
         }
+        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
+            $this->getRouter()->resource('extension', ExtensionController::class);
+        });
     }
     /**
      * @return void
