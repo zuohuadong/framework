@@ -41,7 +41,7 @@ class ThemeServiceProvider extends ServiceProvider {
             $this->getView()->share('__theme', $this->getTheme());
             $this->getTheme()->getThemeList()->each(function(Theme $theme) use($default) {
                 $alias = $theme->getAlias();
-                if($alias == $default) {
+                if($alias == $default && $this->getTheme()->getThemeList()->has($alias)) {
                     $this->loadViewsFrom($theme->getViewPath(), 'themes');
                 }
                 $this->loadViewsFrom($theme->getViewPath(), $alias);
@@ -57,6 +57,7 @@ class ThemeServiceProvider extends ServiceProvider {
                     });
                 }
             });
+
         });
         $this->getBlade()->directive('css', function($expression) {
             return "<?php \$__theme->registerCss{$expression}; ?>";
