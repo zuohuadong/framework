@@ -24,7 +24,7 @@ class CategoryController extends Controller {
      */
     public function show($id) {
         $category = new Category($id);
-        $this->events->fire(new OnCategoryShow($this->app, $this->view, $category->getModel()));
+        $this->events->fire(new OnCategoryShow($this->app, $this->view, $category));
         $this->seo->setTitleMeta($category->getTitle() . ' - {sitename}');
         $this->seo->setDescriptionMeta($category->getDescription());
         $this->seo->setKeywordsMeta($category->getKeywords());

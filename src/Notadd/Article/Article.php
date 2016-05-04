@@ -87,4 +87,11 @@ class Article {
     public function getTitle() {
         return $this->model->getAttribute('title');
     }
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function getAttribute($key) {
+        return $this->model->getAttribute($key);
+    }
 }

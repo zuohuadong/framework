@@ -20,9 +20,17 @@ class Category {
      */
     private $id;
     /**
+     * @var \Illuminate\Support\Collection
+     */
+    private $list;
+    /**
      * @var \Notadd\Category\Models\Category
      */
     private $model;
+    /**
+     * @var \Illuminate\Support\Collection
+     */
+    private $relations;
     /**
      * Category constructor.
      * @param $id
@@ -47,23 +55,32 @@ class Category {
      * @return static
      */
     public function getList() {
-        if($this->model->hasParent()) {
-            $model = ArticleModel::whereCategoryId($this->model->getAttribute('id'))->orderBy('created_at', 'desc');
-        } else {
-            $relations = $this->getRelationCategoryList();
-            $list = Collection::make();
-            $list->push($this->model->getAttribute('id'));
-            foreach($relations as $relation) {
-                $list->push($relation->getId());
+        if(!isset($this->list)) {
+            if($this->model->hasParent()) {
+                $model = ArticleModel::whereCategoryId($this->model->getAttribute('id'))->orderBy('created_at', 'desc');
+            } else {
+                $relations = $this->getRelationCategoryList();
+                $list = Collection::make();
+                $list->push($this->model->getAttribute('id'));
+                foreach($relations as $relation) {
+                    $list->push($relation->getId());
+                }
+                $model = ArticleModel::whereIn('category_id', $list->toArray())->orderBy('created_at', 'desc');
             }
-            $model = ArticleModel::whereIn('category_id', $list->toArray())->orderBy('created_at', 'desc');
+            $data = $model->paginate(15);
+            $list = Collection::make();
+            foreach($data as $value) {
+                $list->push(new Article($value->getAttribute('id')));
+            }
+            $this->list = $list;
         }
-        $data = $model->paginate(15);
-        $list = Collection::make();
-        foreach($data as $value) {
-            $list->push(new Article($value->getAttribute('id')));
-        }
-        return $list;
+        return $this->list;
+    }
+    /**
+     * @param \Illuminate\Support\Collection $list
+     */
+    public function setList(Collection $list) {
+        $this->list = $list;
     }
     /**
      * @param \Illuminate\Support\Collection $list
@@ -92,23 +109,32 @@ class Category {
         return $this->model;
     }
     /**
-     * @return static
+     * @return \Illuminate\Support\Collection
      */
     public function getRelationCategoryList() {
-        $list = Collection::make();
-        if($this->model->hasParent()) {
-            $data = $this->model->whereEnabled(true)->whereParentId($this->model->getAttribute('parent_id'))->orderBy('created_at', 'asc')->get();
-        } else {
-            $data = $this->model->whereEnabled(true)->whereParentId($this->model->getAttribute('id'))->orderBy('created_at', 'asc')->get();
-        }
-        if($data->count()) {
-            foreach($data as $category) {
-                $list->push(new Category($category->getAttribute('id')));
+        if(!isset($this->relations)) {
+            $list = Collection::make();
+            if($this->model->hasParent()) {
+                $data = $this->model->whereEnabled(true)->whereParentId($this->model->getAttribute('parent_id'))->orderBy('created_at', 'asc')->get();
+            } else {
+                $data = $this->model->whereEnabled(true)->whereParentId($this->model->getAttribute('id'))->orderBy('created_at', 'asc')->get();
             }
-        } else {
-            $list->push(new Category($this->model->getAttribute('id')));
+            if($data->count()) {
+                foreach($data as $category) {
+                    $list->push(new Category($category->getAttribute('id')));
+                }
+            } else {
+                $list->push(new Category($this->model->getAttribute('id')));
+            }
+            $this->relations = $list;
         }
-        return $list;
+        return $this->relations;
+    }
+    /**
+     * @param \Illuminate\Support\Collection $list
+     */
+    public function setRelationCategoryList(Collection $list) {
+        $this->relations = $list;
     }
     /**
      * @return string
