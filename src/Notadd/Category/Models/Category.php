@@ -39,7 +39,7 @@ class Category extends Model {
     /**
      * @var string
      */
-    protected $showTemplate = 'default::category.show';
+    protected $showTemplate = 'themes::category.show';
     /**
      * @var array
      */
