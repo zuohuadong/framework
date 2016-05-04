@@ -29,8 +29,9 @@ class CategoryController extends Controller {
         $this->seo->setDescriptionMeta($category->getDescription());
         $this->seo->setKeywordsMeta($category->getKeywords());
         $this->share('category', $category->getModel());
-        $this->share('name', $category->getTitle());
+        $this->share('links', $category->getLinks());
         $this->share('list', $category->getList());
+        $this->share('name', $category->getTitle());
         $this->share('relations', $category->getRelationCategoryList());
         return $this->view($category->getShowTemplate());
     }

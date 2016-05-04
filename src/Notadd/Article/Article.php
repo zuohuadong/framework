@@ -84,6 +84,12 @@ class Article {
     /**
      * @return mixed
      */
+    public function getThumbImage() {
+        return $this->model->getAttribute('thumb_image');
+    }
+    /**
+     * @return mixed
+     */
     public function getTitle() {
         return $this->model->getAttribute('title');
     }

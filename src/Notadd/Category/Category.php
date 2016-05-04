@@ -20,6 +20,10 @@ class Category {
      */
     private $id;
     /**
+     * @var
+     */
+    private $links;
+    /**
      * @var \Illuminate\Support\Collection
      */
     private $list;
@@ -52,6 +56,18 @@ class Category {
         return $this->id;
     }
     /**
+     * @return mixed
+     */
+    public function getLinks() {
+        return $this->links;
+    }
+    /**
+     * @param $links
+     */
+    public function setLinks($links) {
+        $this->links = $links;
+    }
+    /**
      * @return static
      */
     public function getList() {
@@ -68,6 +84,7 @@ class Category {
                 $model = ArticleModel::whereIn('category_id', $list->toArray())->orderBy('created_at', 'desc');
             }
             $data = $model->paginate(15);
+            $this->links = $data->links();
             $list = Collection::make();
             foreach($data as $value) {
                 $list->push(new Article($value->getAttribute('id')));
