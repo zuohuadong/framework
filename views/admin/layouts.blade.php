@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>@yield('title') - 后台 - {{ setting('site.company', 'iBenchu CMS')  }}内容管理系统</title>
-    <meta name="author" content="iBenchu.net">
-    <meta name="keywords" content="iBenchu">
-    <meta name="description" content="iBenchu CMS内容管理系统">
+    <meta name="author" content="iBenchu, TwilRoad">
+    <meta name="keywords" content="Notadd CMS">
+    <meta name="description" content="A CMS System Base On Laravel 5.2">
     @css('admin::less.layout.bootstrap.bootstrap')
     @css('admin::less.layout.font-awesome.font-awesome')
     @yield('admin-css')

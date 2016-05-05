@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>@yield('title')</title>
-    <meta name="author" content="solutionportal">
-    <meta name="keywords" content="appboard, webapp, admin, dashboard, template, ui">
-    <meta name="description" content="Appboard - Admin Template with Angularjs">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <meta name="author" content="iBenchu, TwilRoad">
+    <meta name="keywords" content="Notadd CMS">
+    <meta name="description" content="A CMS System Base On Laravel 5.2">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('statics/admin/css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('statics/admin/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('statics/admin/css/main.css') }}">
