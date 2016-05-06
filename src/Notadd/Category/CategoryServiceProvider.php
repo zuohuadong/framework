@@ -13,6 +13,7 @@ use Notadd\Category\Controllers\Admin\CategoryController as AdminCategoryControl
 use Notadd\Category\Controllers\CategoryController;
 use Notadd\Category\Listeners\BeforeCategoryDelete;
 use Notadd\Category\Models\Category as CategoryModel;
+use Notadd\Category\Observers\CategoryObserver;
 use Notadd\Foundation\Traits\InjectBladeTrait;
 use Notadd\Foundation\Traits\InjectEventsTrait;
 use Notadd\Foundation\Traits\InjectRouterTrait;
@@ -44,7 +45,7 @@ class CategoryServiceProvider extends ServiceProvider {
         $this->getRouter()->resource('category', CategoryController::class);
         $this->getEvents()->subscribe(BeforeCategoryDelete::class);
         $this->getEvents()->listen(RouteMatched::class, function () {
-            $this->getView()->share('__category', Factory::class);
+            $this->getView()->share('__category', $this->app->make(Factory::class));
         });
         $this->getBlade()->directive('category', function($expression) {
             $segments = explode(',', preg_replace("/[\(\)\\\"\']/", '', $expression));
@@ -53,6 +54,7 @@ class CategoryServiceProvider extends ServiceProvider {
         $this->getBlade()->directive('endcategory', function($expression) {
             return "<?php endforeach; ?>";
         });
+        CategoryModel::observe(CategoryObserver::class);
     }
     /**
      * @return void
