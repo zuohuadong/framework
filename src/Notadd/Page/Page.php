@@ -102,7 +102,7 @@ class Page {
      */
     public function getSubPages() {
         $list = Collection::make();
-        $data = $this->model->whereParentId($this->model->getAttribute('id'))->get();
+        $data = $this->model->whereParentId($this->model->getAttribute('id'))->orderBy('order_id', 'asc')->get();
         foreach($data as $value) {
             $list->push(new Page($value->getAttribute('id')));
         }
