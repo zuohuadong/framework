@@ -6,20 +6,23 @@
  * @datetime 2015-10-30 15:46
  */
 namespace Notadd\Category;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Category\Category;
 use Notadd\Category\Controllers\Admin\CategoryController as AdminCategoryController;
 use Notadd\Category\Controllers\CategoryController;
 use Notadd\Category\Listeners\BeforeCategoryDelete;
 use Notadd\Category\Models\Category as CategoryModel;
+use Notadd\Foundation\Traits\InjectBladeTrait;
 use Notadd\Foundation\Traits\InjectEventsTrait;
 use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Foundation\Traits\InjectViewTrait;
 /**
  * Class CategoryServiceProvider
  * @package Notadd\Category
  */
 class CategoryServiceProvider extends ServiceProvider {
-    use InjectEventsTrait, InjectRouterTrait;
+    use InjectBladeTrait, InjectEventsTrait, InjectRouterTrait, InjectViewTrait;
     /**
      * @return void
      */
@@ -40,6 +43,16 @@ class CategoryServiceProvider extends ServiceProvider {
         });
         $this->getRouter()->resource('category', CategoryController::class);
         $this->getEvents()->subscribe(BeforeCategoryDelete::class);
+        $this->getEvents()->listen(RouteMatched::class, function () {
+            $this->getView()->share('__category', Factory::class);
+        });
+        $this->getBlade()->directive('category', function($expression) {
+            $segments = explode(',', preg_replace("/[\(\)\\\"\']/", '', $expression));
+            return "<?php \$__tmp = \$__category->handle(" . trim($segments[0]) . ", " . trim($segments[1]) ."); foreach(\$__tmp as \$" . trim($segments[2]) . "=>\$" . trim($segments[3]) . "): ?>";
+        });
+        $this->getBlade()->directive('endcategory', function($expression) {
+            return "<?php endforeach; ?>";
+        });
     }
     /**
      * @return void
