@@ -8,8 +8,17 @@
 namespace Notadd\Category;
 use Illuminate\Support\Collection;
 use Notadd\Category\Models\Category as CategoryModel;
+/**
+ * Class Factory
+ * @package Notadd\Category
+ */
 class Factory {
-    public function handle($id, bool $getAllSubCategories) {
+    /**
+     * @param $id
+     * @param $getAllSubCategories
+     * @return \Illuminate\Support\Collection
+     */
+    public function handle($id, $getAllSubCategories) {
         $collections = new Collection();
         if($getAllSubCategories) {
             CategoryModel::getAllSubCategories($id, $collections);
