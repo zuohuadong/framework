@@ -68,6 +68,12 @@ class Article {
         return $this->model;
     }
     /**
+     * @param \Notadd\Article\Models\Article $model
+     */
+    public function setModel(ArticleModel $model) {
+        $this->model = $model;
+    }
+    /**
      * @return string
      */
     public function getRouting() {
