@@ -44,6 +44,12 @@ class Category {
         $this->model = CategoryModel::findOrFail($id);
     }
     /**
+     * @return mixed
+     */
+    public function getBackgroundImage() {
+        return $this->model->getAttribute('background_image');
+    }
+    /**
      * @return string
      */
     public function getDescription() {
@@ -176,6 +182,12 @@ class Category {
      */
     public function getTitle() {
         return $this->model->getAttribute('title');
+    }
+    /**
+     * @return mixed
+     */
+    public function getTopImage() {
+        return $this->model->getAttribute('top_image');
     }
     /**
      * @return mixed
