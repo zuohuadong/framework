@@ -7,7 +7,7 @@
  */
 namespace Notadd\Cache\Console;
 use Illuminate\Filesystem\Filesystem;
-use Notadd\Foundation\Composer\Composer;
+use Illuminate\Support\Composer;
 use Notadd\Foundation\Console\Command;
 /**
  * Class CacheTableCommand
@@ -27,13 +27,13 @@ class CacheTableCommand extends Command {
      */
     protected $files;
     /**
-     * @var \Notadd\Foundation\Composer\Composer
+     * @var \Illuminate\Support\Composer
      */
     protected $composer;
     /**
      * CacheTableCommand constructor.
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @param \Notadd\Foundation\Composer\Composer $composer
+     * @param \Illuminate\Support\Composer $composer
      */
     public function __construct(Filesystem $files, Composer $composer) {
         parent::__construct();

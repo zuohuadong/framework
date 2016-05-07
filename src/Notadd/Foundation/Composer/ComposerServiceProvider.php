@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 17:10
  */
 namespace Notadd\Foundation\Composer;
+use Illuminate\Support\Composer;
 use Illuminate\Support\ServiceProvider;
 /**
  * Class ComposerServiceProvider

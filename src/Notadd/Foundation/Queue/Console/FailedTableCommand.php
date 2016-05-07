@@ -7,8 +7,9 @@
  */
 namespace Notadd\Foundation\Queue\Console;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Composer;
 use Illuminate\Support\Str;
-use Notadd\Foundation\Composer\Composer;
+
 use Notadd\Foundation\Console\Command;
 /**
  * Class FailedTableCommand
@@ -28,13 +29,13 @@ class FailedTableCommand extends Command {
      */
     protected $files;
     /**
-     * @var \Notadd\Foundation\Composer\Composer
+     * @var \Illuminate\Support\Composer
      */
     protected $composer;
     /**
      * FailedTableCommand constructor.
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @param \Notadd\Foundation\Composer\Composer $composer
+     * @param \Illuminate\Support\Composer $composer
      */
     public function __construct(Filesystem $files, Composer $composer) {
         parent::__construct();

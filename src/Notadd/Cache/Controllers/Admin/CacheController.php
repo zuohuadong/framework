@@ -7,6 +7,7 @@
  */
 namespace Notadd\Cache\Controllers\Admin;
 use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Console\Kernel;
 /**
  * Class CacheController
  * @package Notadd\Cache\Controllers\Admin
@@ -18,8 +19,9 @@ class CacheController extends AbstractAdminController {
     protected $artisan;
     /**
      * CacheController constructor.
+     * @param \Notadd\Foundation\Console\Kernel $artisan
      */
-    public function __construct() {
+    public function __construct(Kernel $artisan) {
         parent::__construct();
         $this->artisan = $artisan;
     }
