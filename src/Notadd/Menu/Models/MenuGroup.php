@@ -6,7 +6,7 @@
  * @datetime 2015-10-30 15:14
  */
 namespace Notadd\Menu\Models;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class MenuGroup
  * @package Notadd\Menu\Models

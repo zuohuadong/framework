@@ -6,7 +6,7 @@
  * @datetime 2016-03-11 14:25
  */
 namespace Notadd\Link\Models;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class Link
  * @package Notadd\Link\Models

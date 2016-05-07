@@ -6,9 +6,9 @@
  * @datetime 2015-10-30 17:13
  */
 namespace Notadd\Page\Models;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Notadd\Foundation\Database\Eloquent\Model;
-use Notadd\Foundation\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 use Notadd\Page\Events\GetTemplateList;
 /**
  * Class Page
@@ -41,8 +41,8 @@ class Page extends Model {
     }
     /**
      * @param $parent_id
-     * @param $crumb
      * @return mixed
+     * @param $crumb
      */
     public static function getCrumbMenu($parent_id, &$crumb) {
         if($parent_id == 0) {
@@ -71,7 +71,7 @@ class Page extends Model {
         return $this->getAttribute('parent_id') && parent::whereId($this->getAttribute('parent_id'))->count();
     }
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent() {
         return $this->belongsTo(Page::class, 'parent_id');

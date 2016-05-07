@@ -6,7 +6,7 @@
  * @datetime 2015-10-29 16:11
  */
 namespace Notadd\Setting\Models;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class Setting
  * @package Notadd\Setting\Models

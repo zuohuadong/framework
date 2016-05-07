@@ -11,7 +11,7 @@ use Notadd\Article\Events\GetArticleAdminTemplates;
 use Notadd\Article\Models\Article;
 use Notadd\Category\Events\GetCategoryAdminTemplates;
 use Notadd\Category\Events\GetCategoryTypes;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class Category
  * @package Notadd\Category\Models
@@ -169,13 +169,13 @@ class Category extends Model {
         return $count ? $count : 0;
     }
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Relations\MorphTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function extend() {
         return $this->morphTo();
     }
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent() {
         return $this->belongsTo(Category::class, 'parent_id');

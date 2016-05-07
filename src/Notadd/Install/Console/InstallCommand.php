@@ -11,7 +11,6 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\Command;
-use Notadd\Foundation\Database\Migrations\DatabaseMigrationRepository;
 use Notadd\Install\Requests\InstallRequest;
 use PDO;
 /**
@@ -108,7 +107,7 @@ class InstallCommand extends Command {
         $this->comment('Application Installed!');
     }
     /**
-     * @return void
+     * @param \Notadd\Install\Requests\InstallRequest $request
      */
     public function setDataFromCalling(InstallRequest $request) {
         $this->data->put('driver', 'mysql');

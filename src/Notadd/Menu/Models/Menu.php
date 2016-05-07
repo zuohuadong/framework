@@ -7,10 +7,10 @@
  */
 namespace Notadd\Menu\Models;
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Collection;
 use Notadd\Article\Models\Article;
 use Notadd\Category\Models\Category;
-use Notadd\Foundation\Database\Eloquent\Collection;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class Menu
  * @package Notadd\Menu\Models
@@ -77,7 +77,7 @@ class Menu extends Model {
         return parent::whereParentId($this->attributes['id'])->count();
     }
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function group() {
         return $this->belongsTo(MenuGroup::class, 'group_id');

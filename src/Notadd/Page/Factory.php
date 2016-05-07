@@ -44,7 +44,7 @@ class Factory {
         $this->view = $view;
     }
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function all() {
         return Model::all();

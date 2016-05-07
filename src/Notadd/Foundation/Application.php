@@ -7,6 +7,7 @@
  */
 namespace Notadd\Foundation;
 use Closure;
+use Illuminate\Database\DatabaseServiceProvider;
 use Notadd\Auth\AuthServiceProvider;
 use Notadd\Foundation\SearchEngine\SearchEngineServiceProvider;
 use RuntimeException;
@@ -35,7 +36,6 @@ use Illuminate\Routing\RoutingServiceProvider;
 use Notadd\Cache\CacheServiceProvider;
 use Notadd\Foundation\Console\ConsoleServiceProvider;
 use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
-use Notadd\Foundation\Database\DatabaseServiceProvider;
 use Notadd\Foundation\Http\FormRequestServiceProvider;
 use Notadd\Foundation\Translation\TranslationServiceProvider;
 use Notadd\Foundation\Validation\ValidationServiceProvider;
@@ -52,7 +52,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * @var string
      */
-    const VERSION = '0.1.7.4';
+    const VERSION = '0.1.7.7';
     /**
      * @var string
      */
@@ -701,7 +701,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
                 'Illuminate\Encryption\Encrypter',
                 'Illuminate\Contracts\Encryption\Encrypter'
             ],
-            'db' => 'Notadd\Foundation\Database\DatabaseManager',
+            'db' => 'Illuminate\Database\DatabaseManager',
             'events' => [
                 'Illuminate\Events\Dispatcher',
                 'Illuminate\Contracts\Events\Dispatcher'

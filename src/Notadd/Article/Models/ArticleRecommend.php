@@ -6,7 +6,7 @@
  * @datetime 2015-10-30 16:09
  */
 namespace Notadd\Article\Models;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class ArticleRecommend
  * @package Notadd\Article\Models

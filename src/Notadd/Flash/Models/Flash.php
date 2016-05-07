@@ -4,7 +4,7 @@
  * @copyright (c) 2015, iBenchu.com
  */
 namespace Notadd\Flash\Models;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class Flash
  * @package Notadd\Flash\Models

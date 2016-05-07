@@ -4,7 +4,7 @@
  * @copyright (c) 2015, iBenchu.com
  */
 namespace Notadd\Flash\Models;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class FlashItem
  * @package Notadd\Flash\Models
@@ -24,7 +24,7 @@ class FlashItem extends Model {
         'enabled',
     ];
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function group() {
         return $this->belongsTo(Flash::class, 'group_id');

@@ -6,7 +6,7 @@
  * @datetime 2015-10-30 10:58
  */
 namespace Notadd\Admin\Controllers;
-use Notadd\Foundation\Database\DatabaseManager;
+use Illuminate\Database\DatabaseManager;
 use PDO;
 /**
  * Class AdminController
@@ -14,7 +14,7 @@ use PDO;
  */
 class AdminController extends AbstractAdminController {
     /**
-     * @param \Notadd\Foundation\Database\DatabaseManager $manager
+     * @param \Illuminate\Database\DatabaseManager $manager
      * @return \Illuminate\Contracts\View\View
      */
     public function init(DatabaseManager $manager) {

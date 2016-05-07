@@ -7,10 +7,10 @@
  */
 namespace Notadd\Foundation\Console;
 use Illuminate\Console\ScheduleServiceProvider;
+use Illuminate\Database\MigrationServiceProvider;
+use Illuminate\Database\SeedServiceProvider;
 use Illuminate\Support\AggregateServiceProvider;
 use Notadd\Foundation\Composer\ComposerServiceProvider;
-use Notadd\Foundation\Database\MigrationServiceProvider;
-use Notadd\Foundation\Database\SeedServiceProvider;
 use Notadd\Foundation\Queue\ConsoleServiceProvider as QueueConsoleServiceProvider;
 use Notadd\Foundation\Session\ConsoleServiceProvider as SessionConsoleServiceProvider;
 /**
