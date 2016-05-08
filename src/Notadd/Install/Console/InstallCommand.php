@@ -172,7 +172,7 @@ class InstallCommand extends Command {
         $config = [
             'database' => [
                 'fetch' => PDO::FETCH_CLASS,
-                'default' => 'mysql',
+                'default' => $this->data->get('driver'),
                 'connections' => [
                     'mysql' => [
                         'driver' => 'mysql',
@@ -191,6 +191,41 @@ class InstallCommand extends Command {
                 ],
             ]
         ];
+        switch($this->data->get('driver')) {
+            case 'mysql':
+                $config['database']['connections']['mysql'] =  [
+                    'driver' => 'mysql',
+                    'host' => $this->data->get('host'),
+                    'database' => $this->data->get('database'),
+                    'username' => $this->data->get('username'),
+                    'password' => $this->data->get('password'),
+                    'charset' => 'utf8',
+                    'collation' => 'utf8_unicode_ci',
+                    'prefix' => $this->data->get('prefix'),
+                    'strict' => false,
+                    'engine' => null,
+                ];
+                break;
+            case 'pgsql':
+                $config['database']['connections']['pgsql'] =  [
+                    'driver' => 'pgsql',
+                    'host' => $this->data->get('host'),
+                    'database' => $this->data->get('database'),
+                    'username' => $this->data->get('username'),
+                    'password' => $this->data->get('password'),
+                    'charset' => 'utf8',
+                    'prefix' => $this->data->get('prefix'),
+                    'schema' => 'public',
+                ];
+                break;
+            case 'sqlite':
+                $config['database']['connections']['sqlite'] =  [
+                    'driver'   => 'sqlite',
+                    'database' => database_path('database.sqlite'),
+                    'prefix'   => $this->data->get('prefix'),
+                ];
+                break;
+        }
         file_put_contents(
             realpath($this->laravel->storagePath() . '/notadd') . DIRECTORY_SEPARATOR . 'config.php',
             '<?php return '.var_export($config, true).';'
