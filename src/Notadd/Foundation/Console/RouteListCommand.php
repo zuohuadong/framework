@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:19
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -119,9 +120,9 @@ class RouteListCommand extends Command {
      * @return array
      */
     protected function getControllerMiddleware($actionName) {
-        Controller::setRouter($this->notadd['router']);
+        Controller::setRouter($this->laravel['router']);
         $segments = explode('@', $actionName);
-        return $this->getControllerMiddlewareFromInstance($this->notadd->make($segments[0]), $segments[1]);
+        return $this->getControllerMiddlewareFromInstance($this->laravel->make($segments[0]), $segments[1]);
     }
     /**
      * @param $controller

@@ -64,7 +64,7 @@ abstract class Controller extends IlluminateController {
     }
     /**
      * @param string $command
-     * @return \Notadd\Foundation\Console\Command
+     * @return \Illuminate\Console\Command
      */
     public function getCommand($command) {
         return $this->app->make(Kernel::class)->find($command);

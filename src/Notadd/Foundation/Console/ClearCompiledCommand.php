@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:00
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 /**
  * Class ClearCompiledCommand
  * @package Notadd\Foundation\Console
@@ -23,8 +24,8 @@ class ClearCompiledCommand extends Command {
      * @return void
      */
     public function fire() {
-        $compiledPath = $this->notadd->getCachedCompilePath();
-        $servicesPath = $this->notadd->getCachedServicesPath();
+        $compiledPath = $this->laravel->getCachedCompilePath();
+        $servicesPath = $this->laravel->getCachedServicesPath();
         if(file_exists($compiledPath)) {
             @unlink($compiledPath);
         }

@@ -6,11 +6,11 @@
  * @datetime 2015-11-29 00:50
  */
 namespace Notadd\Install\Console;
+use Illuminate\Console\Command;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Notadd\Foundation\Auth\Models\User;
-use Notadd\Foundation\Console\Command;
 use Notadd\Install\Requests\InstallRequest;
 use PDO;
 /**
@@ -53,24 +53,24 @@ class InstallCommand extends Command {
      */
     public function __construct(Application $application, Filesystem $filesystem) {
         parent::__construct();
-        $this->notadd = $application;
-        $this->config = $this->notadd->make('config');
+        $this->laravel = $application;
+        $this->config = $this->laravel->make('config');
         $this->data = Collection::make();
         $this->filesystem = $filesystem;
-        $this->setting = $this->notadd->make('setting');
+        $this->setting = $this->laravel->make('setting');
     }
     /**
      * @return void
      */
     protected function createAdministrationUser() {
-        $auth = $this->notadd->make('auth');
+        $auth = $this->laravel->make('auth');
         $user = User::create([
             'name' => $this->data->get('admin_username'),
             'email' => $this->data->get('admin_email'),
             'password' => bcrypt($this->data->get('admin_password')),
         ]);
         $auth->login($user);
-        touch($this->notadd->storagePath() . '/notadd/installed');
+        touch($this->laravel->storagePath() . '/notadd/installed');
     }
     /**
      * @return void
@@ -189,7 +189,7 @@ class InstallCommand extends Command {
             ]
         ];
         file_put_contents(
-            realpath($this->notadd->storagePath() . '/notadd') . DIRECTORY_SEPARATOR . 'config.php',
+            realpath($this->laravel->storagePath() . '/notadd') . DIRECTORY_SEPARATOR . 'config.php',
             '<?php return '.var_export($config, true).';'
         );
     }

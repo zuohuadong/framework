@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 17:50
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
@@ -61,15 +62,15 @@ abstract class GeneratorCommand extends Command {
      * @return string
      */
     protected function getPath($name) {
-        $name = str_replace($this->notadd->getNamespace(), '', $name);
-        return $this->notadd['path'] . '/' . str_replace('\\', '/', $name) . '.php';
+        $name = str_replace($this->laravel->getNamespace(), '', $name);
+        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '.php';
     }
     /**
      * @param string $name
      * @return string
      */
     protected function parseName($name) {
-        $rootNamespace = $this->notadd->getNamespace();
+        $rootNamespace = $this->laravel->getNamespace();
         if(Str::startsWith($name, $rootNamespace)) {
             return $name;
         }
@@ -109,7 +110,7 @@ abstract class GeneratorCommand extends Command {
      */
     protected function replaceNamespace(&$stub, $name) {
         $stub = str_replace('DummyNamespace', $this->getNamespace($name), $stub);
-        $stub = str_replace('DummyRootNamespace', $this->notadd->getNamespace(), $stub);
+        $stub = str_replace('DummyRootNamespace', $this->laravel->getNamespace(), $stub);
         return $this;
     }
     /**

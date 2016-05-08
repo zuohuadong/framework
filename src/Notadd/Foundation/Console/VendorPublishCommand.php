@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:27
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\MountManager;

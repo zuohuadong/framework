@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:17
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 /**
  * Class RouteClearCommand
@@ -36,7 +37,7 @@ class RouteClearCommand extends Command {
      * @return void
      */
     public function fire() {
-        $this->files->delete($this->notadd->getCachedRoutesPath());
+        $this->files->delete($this->laravel->getCachedRoutesPath());
         $this->info('Route cache cleared!');
     }
 }

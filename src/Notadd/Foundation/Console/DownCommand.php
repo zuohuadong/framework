@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:12
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 /**
  * Class DownCommand
  * @package Notadd\Foundation\Console
@@ -23,7 +24,7 @@ class DownCommand extends Command {
      * @return void
      */
     public function fire() {
-        touch($this->notadd->storagePath() . '/notadd/down');
+        touch($this->laravel->storagePath() . '/notadd/down');
         $this->comment('Application is now in maintenance mode.');
     }
 }

@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:14
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Routing\RouteCollection;
 /**
@@ -45,14 +46,14 @@ class RouteCacheCommand extends Command {
         foreach($routes as $route) {
             $route->prepareForSerialization();
         }
-        $this->files->put($this->notadd->getCachedRoutesPath(), $this->buildRouteCacheFile($routes));
+        $this->files->put($this->laravel->getCachedRoutesPath(), $this->buildRouteCacheFile($routes));
         $this->info('Routes cached successfully!');
     }
     /**
      * @return mixed
      */
     protected function getFreshApplicationRoutes() {
-        $app = require $this->notadd->basePath() . '/bootstrap/app.php';
+        $app = require $this->laravel->basePath() . '/bootstrap/app.php';
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
         return $app['router']->getRoutes();
     }
