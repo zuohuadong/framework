@@ -1,6 +1,11 @@
 <?php
-
-use Notadd\Foundation\Database\Schema\Blueprint;
+/**
+ * This file is part of Notadd.
+ * @author TwilRoad <269044570@qq.com>
+ * @copyright (c) 2015, iBenchu.org
+ * @datetime 2016-03-01 13:42
+ */
+use Illuminate\Database\Schema\Blueprint;
 use Notadd\Foundation\Database\Migrations\Migration;
 /**
  * Class ExtendUserInfoToUsersTable

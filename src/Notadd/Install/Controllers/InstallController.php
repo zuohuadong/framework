@@ -30,7 +30,7 @@ class InstallController extends Controller {
      * @param \Notadd\Install\Requests\InstallRequest $request
      */
     public function handle(InstallRequest $request) {
-        $input = new ArrayInput([]);
+        $input = new ArrayInput(['command' => 'install']);
         $output = new BufferedOutput();
         $this->command->setDataFromCalling($request);
         $this->command->run($input, $output);

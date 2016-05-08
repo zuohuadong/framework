@@ -155,6 +155,9 @@ class Server {
                 ],
                 'prefix' => 'notadd',
             ],
+            'database' => [
+                'migrations' => 'migrations',
+            ],
             'filesystems' => [
                 'default' => 'local',
                 'cloud' => 's3',

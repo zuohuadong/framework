@@ -1,6 +1,9 @@
 <?php
-use Notadd\Foundation\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Blueprint;
 use Notadd\Foundation\Database\Migrations\Migration;
+/**
+ * Class CreateUsersTable
+ */
 class CreateUsersTable extends Migration {
     /**
      * Run the migrations.
