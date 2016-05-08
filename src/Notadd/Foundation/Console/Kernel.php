@@ -14,9 +14,9 @@ use Notadd\Foundation\Bootstrap\SetRequestForConsole;
 use Throwable;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Contracts\Console\Kernel as KernelContract;
+use Illuminate\Console\Application as Artisan;
 use Illuminate\Contracts\Foundation\Application;
-use Notadd\Foundation\Console\Application as Artisan;
+use Illuminate\Contracts\Console\Kernel as KernelContract;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 /**
  * Class Kernel
@@ -28,10 +28,6 @@ class Kernel implements KernelContract {
      */
     protected $app;
     /**
-     * @var array
-     */
-    protected $commands = [];
-    /**
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
     protected $events;
@@ -40,7 +36,10 @@ class Kernel implements KernelContract {
      */
     protected $artisan;
     /**
-     * The bootstrap classes for the application.
+     * @var array
+     */
+    protected $commands = [];
+    /**
      * @var array
      */
     protected $bootstrappers = [
@@ -50,7 +49,6 @@ class Kernel implements KernelContract {
         BootProviders::class,
     ];
     /**
-     * Kernel constructor.
      * @param \Illuminate\Contracts\Foundation\Application $app
      * @param \Illuminate\Contracts\Events\Dispatcher $events
      */
@@ -112,7 +110,6 @@ class Kernel implements KernelContract {
      */
     public function call($command, array $parameters = []) {
         $this->bootstrap();
-        $this->app->loadDeferredProviders();
         return $this->getArtisan()->call($command, $parameters);
     }
     /**
@@ -130,9 +127,6 @@ class Kernel implements KernelContract {
         $this->bootstrap();
         return $this->getArtisan()->all();
     }
-    public function find($command) {
-        return $this->getArtisan()->find($command);
-    }
     /**
      * @return string
      */
@@ -148,6 +142,13 @@ class Kernel implements KernelContract {
             $this->app->bootstrapWith($this->bootstrappers());
         }
         $this->app->loadDeferredProviders();
+    }
+    /**
+     * @param $command
+     * @return \Symfony\Component\Console\Command\Command
+     */
+    public function find($command) {
+        return $this->getArtisan()->find($command);
     }
     /**
      * @return \Illuminate\Console\Application
