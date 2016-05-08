@@ -81,9 +81,14 @@ class InstallCommand extends Command {
         }
         $this->config->set('database', [
             'fetch' => PDO::FETCH_CLASS,
-            'default' => 'mysql',
-            'connections' => [
-                'mysql' => [
+            'default' => $this->data->get('driver'),
+            'connections' => [],
+            'migrations' => 'migrations',
+            'redis' => [],
+        ]);
+        switch($this->data->get('driver')) {
+            case 'mysql':
+                $this->config->set('database.connections.mysql', [
                     'driver' => 'mysql',
                     'host' => $this->data->get('host'),
                     'database' => $this->data->get('database'),
@@ -92,13 +97,30 @@ class InstallCommand extends Command {
                     'charset' => 'utf8',
                     'collation' => 'utf8_unicode_ci',
                     'prefix' => $this->data->get('prefix'),
-                    'strict' => true,
-                ],
-            ],
-            'migrations' => 'migrations',
-            'redis' => [
-            ],
-        ]);
+                    'strict' => false,
+                    'engine' => null,
+                ]);
+                break;
+            case 'pgsql':
+                $this->config->set('database.connections.pgsql', [
+                    'driver' => 'pgsql',
+                    'host' => $this->data->get('host'),
+                    'database' => $this->data->get('database'),
+                    'username' => $this->data->get('username'),
+                    'password' => $this->data->get('password'),
+                    'charset' => 'utf8',
+                    'prefix' => $this->data->get('prefix'),
+                    'schema' => 'public',
+                ]);
+                break;
+            case 'sqlite':
+                $this->config->set('database.connections.sqlite', [
+                    'driver'   => 'sqlite',
+                    'database' => database_path('database.sqlite'),
+                    'prefix'   => $this->data->get('prefix'),
+                ]);
+                break;
+        }
         $this->call('migrate');
         $this->setting->set('site.title', $this->data->get('title'));
         $this->setting->set('seo.title', $this->data->get('title'));
@@ -110,7 +132,7 @@ class InstallCommand extends Command {
      * @param \Notadd\Install\Requests\InstallRequest $request
      */
     public function setDataFromCalling(InstallRequest $request) {
-        $this->data->put('driver', 'mysql');
+        $this->data->put('driver', $request->offsetGet('driver'));
         $this->data->put('host', $request->offsetGet('host'));
         $this->data->put('database', $request->offsetGet('database'));
         $this->data->put('username', $request->offsetGet('username'));

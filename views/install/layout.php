@@ -11,7 +11,10 @@
             margin: 0;
             padding: 0;
         }
-        body, input, button {
+        body,
+        input,
+        button,
+        select {
             color: #7e96b3;
             font-family: "Microsoft Yahei", "Open Sans", Helvetica, Arial, sans-serif;
             font-size: 16px;
@@ -52,7 +55,8 @@
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
         }
-        .form-field input {
+        .form-field input,
+        .form-field select {
             background: #edf2f7;
             border: 2px solid transparent;
             box-sizing: border-box;
@@ -63,7 +67,8 @@
             transition: background 0.2s, border-color 0.2s, color 0.2s;
             width: 100%;
         }
-        .form-field input:focus {
+        .form-field input:focus,
+        .form-field select:focus {
             background: #fff;
             border-color: #e7652e;
             color: #444;
