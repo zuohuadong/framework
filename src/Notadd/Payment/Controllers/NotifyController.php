@@ -57,15 +57,16 @@ class NotifyController extends Controller {
             case 'wechatpay':
                 $this->log->error('微信回调开始：');
                 $gateway = $this->payment->gateway('wechatpay');
+                $this->log->error('微信回调请求信息：' . file_get_contents('php://input'));
                 $response = $gateway->completePurchase([
                     'request_params' => file_get_contents('php://input')
-                ]);
-                $tmp = $response->getData();
+                ])->send();
+                $tmp = $response->getRequestData();
+                $this->log->error('微信回调请求Response数据：' . print_r($response->getRequestData(), true));
                 $payment = Payment::whereTradeNumber($tmp['out_trade_no'])->whereType('wechatpay')->first();
                 $data = new Collection();
                 $data->put('subject', $tmp['attach']);
                 $data->put('data', json_encode($tmp));
-                $response->send();
                 if ($response->isPaid()) {
                     $data->put('is_success', true);
                 }else{
