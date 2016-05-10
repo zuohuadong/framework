@@ -21,7 +21,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="col-md-5">插件名称</th>别名</th>
+                                <th class="col-md-5">插件名称</th>
                                 <th class="col-md-4">操作</th>
                             </tr>
                             </thead>
