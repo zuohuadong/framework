@@ -8,6 +8,7 @@
 namespace Notadd\Theme;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Foundation\Console\Kernel;
 use Notadd\Foundation\Traits\InjectBladeTrait;
 use Notadd\Foundation\Traits\InjectCookieTrait;
 use Notadd\Foundation\Traits\InjectEventsTrait;
@@ -18,6 +19,8 @@ use Notadd\Foundation\Traits\InjectThemeTrait;
 use Notadd\Foundation\Traits\InjectViewTrait;
 use Notadd\Theme\Controllers\Admin\PublishController;
 use Notadd\Theme\Controllers\Admin\ThemeController;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 /**
  * Class ThemeServiceProvider
  * @package Notadd\Theme
@@ -57,7 +60,17 @@ class ThemeServiceProvider extends ServiceProvider {
                     });
                 }
             });
-
+        });
+        $this->getEvents()->listen('kernel.handled', function() {
+            if($this->app->inDebugMode()) {
+                $command = $this->app->make(Kernel::class)->find('vendor:publish');
+                $input = new ArrayInput([
+                    '--force' => true
+                ]);
+                $output = new BufferedOutput();
+                $command->run($input, $output);
+                $this->app->make('log')->info('调试状态下发布静态到公共目录的结果：' . $output->fetch());
+            }
         });
         $this->getBlade()->directive('css', function($expression) {
             return "<?php \$__theme->registerCss{$expression}; ?>";
