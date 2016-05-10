@@ -178,6 +178,17 @@ class Category {
         return $this->model->getShowTemplate();
     }
     /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function getSubCategories() {
+        $collections = new Collection();
+        $data = $this->model->where('parent_id', $this->model->getAttribute('id'))->get();
+        $data->each(function(CategoryModel $model) use($collections) {
+            $collections->push(new Category($model->getAttribute('id')));
+        });
+        return $collections;
+    }
+    /**
      * @return mixed
      */
     public function getTitle() {
