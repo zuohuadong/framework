@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:05
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 /**
  * Class ConfigClearCommand
@@ -33,7 +34,7 @@ class ConfigClearCommand extends Command {
      * @return void
      */
     public function fire() {
-        $this->files->delete($this->notadd->getCachedConfigPath());
+        $this->files->delete($this->laravel->getCachedConfigPath());
         $this->info('Configuration cache cleared!');
     }
 }

@@ -22,15 +22,6 @@ interface Theme {
     /**
      * @return mixed
      */
-    public function getCssPath();
-    /**
-     * @param $path
-     * @return mixed
-     */
-    public function useCssPath($path);
-    /**
-     * @return mixed
-     */
     public function getViewPath();
     /**
      * @param $path

@@ -6,8 +6,8 @@
  * @datetime 2015-12-01 19:54
  */
 namespace Notadd\Foundation\Session;
+use Illuminate\Session\Console\SessionTableCommand;
 use Illuminate\Support\ServiceProvider;
-use Notadd\Foundation\Session\Console\SessionTableCommand;
 /**
  * Class ConsoleServiceProvider
  * @package Notadd\Foundation\Session

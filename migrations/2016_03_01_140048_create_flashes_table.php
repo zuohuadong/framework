@@ -5,7 +5,7 @@
  * @copyright (c) 2015, iBenchu.org
  * @datetime 2016-03-01 13:42
  */
-use Notadd\Foundation\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Blueprint;
 use Notadd\Foundation\Database\Migrations\Migration;
 /**
  * Class CreateFlashesTable

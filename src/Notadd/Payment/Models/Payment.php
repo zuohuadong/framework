@@ -6,7 +6,7 @@
  * @datetime 2016-03-19 21:17
  */
 namespace Notadd\Payment\Models;
-use Notadd\Foundation\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 class Payment extends Model {
     /**
      * @var array

@@ -74,9 +74,11 @@
                                 <tr>
                                     <td class="col-md-3"><strong>当前级别共有{{ $count }}个菜单</strong></td>
                                     <td class="col-md-2">
-                                        <input class="form-control input-sm" name="title" placeholder="输入菜单名称"></td>
+                                        <input class="form-control" name="title" placeholder="输入菜单名称">
+                                    </td>
                                     <td class="col-md-3">
-                                        <input class="form-control input-sm" name="link" placeholder="输入菜单链接"></td>
+                                        <input class="form-control" name="link" placeholder="输入菜单链接">
+                                    </td>
                                     <td class="col-md-4">
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-primary btn-xs">

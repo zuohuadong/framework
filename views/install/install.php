@@ -2,25 +2,32 @@
 <p>如果您在安装过程中遇到问题，可以联系作者获取帮助。</p>
 <form autocomplete="off" method="post">
     <input type="hidden" name="_token" value="<?php echo app('session')->getToken() ?>">
-    <input type="hidden" name="driver" value="mysql">
-    <div class="form-group">
+    <div class="form-group form-group-sm">
         <div class="form-field">
             <label>网站标题</label>
             <input name="title">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group form-group-sm">
         <div class="form-field">
             <label>数据库服务器</label>
             <input name="host" value="localhost">
         </div>
         <div class="form-field">
+            <label>数据库引擎</label>
+            <select name="driver">
+                <option value="mysql">MySQL</option>
+                <option value="pgsql">PostgreSQL</option>
+                <option value="sqlite">SQLite</option>
+            </select>
+        </div>
+        <div class="form-field">
             <label>数据库名</label>
-            <input name="database">
+            <input name="database" value="notadd">
         </div>
         <div class="form-field">
             <label>数据库用户名</label>
-            <input name="username">
+            <input name="username" value="root">
         </div>
         <div class="form-field">
             <label>数据库密码</label>
@@ -28,10 +35,10 @@
         </div>
         <div class="form-field">
             <label>数据库表前缀(例：not_)</label>
-            <input type="text" name="prefix">
+            <input type="text" name="prefix" value="not_">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group form-group-sm">
         <div class="form-field">
             <label>管理员用户名</label>
             <input name="admin_username">

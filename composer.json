@@ -42,9 +42,7 @@
         "doctrine/inflector": "~1.0",
         "doctrine/dbal": "^2.5",
         "jeremeamia/superclosure": "~2.2",
-        "leafo/scssphp": "0.6.*",
         "league/flysystem": "~1.0",
-        "matthiasmullie/minify": "^1.3",
         "monolog/monolog": "~1.11",
         "mtdowling/cron-expression": "~1.0",
         "nesbot/carbon": "~1.20",
@@ -66,7 +64,8 @@
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "symfony/psr-http-message-bridge": "^0.2.0",
         "zendframework/zend-diactoros": "^1.3.3",
-        "paragonie/random_compat": "^1.2"
+        "paragonie/random_compat": "^1.2",
+        "mobiledetect/mobiledetectlib": "2.8.*"
     },
     "require-dev": {
     },

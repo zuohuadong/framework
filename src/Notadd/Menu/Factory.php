@@ -42,12 +42,10 @@ class Factory {
     }
     /**
      * @param $name
-     * @param string $template
-     * @return mixed
+     * @return array
      */
-    public function make($name, $template = '') {
+    public function make($name) {
         $group = MenuGroup::whereAlias($name)->firstOrFail();
-        $menus = $this->build($group->id);
-        return $this->view->make($template)->withMenus($menus);
+        return $this->build($group->id);
     }
 }

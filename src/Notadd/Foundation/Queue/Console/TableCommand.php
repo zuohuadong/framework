@@ -6,10 +6,10 @@
  * @datetime 2015-12-01 18:04
  */
 namespace Notadd\Foundation\Queue\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Composer;
 use Illuminate\Support\Str;
-use Notadd\Foundation\Composer\Composer;
-use Notadd\Foundation\Console\Command;
 /**
  * Class TableCommand
  * @package Notadd\Foundation\Queue\Console
@@ -28,13 +28,13 @@ class TableCommand extends Command {
      */
     protected $files;
     /**
-     * @var \Notadd\Foundation\Composer\Composer
+     * @var \Illuminate\Support\Composer
      */
     protected $composer;
     /**
      * TableCommand constructor.
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @param \Notadd\Foundation\Composer\Composer $composer
+     * @param \Illuminate\Support\Composer $composer
      */
     public function __construct(Filesystem $files, Composer $composer) {
         parent::__construct();
@@ -45,7 +45,7 @@ class TableCommand extends Command {
      * @return void
      */
     public function fire() {
-        $table = $this->notadd['config']['queue.connections.database.table'];
+        $table = $this->laravel['config']['queue.connections.database.table'];
         $tableClassName = Str::studly($table);
         $fullPath = $this->createBaseMigration($table);
         $stub = str_replace([
@@ -65,7 +65,7 @@ class TableCommand extends Command {
      */
     protected function createBaseMigration($table = 'jobs') {
         $name = 'create_' . $table . '_table';
-        $path = $this->notadd->frameworkPath() . '/migrations';
-        return $this->notadd['migration.creator']->create($name, $path);
+        $path = $this->laravel->frameworkPath() . '/migrations';
+        return $this->laravel['migration.creator']->create($name, $path);
     }
 }

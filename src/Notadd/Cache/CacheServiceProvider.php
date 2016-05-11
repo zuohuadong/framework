@@ -7,10 +7,10 @@
  */
 namespace Notadd\Cache;
 use Illuminate\Cache\CacheManager;
+use Illuminate\Cache\Console\CacheTableCommand;
+use Illuminate\Cache\Console\ClearCommand;
 use Illuminate\Cache\MemcachedConnector;
 use Illuminate\Support\ServiceProvider;
-use Notadd\Cache\Console\CacheTableCommand;
-use Notadd\Cache\Console\ClearCommand;
 use Notadd\Cache\Controllers\Admin\CacheController;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 /**

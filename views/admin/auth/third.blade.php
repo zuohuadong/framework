@@ -14,7 +14,7 @@
                         <div class="panel panel-lined clearfix mb20">
                             <div class="panel-heading mb20"><i>QQ登陆设置</i></div>
                             <div class="form-horizontal col-md-12">
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">QQ登陆功能开启</label>
                                     <div class="col-md-6">
                                         <div class="btn-group" data-toggle="buttons">
@@ -28,19 +28,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">App ID</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_qq_key" value="{{ $third_qq_key }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">APP KEY</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_qq_secret" value="{{ $third_qq_secret }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">回调地址</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_qq_callback" value="{{ $third_qq_callback }}">
@@ -49,7 +49,7 @@
                             </div>
                             <div class="panel-heading mb20"><i>微博登陆设置</i></div>
                             <div class="form-horizontal col-md-12">
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">微博登陆功能开启</label>
                                     <div class="col-md-6">
                                         <div class="btn-group" data-toggle="buttons">
@@ -63,19 +63,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">App Key</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_weibo_key" value="{{ $third_weibo_key }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">App Secret</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_weibo_secret" value="{{ $third_weibo_secret }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">回调地址</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_weibo_callback" value="{{ $third_weibo_callback }}">
@@ -84,7 +84,7 @@
                             </div>
                             <div class="panel-heading mb20"><i>微信登陆设置</i></div>
                             <div class="form-horizontal col-md-12">
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">微信登陆功能开启</label>
                                     <div class="col-md-6">
                                         <div class="btn-group" data-toggle="buttons">
@@ -98,19 +98,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">App Key</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_weixin_key" value="{{ $third_weixin_key }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">App Secret</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_weixin_secret" value="{{ $third_weixin_secret }}">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">回调地址</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="third_weixin_callback" value="{{ $third_weixin_callback }}">
@@ -118,10 +118,10 @@
                                 </div>
                             </div>
                             <div class="form-horizontal col-md-12 mt20">
-                                <div class="form-group">
+                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label"></label>
                                     <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary" style="width: 100%;">提交</button>
+                                        <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
                                     </div>
                                 </div>
                             </div>

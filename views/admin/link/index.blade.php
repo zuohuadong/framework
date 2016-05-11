@@ -64,9 +64,11 @@
                                 <tr>
                                     <td class="col-md-3"><strong>当前级别共有{{ $count }}个友情链接</strong></td>
                                     <td class="col-md-2">
-                                        <input class="form-control input-sm" name="title" placeholder="输入名称"></td>
+                                        <input type="text" class="form-control input-sm" name="title" placeholder="输入名称">
+                                    </td>
                                     <td class="col-md-3">
-                                        <input class="form-control input-sm" name="link" placeholder="输入链接"></td>
+                                        <input type="text" class="form-control input-sm" name="link" placeholder="输入链接">
+                                    </td>
                                     <td class="col-md-4">
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-primary btn-xs">

@@ -6,32 +6,21 @@
  * @datetime 2015-12-06 19:03
  */
 namespace Notadd\Foundation\Database\Migrations;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Container\Container;
+use Illuminate\Database\Migrations\Migration as IlluminateMigration;
 /**
  * Class Migration
  * @package Notadd\Foundation\Database\Migrations
  */
-abstract class Migration {
+abstract class Migration extends IlluminateMigration {
     /**
-     * @var string
-     */
-    protected $connection;
-    /**
-     * @var \Notadd\Foundation\Database\Schema\Builder
+     * @var \Illuminate\Database\Schema\Builder
      */
     protected $schema;
     /**
      * Migration constructor.
-     * @param \Illuminate\Contracts\Foundation\Application $application
-     * @internal param \Notadd\Foundation\Database\Schema\Builder $schema
      */
-    public function __construct(Application $application) {
-        $this->schema = $application->make('db')->connection()->getSchemaBuilder();
-    }
-    /**
-     * @return string
-     */
-    public function getConnection() {
-        return $this->connection;
+    public function __construct() {
+        $this->schema = Container::getInstance()->make('db')->connection()->getSchemaBuilder();
     }
 }

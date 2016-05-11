@@ -9,6 +9,7 @@ namespace Notadd\Article\Controllers\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Article\Events\OnArticleEdit;
 use Notadd\Article\Models\Article;
 use Notadd\Article\Models\ArticleRecommend;
 use Notadd\Article\Requests\ArticleCreateRequest;
@@ -58,6 +59,7 @@ class ArticleController extends AbstractAdminController {
     public function edit($id) {
         $article = Article::findOrFail($id);
         $category = Category::findOrFail($article->category_id);
+        $this->events->fire(new OnArticleEdit($this->app, $this->view, $id));
         $this->share('article', $article);
         $this->share('category', $category);
         return $this->view($category->getArticleTemplate('edit'));

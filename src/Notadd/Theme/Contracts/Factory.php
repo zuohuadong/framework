@@ -15,19 +15,4 @@ interface Factory {
      * @return mixed
      */
     public function getThemeList();
-    /**
-     * @param $path
-     * @return void
-     */
-    public function registerCss($path);
-    /**
-     * @param $path
-     * @return void
-     */
-    public function registerJs($path);
-    /**
-     * @param string $type
-     * @return string
-     */
-    public function outputInBlade($type = 'css');
 }

@@ -4,15 +4,7 @@
  * @copyright (c) 2015, iBenchu.com
  */
 namespace Notadd\Theme\Controllers\Admin;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Logging\Log;
-use Illuminate\Contracts\View\Factory as ViewFactory;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Notadd\Admin\Controllers\AbstractAdminController;
-use Notadd\Foundation\SearchEngine\Optimization;
-use Notadd\Setting\Factory;
 /**
  * Class ThemeController
  * @package Notadd\Theme\Controllers\Admin
@@ -24,17 +16,9 @@ class ThemeController extends AbstractAdminController {
     protected $theme;
     /**
      * ThemeController constructor.
-     * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param \Illuminate\Events\Dispatcher $events
-     * @param \Illuminate\Contracts\Logging\Log $log
-     * @param \Illuminate\Routing\Redirector $redirect
-     * @param \Illuminate\Http\Request $request
-     * @param \Notadd\Setting\Factory $setting
-     * @param \Notadd\Foundation\SearchEngine\Optimization $seo
-     * @param \Illuminate\Contracts\View\Factory $view
      */
-    public function __construct(Application $app, Dispatcher $events, Log $log, Redirector $redirect, Request $request, Factory $setting, Optimization $seo, ViewFactory $view) {
-        parent::__construct($app, $events, $log, $redirect, $request, $setting, $seo, $view);
+    public function __construct() {
+        parent::__construct();
         $this->theme = $this->app->make('theme');
     }
     /**
@@ -43,7 +27,12 @@ class ThemeController extends AbstractAdminController {
     public function index() {
         $themes = $this->theme->getThemeList()->toArray();
         unset($themes['admin']);
-        $this->share('message', $this->session->get('message'));
+        if($this->session->get('message')) {
+            $message = explode(PHP_EOL, $this->session->get('message'));
+        } else {
+            $message = $this->session->get('message');
+        }
+        $this->share('message', $message);
         $this->share('themes', $themes);
         return $this->view('theme.index');
     }

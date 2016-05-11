@@ -13,11 +13,11 @@ use Illuminate\Container\Container;
  */
 trait InjectExtensionTrait {
     /**
-     * @var \Notadd\Foundation\Extension\ExtensionManager
+     * @var \Notadd\Extension\ExtensionManager
      */
     private $extension;
     /**
-     * @return \Notadd\Foundation\Extension\ExtensionManager
+     * @return \Notadd\Extension\ExtensionManager
      */
     public function getExtension() {
         if(!isset($this->extension)) {

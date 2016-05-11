@@ -6,6 +6,7 @@
  * @datetime 2016-01-29 15:07
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 /**
  * Class StaticClearCommand
@@ -36,7 +37,7 @@ class StaticClearCommand extends Command {
      * @return void
      */
     public function fire() {
-        $statics = $this->files->glob($this->notadd->publicPath() . DIRECTORY_SEPARATOR . 'caches' . '/*');
+        $statics = $this->files->glob($this->laravel->publicPath() . DIRECTORY_SEPARATOR . 'caches' . '/*');
         foreach($statics as $static) {
             $this->files->deleteDirectory($static);
         }

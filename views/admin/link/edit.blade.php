@@ -27,19 +27,19 @@
                         <form class="form-horizontal col-md-12" action="{{ url('admin/link/' . $link->id) }}" autocomplete="off" enctype="multipart/form-data" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="_method" value="put">
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">名称</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="title" value="{{ $link->title }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">链接</label>
                                 <div class="col-md-6">
                                     <textarea class="form-control" name="link" rows="1">{{ $link->link }}</textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">图标</label>
                                 <div class="col-md-6">
                                 <span class="btn btn-success btn-file">
@@ -56,13 +56,13 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">简介</label>
                                 <div class="col-md-6">
                                     <textarea class="form-control" name="description" rows="3">{{ $link->description }}</textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">状态</label>
                                 <div class="col-md-6">
                                     <div class="btn-group" data-toggle="buttons">
@@ -76,10 +76,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label"></label>
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary right">提交</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
                                 </div>
                             </div>
                         </form>

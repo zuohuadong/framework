@@ -31,7 +31,7 @@ class HttpServiceProvider extends ServiceProvider {
                 return $this->app->call('Notadd\Page\Controllers\PageController@show', ['id' => $page_id]);
             }
             $this->app->make('view')->share('logo', file_get_contents(realpath($this->app->frameworkPath() . '/views/install') . DIRECTORY_SEPARATOR . 'logo.svg'));
-            return $this->app->make('view')->make('default::index');
+            return $this->app->make('view')->make('themes::index');
         });
     }
     /**

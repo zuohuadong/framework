@@ -31,28 +31,28 @@
                         </div>
                         <form class="form-horizontal col-md-12" action="{{ url('admin/seo') }}" autocomplete="off" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">SEO标题</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control input-sm" name="title" value="{{ app('request')->old('title', $title) }}">
+                                    <input type="text" class="form-control" name="title" value="{{ app('request')->old('title', $title) }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">SEO关键字</label>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control input-sm" name="keyword" value="{{ app('request')->old('keyword', $keyword) }}">
+                                    <input type="text" class="form-control" name="keyword" value="{{ app('request')->old('keyword', $keyword) }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">SEO描述</label>
                                 <div class="col-md-4">
-                                    <textarea class="form-control input-sm" name="description" rows="10">{{ app('request')->old('description', $description) }}</textarea>
+                                    <textarea class="form-control" name="description" rows="10">{{ app('request')->old('description', $description) }}</textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4">
-                                    <button class="btn btn-primary right" type="submit">提交</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
                                 </div>
                             </div>
                         </form>

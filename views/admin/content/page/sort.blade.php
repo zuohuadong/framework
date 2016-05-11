@@ -12,7 +12,7 @@
         </ol>
         <div class="page-wrap">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-lined clearfix mb30">
                         <div class="panel-heading"><i>页面：{{ $page->title }} - 排序</i></div>
                         <form action="{{ url('admin/page/' . $page->id . '/sorting') }}" method="post">
@@ -27,7 +27,7 @@
                                 @endforeach
                             </ul>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary mb20 mr20 mt20" style="width: 80%;">提交</button>
+                                <button type="submit" class="btn btn-primary btn-sm mb20 mr20 mt20" style="width: 80%;">提交</button>
                             </div>
                         </form>
                     </div>

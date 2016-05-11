@@ -12,8 +12,12 @@
                     @if(isset($message))
                         <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom: 15px;">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <p><strong>提示：</strong>{{ $message }}</p>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p><strong>提示：</strong></p>
+                            @foreach($message as $item)
+                                <p>{{ $item }}</p>
+                            @endforeach
                         </div>
                     @endif
                     <div class="panel panel-lined clearfix mb30">

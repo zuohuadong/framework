@@ -163,6 +163,7 @@ class AdminServiceProvider extends ServiceProvider {
                     'group' => [
                         'title' => '组件管理',
                         'active' => [
+                            'admin/attachment*',
                             'admin/theme*',
                             'admin/flash*',
                             'admin/ad*',
@@ -177,6 +178,11 @@ class AdminServiceProvider extends ServiceProvider {
                                 'title' => '主题管理',
                                 'active' => 'admin/theme*',
                                 'url' => 'admin/theme',
+                            ],
+                            [
+                                'title' => '附件管理',
+                                'active' => 'admin/attachment*',
+                                'url' => 'admin/attachment',
                             ],
                             [
                                 'title' => '菜单组件',
@@ -217,6 +223,20 @@ class AdminServiceProvider extends ServiceProvider {
                                 'active' => 'admin/migration*',
                                 'url' => 'admin/migration'
                             ],
+                        ]
+                    ],
+                    'extension' => [
+                        'title' => '插件配置',
+                        'active' => [
+                            'admin/extension*'
+                        ],
+                        'icon' => 'fa-shekel',
+                        'sub' => [
+                            [
+                                'title' => '插件管理',
+                                'active' => 'admin/extension*',
+                                'url' => 'admin/extension'
+                            ]
                         ]
                     ]
                 ]

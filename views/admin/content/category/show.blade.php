@@ -72,7 +72,7 @@
                                 <tr>
                                     <td class="col-md-4"><strong>当前级别有{{ $count }}个分类</strong></td>
                                     <td class="col-md-4">
-                                        <input class="form-control input-sm" name="title" placeholder="输入分类名称"></td>
+                                        <input type="text" class="form-control input-sm" name="title" placeholder="输入分类名称"></td>
                                     <td class="col-md-4">
                                         <button class="btn btn-primary btn-xs" type="submit">
                                             <i class="fa fa-plus"></i>创建新分类

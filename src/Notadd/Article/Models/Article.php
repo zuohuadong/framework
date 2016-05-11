@@ -6,10 +6,10 @@
  * @datetime 2015-10-30 15:06
  */
 namespace Notadd\Article\Models;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Notadd\Category\Models\Category;
-use Notadd\Foundation\Database\Eloquent\Model;
-use Notadd\Foundation\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 /**
  * Class Article
  * @package Notadd\Article\Models
@@ -41,13 +41,13 @@ class Article extends Model {
      */
     protected $showTemplate = 'themes::article.show';
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category() {
         return $this->belongsTo(Category::class);
     }
     /**
-     * @return \Notadd\Foundation\Database\Eloquent\Relations\MorphTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function extend() {
         return $this->morphTo();

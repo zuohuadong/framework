@@ -68,6 +68,12 @@ class Article {
         return $this->model;
     }
     /**
+     * @param \Notadd\Article\Models\Article $model
+     */
+    public function setModel(ArticleModel $model) {
+        $this->model = $model;
+    }
+    /**
      * @return string
      */
     public function getRouting() {
@@ -84,7 +90,20 @@ class Article {
     /**
      * @return mixed
      */
+    public function getThumbImage() {
+        return $this->model->getAttribute('thumb_image');
+    }
+    /**
+     * @return mixed
+     */
     public function getTitle() {
         return $this->model->getAttribute('title');
+    }
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function getAttribute($key) {
+        return $this->model->getAttribute($key);
     }
 }

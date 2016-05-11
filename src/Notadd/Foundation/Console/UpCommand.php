@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:25
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 /**
  * Class UpCommand
  * @package Notadd\Foundation\Console
@@ -23,7 +24,7 @@ class UpCommand extends Command {
      * @return void
      */
     public function fire() {
-        @unlink($this->notadd->storagePath() . '/notadd/down');
+        @unlink($this->laravel->storagePath() . '/notadd/down');
         $this->info('Application is now live.');
     }
 }

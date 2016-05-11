@@ -51,10 +51,10 @@
                                 <tr>
                                     <td class="col-md-2"></td>
                                     <td class="col-md-3">
-                                        <input class="form-control input-sm" name="title" placeholder="输入分组名称">
+                                        <input type="text" class="form-control input-sm" name="title" placeholder="输入分组名称">
                                     </td>
                                     <td class="col-md-3">
-                                        <input class="form-control input-sm" name="alias" placeholder="输入分组别名">
+                                        <input type="text" class="form-control input-sm" name="alias" placeholder="输入分组别名">
                                     </td>
                                     <td class="col-md-4">
                                         <button class="btn btn-primary btn-xs" type="submit">

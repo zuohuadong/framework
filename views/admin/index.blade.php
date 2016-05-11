@@ -23,7 +23,8 @@
                             </tr>
                             <tr>
                                 <td class="text-right"><strong>服务器操作系统：</strong></td>
-                                <td><?php
+                                <td>
+                                    <?php
                                     $os = explode(" ", php_uname());
                                     echo $os[0];
                                     ?> &nbsp;内核版本：<?php
@@ -32,7 +33,8 @@
                                     } else {
                                         echo $os[1];
                                     }
-                                    ?></td>
+                                    ?>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-right"><strong>服务器解译引擎：</strong></td>

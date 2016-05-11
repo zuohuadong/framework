@@ -62,7 +62,7 @@
                             <table class="table table-hover">
                                 <tr>
                                     <td class="col-md-4"><strong>分组共有{{ $count }}张幻灯片</strong></td>
-                                    <td class="col-md-4"><input class="form-control input-sm" name="title" placeholder="输入幻灯片标题"></td>
+                                    <td class="col-md-4"><input class="form-control" name="title" placeholder="输入幻灯片标题"></td>
                                     <td class="col-md-4">
                                         <button class="btn btn-primary btn-xs" type="submit">
                                             <i class="fa fa-plus"></i>创建新幻灯片

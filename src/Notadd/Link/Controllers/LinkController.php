@@ -7,6 +7,7 @@
  */
 namespace Notadd\Link\Controllers;
 use Notadd\Foundation\Routing\Controller;
+use Notadd\Link\Models\Link;
 /**
  * Class LinkController
  * @package Notadd\Link\Controllers
@@ -16,7 +17,8 @@ class LinkController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function index() {
-        return $this->view('');
+        $this->share('list', Link::whereIsEnabled(true)->get());
+        return $this->view('link.index');
     }
     /**
      * @param $id

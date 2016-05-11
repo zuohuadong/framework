@@ -185,10 +185,10 @@ if(!function_exists('delete')) {
 if(!function_exists('factory')) {
     /**
      * @param dynamic  class|class,name|class,amount|class,name,amount
-     * @return \Notadd\Foundation\Database\Eloquent\FactoryBuilder
+     * @return \Illuminate\Database\Eloquent\FactoryBuilder
      */
     function factory() {
-        $factory = app('Notadd\Foundation\Database\Eloquent\Factory');
+        $factory = app('Illuminate\Database\Eloquent\Factory');
         $arguments = func_get_args();
         if(isset($arguments[1]) && is_string($arguments[1])) {
             return $factory->of($arguments[0], $arguments[1])->times(isset($arguments[2]) ? $arguments[2] : 1);

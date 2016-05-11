@@ -6,7 +6,7 @@
 namespace Notadd\Category\Events;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Notadd\Category\Models\Category;
+use Notadd\Category\Category;
 /**
  * Class OnCategoryShow
  * @package Notadd\Category\Events
@@ -28,7 +28,7 @@ class OnCategoryShow {
      * OnCategoryShow constructor.
      * @param \Illuminate\Contracts\Foundation\Application $application
      * @param \Illuminate\Contracts\View\Factory $view
-     * @param \Notadd\Category\Models\Category $category
+     * @param \Notadd\Category\Category $category
      */
     public function __construct(Application $application, Factory $view, Category $category) {
         $this->application = $application;
@@ -36,16 +36,22 @@ class OnCategoryShow {
         $this->category = $category;
     }
     /**
-     * @return \Notadd\Category\Models\Category
+     * @return \Notadd\Category\Category
      */
     public function getCategory() {
         return $this->category;
     }
     /**
+     * @return \Notadd\Category\Models\Category
+     */
+    public function getCategoryModel() {
+        return $this->getCategoryModel();
+    }
+    /**
      * @param $template
      */
     public function setCategoryShowTemplate($template) {
-        $this->category->setShowTemplate($template);
+        $this->category->getModel()->setShowTemplate($template);
     }
     /**
      * @param $key

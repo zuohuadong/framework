@@ -6,6 +6,7 @@
  * @datetime 2015-12-01 16:02
  */
 namespace Notadd\Foundation\Console;
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 /**
  * Class ConfigCacheCommand
@@ -38,14 +39,14 @@ class ConfigCacheCommand extends Command {
     public function fire() {
         $this->call('config:clear');
         $config = $this->getFreshConfiguration();
-        $this->files->put($this->notadd->getCachedConfigPath(), '<?php return ' . var_export($config, true) . ';' . PHP_EOL);
+        $this->files->put($this->laravel->getCachedConfigPath(), '<?php return ' . var_export($config, true) . ';' . PHP_EOL);
         $this->info('Configuration cached successfully!');
     }
     /**
      * @return mixed
      */
     protected function getFreshConfiguration() {
-        $app = require $this->notadd->basePath() . '/bootstrap/app.php';
+        $app = require $this->laravel->basePath() . '/bootstrap/app.php';
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
         return $app['config']->all();
     }

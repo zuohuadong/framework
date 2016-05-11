@@ -6,17 +6,14 @@
  * @datetime 2016-03-19 21:00
  */
 namespace Notadd\Payment\Controllers;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Logging\Log;
-use Illuminate\Contracts\View\Factory as ViewFactory;
-use Illuminate\Events\Dispatcher;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Collection;
 use Notadd\Foundation\Routing\Controller;
-use Notadd\Foundation\SearchEngine\Optimization;
 use Notadd\Payment\Models\Payment;
-use Notadd\Setting\Factory as SettingFactory;
+/**
+ * Class NotifyController
+ * @package Notadd\Payment\Controllers
+ */
 class NotifyController extends Controller {
     /**
      * @var \Notadd\Payment\PaymentManager
@@ -24,18 +21,16 @@ class NotifyController extends Controller {
     protected $payment;
     /**
      * NotifyController constructor.
-     * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param \Illuminate\Events\Dispatcher $events
-     * @param \Illuminate\Contracts\Logging\Log $log
-     * @param \Illuminate\Routing\Redirector $redirect
-     * @param \Notadd\Setting\Factory $setting
-     * @param \Notadd\Foundation\SearchEngine\Optimization $seo
-     * @param \Illuminate\Contracts\View\Factory $view
      */
-    public function __construct(Application $app, Dispatcher $events, Log $log, Redirector $redirect, SettingFactory $setting, Optimization $seo, ViewFactory $view) {
-        parent::__construct($app, $events, $log, $redirect, $setting, $seo, $view);
-        $this->payment = $app->make('pay');
+    public function __construct() {
+        parent::__construct();
+        $this->payment = $this->app->make('pay');
     }
+    /**
+     * @param $type
+     * @param \Illuminate\Http\Request $request
+     * @return bool|\Illuminate\Http\RedirectResponse|mixed
+     */
     public function handle($type, Request $request) {
         if(!in_array($type, ['alipay', 'wechatpay'])) {
             return false;
@@ -62,15 +57,16 @@ class NotifyController extends Controller {
             case 'wechatpay':
                 $this->log->error('微信回调开始：');
                 $gateway = $this->payment->gateway('wechatpay');
+                $this->log->error('微信回调请求信息：' . file_get_contents('php://input'));
                 $response = $gateway->completePurchase([
                     'request_params' => file_get_contents('php://input')
-                ]);
-                $tmp = $response->getData();
+                ])->send();
+                $tmp = $response->getRequestData();
+                $this->log->error('微信回调请求Response数据：' . print_r($response->getRequestData(), true));
                 $payment = Payment::whereTradeNumber($tmp['out_trade_no'])->whereType('wechatpay')->first();
                 $data = new Collection();
                 $data->put('subject', $tmp['attach']);
                 $data->put('data', json_encode($tmp));
-                $response->send();
                 if ($response->isPaid()) {
                     $data->put('is_success', true);
                 }else{

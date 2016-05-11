@@ -31,6 +31,12 @@ class GetArticleAdminTemplates {
         $this->templates = $templates;
     }
     /**
+     * @return \Notadd\Category\Models\Category
+     */
+    public function getCategory() {
+        return $this->category;
+    }
+    /**
      * @param $key
      * @param $value
      */

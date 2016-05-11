@@ -6,15 +6,15 @@
  * @datetime 2015-12-07 16:48
  */
 namespace Notadd\Foundation\Validation;
+use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Validation\PresenceVerifierInterface;
-use Notadd\Foundation\Database\ConnectionResolverInterface;
 /**
  * Class DatabasePresenceVerifier
  * @package Notadd\Foundation\Validation
  */
 class DatabasePresenceVerifier implements PresenceVerifierInterface {
     /**
-     * @var \Notadd\Foundation\Database\ConnectionResolverInterface
+     * @var \Illuminate\Database\ConnectionResolverInterface
      */
     protected $db;
     /**
@@ -23,7 +23,7 @@ class DatabasePresenceVerifier implements PresenceVerifierInterface {
     protected $connection = null;
     /**
      * DatabasePresenceVerifier constructor.
-     * @param \Notadd\Foundation\Database\ConnectionResolverInterface $db
+     * @param \Illuminate\Database\ConnectionResolverInterface $db
      */
     public function __construct(ConnectionResolverInterface $db) {
         $this->db = $db;
@@ -62,7 +62,7 @@ class DatabasePresenceVerifier implements PresenceVerifierInterface {
         return $query->count();
     }
     /**
-     * @param  \Notadd\Foundation\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Query\Builder $query
      * @param  string $key
      * @param  string $extraValue
      * @return void
@@ -78,7 +78,7 @@ class DatabasePresenceVerifier implements PresenceVerifierInterface {
     }
     /**
      * @param  string $table
-     * @return \Notadd\Foundation\Database\Query\Builder
+     * @return \Illuminate\Database\Query\Builder
      */
     protected function table($table) {
         return $this->db->connection($this->connection)->table($table);

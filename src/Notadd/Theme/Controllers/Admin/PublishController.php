@@ -9,7 +9,15 @@ namespace Notadd\Theme\Controllers\Admin;
 use Notadd\Admin\Controllers\AbstractAdminController;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+/**
+ * Class PublishController
+ * @package Notadd\Theme\Controllers\Admin
+ */
 class PublishController extends AbstractAdminController {
+    /**
+     * @param $alias
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function show($alias) {
         $command = $this->getCommand('vendor:publish');
         $input = new ArrayInput([
