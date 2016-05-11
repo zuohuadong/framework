@@ -33,29 +33,29 @@
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="parent_id" value="{{ $item->parent_id }}">
                             <input type="hidden" name="group_id" value="{{ $item->group_id }}">
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">名称</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="title" value="{{ $item->title }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">提示</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="tooltip" value="{{ $item->tooltip }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">链接</label>
                                 <div class="col-md-6">
                                     <textarea class="form-control" name="link" rows="3">{{ $item->link }}</textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <div class="col-md-6 col-md-offset-3">以<strong>http://</strong>或<strong>https://</strong>开通的链接解析为外站链接
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">打开方式</label>
                                 <div class="col-md-6">
                                     <div class="btn-group" data-toggle="buttons">
@@ -83,12 +83,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <div class="col-md-6 col-md-offset-3">
                                     <strong>_blank：</strong>新窗口，<strong>_self：</strong>本窗口，<strong>_parent：</strong>父窗口，<strong>_top：</strong>顶层窗口。
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">颜色</label>
                                 <div class="col-md-6">
                                     <div class="input-group mb0" data-toggle="colorpicker">
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">图标</label>
                                 <div class="col-md-6">
                                 <span class="btn btn-success btn-file">
@@ -114,7 +114,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label">状态</label>
                                 <div class="col-md-6">
                                     <div class="btn-group" data-toggle="buttons">
@@ -128,10 +128,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-3 control-label"></label>
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary right">提交</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
                                 </div>
                             </div>
                         </form>

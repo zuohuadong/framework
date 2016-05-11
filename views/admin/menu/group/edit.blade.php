@@ -26,22 +26,22 @@
                         <form class="form-horizontal col-md-12" action="{{ url('admin/menu/' . $group->id) }}" autocomplete="off" method="post">
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">分组名称</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" name="title" value="{{ $group->title }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">分组别名</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" name="alias" value="{{ $group->alias }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4">
-                                    <button class="btn btn-primary right" type="submit">提交</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
                                 </div>
                             </div>
                         </form>

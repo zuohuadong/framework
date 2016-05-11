@@ -57,7 +57,7 @@
                                 <tr>
                                     <td class="col-md-5"><strong>当前级别有{{ $count }}个页面</strong></td>
                                     <td class="col-md-3">
-                                        <input class="form-control input-sm" name="title" placeholder="输入页面名称"></td>
+                                        <input type="text" class="form-control input-sm" name="title" placeholder="输入页面名称"></td>
                                     <td class="col-md-4">
                                         @if($id && $count)
                                             <div class="btn-group">

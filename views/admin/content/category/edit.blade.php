@@ -29,25 +29,25 @@
                         <form class="form-horizontal col-md-12" action="{{ url('admin/category/' . $category->id) }}" autocomplete="off" enctype="multipart/form-data" method="post">
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">名称</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" name="title" value="{{ $category->title }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">别名</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" name="alias" value="{{ $category->alias }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">描述</label>
                                 <div class="col-md-4">
                                     <textarea class="form-control" name="description" rows="4">{{ $category->description }}</textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">类型</label>
                                 <div class="col-md-4">
                                     <select class="form-control" name="type">
@@ -61,7 +61,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">背景颜色</label>
                                 <div class="col-md-4">
                                     <div class="input-group mb0" data-toggle="colorpicker">
@@ -70,25 +70,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">SEO标题</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" name="seo_title" value="{{ $category->seo_title }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">SEO关键字</label>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" name="seo_keyword" value="{{ $category->seo_keyword }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">SEO描述</label>
                                 <div class="col-md-4">
                                     <textarea class="form-control" name="seo_description" rows="4">{{ $category->seo_description }}</textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">背景图片</label>
                                 <div class="col-md-4">
                                 <span class="btn btn-success btn-file">
@@ -105,7 +105,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">头部图片</label>
                                 <div class="col-md-4">
                                 <span class="btn btn-success btn-file">
@@ -122,7 +122,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">状态</label>
                                 <div class="col-md-4">
                                     <div class="btn-group" data-toggle="buttons">
@@ -136,10 +136,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-primary" style="width: 100%;">提交</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
                                 </div>
                             </div>
                         </form>

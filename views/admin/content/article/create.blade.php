@@ -28,18 +28,18 @@
                 <div class="panel panel-lined clearfix mb30">
                     <div class="panel-heading mb20"><i>创建文章</i></div>
                     <div class="col-md-8">
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <div class="col-md-12">
                                 <input type="text" class="form-control" name="title" placeholder="请输入标题" value="{{ app('request')->old('title') }}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <div class="col-md-12">
                                 <script id="editor-container" type="text/plain" data-toggle="ueditor" name="content">{!! app('request')->old('content') !!}</script>
                             </div>
                         </div>
                         @if($category->type == 'western.information')
-                            <div class="form-group">
+                            <div class="form-group form-group-sm">
                                 <div class="col-md-12">
                                     <div class="btn-group" data-toggle="buttons">
                                         @foreach($recommends as $key=>$recommend)
@@ -51,14 +51,14 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary" style="width: 100%;">提交</button>
+                                <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <label class="col-md-4 control-label">上传缩略图</label>
                             <div class="col-md-8">
                         <span class="btn btn-success btn-file">
@@ -69,31 +69,31 @@
                                 <div id="thumb-image" class="image-preview" style="display: none;"></div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <label class="col-md-4 control-label">作者</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="author" value="{{ app('request')->old('author') }}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <label class="col-md-4 control-label">标签</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" name="keyword" rows="3">{{ app('request')->old('keyword') }}</textarea>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <label class="col-md-4 control-label">摘要</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" name="description" rows="11">{{ app('request')->old('description') }}</textarea>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <label class="col-md-4 control-label">来源</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="from_author" value="{{ app('request')->old('from_author') }}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-group-sm">
                             <label class="col-md-4 control-label">来源链接</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" name="from_url" rows="2">{{ app('request')->old('from_url') }}</textarea>

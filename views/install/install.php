@@ -2,13 +2,13 @@
 <p>如果您在安装过程中遇到问题，可以联系作者获取帮助。</p>
 <form autocomplete="off" method="post">
     <input type="hidden" name="_token" value="<?php echo app('session')->getToken() ?>">
-    <div class="form-group">
+    <div class="form-group form-group-sm">
         <div class="form-field">
             <label>网站标题</label>
             <input name="title">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group form-group-sm">
         <div class="form-field">
             <label>数据库服务器</label>
             <input name="host" value="localhost">
@@ -38,7 +38,7 @@
             <input type="text" name="prefix" value="not_">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group form-group-sm">
         <div class="form-field">
             <label>管理员用户名</label>
             <input name="admin_username">

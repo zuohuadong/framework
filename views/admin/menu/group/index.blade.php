@@ -51,10 +51,10 @@
                                 <tr>
                                     <td class="col-md-2"><strong>共有{{ $count }}个菜单分组</strong></td>
                                     <td class="col-md-3">
-                                        <input class="form-control input-sm" name="title" placeholder="输入分组名称">
+                                        <input type="text" class="form-control input-sm" name="title" placeholder="输入分组名称">
                                     </td>
                                     <td class="col-md-3">
-                                        <input class="form-control input-sm" name="alias" placeholder="输入分组别名">
+                                        <input type="text" class="form-control input-sm" name="alias" placeholder="输入分组别名">
                                     </td>
                                     <td class="col-md-4">
                                         <button class="btn btn-primary btn-xs" type="submit">
