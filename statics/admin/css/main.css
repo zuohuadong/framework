@@ -1334,11 +1334,14 @@ input[type=checkbox] {
 .form-inline .form-group-sm .form-control,
 .form-horizontal .form-group-sm .input-group-btn .btn,
 .form-inline .form-group-sm .input-group-btn .btn {
-    height: 31.2px;
+    height: 32px;
     padding: 4px 10px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 1px
+}
+.form-horizontal .form-group-sm textarea.form-control {
+    height: auto;
 }
 select.input-sm {
     height: 31.2px;

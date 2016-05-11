@@ -69,7 +69,7 @@
                                     <div class="form-group form-group-sm">
                                         <label class="col-md-4 control-label">上传缩略图</label>
                                         <div class="col-md-8">
-                                            <span class="btn btn-success btn-file">
+                                            <span class="btn btn-success btn-sm btn-file">
                                                 <i class="fa fa-image"></i>
                                                 <span>上传图片</span>
                                                 <input type="file" data-toggle="upload-image" data-target="thumb-image" name="thumb_image">
@@ -124,11 +124,11 @@
                                         <div class="col-md-8">
                                             <div class="btn-group" data-toggle="buttons">
                                                 @if($article->is_sticky)
-                                                    <label class="btn btn-info active"><input type="radio" name="is_sticky" value="1" checked>置顶</label>
-                                                    <label class="btn btn-info"><input type="radio" name="is_sticky" value="0">不置顶</label>
+                                                    <label class="btn btn-info btn-sm active"><input type="radio" name="is_sticky" value="1" checked>置顶</label>
+                                                    <label class="btn btn-info btn-sm"><input type="radio" name="is_sticky" value="0">不置顶</label>
                                                 @else
-                                                    <label class="btn btn-info"><input type="radio" name="is_sticky" value="1">置顶</label>
-                                                    <label class="btn btn-info active"><input type="radio" name="is_sticky" value="0" checked>不置顶</label>
+                                                    <label class="btn btn-info btn-sm"><input type="radio" name="is_sticky" value="1">置顶</label>
+                                                    <label class="btn btn-info btn-sm active"><input type="radio" name="is_sticky" value="0" checked>不置顶</label>
                                                 @endif
                                             </div>
                                         </div>
