@@ -14,6 +14,7 @@ use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 use Illuminate\Support\Arr;
 use Notadd\Admin\AdminServiceProvider;
 use Notadd\Article\ArticleServiceProvider;
+use Notadd\Attachment\AttachmentServiceProvider;
 use Notadd\Category\CategoryServiceProvider;
 use Notadd\Develop\DevelopServiceProvider;
 use Notadd\Editor\EditorServiceProvider;
@@ -77,6 +78,7 @@ class Server {
             $this->application->register(FlashServiceProvider::class);
             $this->application->register(CategoryServiceProvider::class);
             $this->application->register(ArticleServiceProvider::class);
+            $this->application->register(AttachmentServiceProvider::class);
             $this->application->register(HttpServiceProvider::class);
             $this->application->register(LinkServiceProvider::class);
             $this->application->register(PageServiceProvider::class);

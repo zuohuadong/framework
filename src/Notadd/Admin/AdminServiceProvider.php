@@ -163,6 +163,7 @@ class AdminServiceProvider extends ServiceProvider {
                     'group' => [
                         'title' => '组件管理',
                         'active' => [
+                            'admin/attachment*',
                             'admin/theme*',
                             'admin/flash*',
                             'admin/ad*',
@@ -177,6 +178,11 @@ class AdminServiceProvider extends ServiceProvider {
                                 'title' => '主题管理',
                                 'active' => 'admin/theme*',
                                 'url' => 'admin/theme',
+                            ],
+                            [
+                                'title' => '附件管理',
+                                'active' => 'admin/attachment*',
+                                'url' => 'admin/attachment',
                             ],
                             [
                                 'title' => '菜单组件',
