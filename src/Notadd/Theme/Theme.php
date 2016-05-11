@@ -27,21 +27,9 @@ class Theme implements ThemeContract {
      */
     private $alias;
     /**
-     * @var string
-     */
-    private $cssPath;
-    /**
-     * @var string
-     */
-    private $lessPath;
-    /**
      * @var \Illuminate\Support\Collection
      */
     private $publishData;
-    /**
-     * @var string
-     */
-    private $sassPath;
     /**
      * @var \Notadd\Setting\Factory
      */
@@ -75,32 +63,6 @@ class Theme implements ThemeContract {
         return $this->alias;
     }
     /**
-     * @return string
-     */
-    public function getCssPath() {
-        return $this->cssPath;
-    }
-    /**
-     * @param string $path
-     * @return mixed|void
-     */
-    public function useCssPath($path) {
-        $this->cssPath = $path;
-    }
-    /**
-     * @return string
-     */
-    public function getLessPath() {
-        return $this->lessPath;
-    }
-    /**
-     * @param $path
-     * @return string
-     */
-    public function useLessPath($path) {
-        $this->lessPath = $path;
-    }
-    /**
      * @return \Illuminate\Support\Collection
      */
     public function getPublishData() {
@@ -112,18 +74,6 @@ class Theme implements ThemeContract {
      */
     public function usePublishPath($key, $value) {
         $this->publishData->put($key, $value);
-    }
-    /**
-     * @return string
-     */
-    public function getSassPath() {
-        return $this->sassPath;
-    }
-    /**
-     * @param $path
-     */
-    public function useSassPath($path) {
-        $this->sassPath = $path;
     }
     /**
      * @return string

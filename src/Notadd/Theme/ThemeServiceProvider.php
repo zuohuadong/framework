@@ -72,15 +72,6 @@ class ThemeServiceProvider extends ServiceProvider {
                 $this->app->make('log')->info('调试状态下发布静态到公共目录的结果：' . $output->fetch());
             }
         });
-        $this->getBlade()->directive('css', function($expression) {
-            return "<?php \$__theme->registerCss{$expression}; ?>";
-        });
-        $this->getBlade()->directive('js', function($expression) {
-            return "<?php \$__theme->registerJs{$expression}; ?>";
-        });
-        $this->getBlade()->directive('output', function($expression) {
-            return "<?php echo \$__theme->outputInBlade{$expression}; ?>";
-        });
     }
     /**
      * @return array
@@ -97,9 +88,6 @@ class ThemeServiceProvider extends ServiceProvider {
         });
         $this->app->singleton('theme.finder', function () {
             return $this->app->make(FileFinder::class);
-        });
-        $this->app->singleton('theme.material', function() {
-            return $this->app->make(Material::class);
         });
     }
 }

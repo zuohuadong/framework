@@ -154,7 +154,7 @@
     </div>
 @endsection
 @section('admin-css')
-    @css('admin::less.default.datetimepicker')
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/bootstrap-datetimepicker.min.css') }}">
 @endsection
 @section('admin-js')
     <script src="{{ asset('statics/ueditor/ueditor.config.js') }}"></script>

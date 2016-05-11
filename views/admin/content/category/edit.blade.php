@@ -150,7 +150,7 @@
     </div>
 @endsection
 @section('admin-css')
-    @css('admin::less.default.bootstrap-colorpicker')
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/bootstrap-colorpicker.min.css') }}">
 @endsection
 @section('admin-js')
     <script src="{{ asset('statics/admin/js/upload-preview.js') }}"></script>

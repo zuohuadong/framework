@@ -7,11 +7,10 @@
     <meta name="author" content="iBenchu, TwilRoad">
     <meta name="keywords" content="Notadd CMS">
     <meta name="description" content="A CMS System Base On Laravel 5.2">
-    @css('admin::less.layout.bootstrap.bootstrap')
-    @css('admin::less.layout.font-awesome.font-awesome')
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/bootstrap.min.css') }}">
     @yield('admin-css')
-    @css('admin::css.default.admin')
-    @output('css')
+    <link rel="stylesheet" href="{{ asset('statics/admin/css/main.css') }}">
 </head>
 <body class="app {{ $admin_theme }}">
 <header class="site-head clearfix" id="site-head">
