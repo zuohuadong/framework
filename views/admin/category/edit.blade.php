@@ -127,11 +127,11 @@
                                 <div class="col-md-4">
                                     <div class="btn-group" data-toggle="buttons">
                                         @if($category->enabled)
-                                            <label class="btn btn-primary active"><input name="enabled" type="radio" value="1" checked>开启</label>
-                                            <label class="btn btn-primary"><input name="enabled" type="radio" value="0">关闭</label>
+                                            <label class="btn btn-primary btn-sm active"><input name="enabled" type="radio" value="1" checked>开启</label>
+                                            <label class="btn btn-primary btn-sm"><input name="enabled" type="radio" value="0">关闭</label>
                                         @else
-                                            <label class="btn btn-primary"><input name="enabled" type="radio" value="1">开启</label>
-                                            <label class="btn btn-primary active"><input name="enabled" type="radio" value="0" checked>关闭</label>
+                                            <label class="btn btn-primary btn-sm"><input name="enabled" type="radio" value="1">开启</label>
+                                            <label class="btn btn-primary btn-sm active"><input name="enabled" type="radio" value="0" checked>关闭</label>
                                         @endif
                                     </div>
                                 </div>
