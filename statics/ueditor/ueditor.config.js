@@ -2,7 +2,7 @@
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
     window.UEDITOR_CONFIG = {
         UEDITOR_HOME_URL: URL
-        , serverUrl: "ueditor"
+        , serverUrl: "/ueditor"
         , toolbars: [[
             'fullscreen', 'source', '|', 'undo', 'redo', '|',
             'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',

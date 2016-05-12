@@ -7,6 +7,7 @@
  */
 namespace Notadd\Editor;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Editor\Controllers\UEditorController;
 use Notadd\Editor\Controllers\UploadController;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 /**
@@ -19,13 +20,12 @@ class EditorServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getRouter()->resource('upload', UploadController::class);
+        $this->getRouter()->any('ueditor', UEditorController::class . '@index');
     }
     /**
      * @return void
      */
     public function register() {
-        $this->app->singleton('editor', Editor::class);
         $this->app->singleton('editor.ueditor', '');
     }
 }
