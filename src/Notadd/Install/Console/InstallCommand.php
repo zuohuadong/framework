@@ -123,7 +123,7 @@ class InstallCommand extends Command {
         }
         $this->call('migrate', [
             '--force' => true,
-            '--path' => str_replace($this->laravel->basePath() . '/', '', realpath(__DIR__ . '/../../../../migrations/')),
+            '--path' => str_replace($this->laravel->basePath() . DIRECTORY_SEPARATOR, '', realpath(__DIR__ . '/../../../../migrations/')),
         ]);
         $this->setting->set('site.title', $this->data->get('title'));
         $this->setting->set('seo.title', $this->data->get('title'));
