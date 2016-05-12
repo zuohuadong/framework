@@ -31,12 +31,12 @@ class UploadCatch extends AbstractUpload {
             return false;
         }
         ob_start();
-        $context = stream_context_create(array(
-                'http' => array(
+        $context = stream_context_create([
+                'http' => [
                     'follow_location' => false
                     // don't follow redirects
-                )
-            ));
+                ]
+            ]);
         readfile($imgUrl, false, $context);
         $img = ob_get_contents();
         ob_end_clean();

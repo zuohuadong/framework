@@ -131,13 +131,13 @@ abstract class AbstractUpload {
      * @return array
      */
     public function getFileInfo() {
-        return array(
+        return [
             "state" => $this->stateInfo,
             "url" => $this->fullName,
             "title" => $this->fileName,
             "original" => $this->oriName,
             "type" => $this->fileType,
             "size" => $this->fileSize
-        );
+        ];
     }
 }

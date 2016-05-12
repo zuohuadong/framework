@@ -22,7 +22,7 @@ class ItemBag implements IteratorAggregate, Countable {
      * ItemBag constructor.
      * @param array $items
      */
-    public function __construct(array $items = array()) {
+    public function __construct(array $items = []) {
         $this->replace($items);
     }
     /**
@@ -34,8 +34,8 @@ class ItemBag implements IteratorAggregate, Countable {
     /**
      * @param array $items
      */
-    public function replace(array $items = array()) {
-        $this->items = array();
+    public function replace(array $items = []) {
+        $this->items = [];
         foreach($items as $item) {
             $this->add($item);
         }

@@ -266,14 +266,14 @@ class UEditorController extends Controller {
                 foreach ($sources as $imgUrl) {
                     $config['imgUrl'] = $imgUrl;
                     $info = with(new UploadCatch($config, $request))->upload();
-                    array_push($list, array(
+                    array_push($list, [
                         "state" => $info["state"],
                         "url" => $info["url"],
                         "size" => $info["size"],
                         "title" => htmlspecialchars($info["title"]),
                         "original" => htmlspecialchars($info["original"]),
                         "source" => htmlspecialchars($imgUrl)
-                    ));
+                    ]);
                 }
                 $result = [
                     'state' => count($list) ? 'SUCCESS' : 'ERROR',

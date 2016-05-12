@@ -37,14 +37,14 @@ class Lists {
         if(!count($files)) {
             return [
                 "state" => "no match file",
-                "list" => array(),
+                "list" => [],
                 "start" => $start,
                 "total" => count($files)
             ];
         }
         /* 获取指定范围的列表 */
         $len = count($files);
-        for($i = min($end, $len) - 1, $list = array(); $i < $len && $i >= 0 && $i >= $start; $i--) {
+        for($i = min($end, $len) - 1, $list = []; $i < $len && $i >= 0 && $i >= $start; $i--) {
             $list[] = $files[$i];
         }
         /* 返回数据 */
@@ -62,7 +62,7 @@ class Lists {
      * @param array $files
      * @return array|null
      */
-    protected function getfiles($path, $allowFiles, &$files = array()) {
+    protected function getfiles($path, $allowFiles, &$files = []) {
         if(!is_dir($path))
             return null;
         if(substr($path, strlen($path) - 1) != '/')
@@ -75,10 +75,10 @@ class Lists {
                     $this->getfiles($path2, $allowFiles, $files);
                 } else {
                     if(preg_match("/\.(" . $allowFiles . ")$/i", $file)) {
-                        $files[] = array(
+                        $files[] = [
                             'url' => substr($path2, strlen($_SERVER['DOCUMENT_ROOT'])),
                             'mtime' => filemtime($path2)
-                        );
+                        ];
                     }
                 }
             }

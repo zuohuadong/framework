@@ -60,7 +60,7 @@ abstract class AbstractRequest implements RequestContract {
      * @param array $parameters
      * @return $this
      */
-    public function initialize(array $parameters = array()) {
+    public function initialize(array $parameters = []) {
         if(null !== $this->response) {
             throw new RuntimeException('Request cannot be modified after it has been sent!');
         }

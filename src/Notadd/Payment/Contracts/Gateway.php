@@ -27,7 +27,7 @@ interface Gateway {
      * @param array $parameters
      * @return mixed
      */
-    public function initialize(array $parameters = array());
+    public function initialize(array $parameters = []);
     /**
      * @return mixed
      */

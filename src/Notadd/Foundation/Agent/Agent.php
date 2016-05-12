@@ -121,7 +121,7 @@ class Agent extends Mobile_Detect {
             $acceptLanguage = $this->getHttpHeader('HTTP_ACCEPT_LANGUAGE');
         }
         if($acceptLanguage) {
-            $languages = array();
+            $languages = [];
             foreach(explode(',', $acceptLanguage) as $piece) {
                 $parts = explode(';', $piece);
                 $language = strtolower($parts[0]);
@@ -131,7 +131,7 @@ class Agent extends Mobile_Detect {
             arsort($languages);
             return array_keys($languages);
         }
-        return array();
+        return [];
     }
     /**
      * @param  array $rules
@@ -192,7 +192,7 @@ class Agent extends Mobile_Detect {
      * @return string
      */
     public function robot($userAgent = null) {
-        $rules = $this->mergeRules(static::$robots, array(static::$utilities['Bot']), array(static::$utilities['MobileBot']));
+        $rules = $this->mergeRules(static::$robots, [static::$utilities['Bot']], [static::$utilities['MobileBot']]);
         return $this->findDetectionRulesAgainstUA($rules, $userAgent);
     }
     /**
@@ -200,7 +200,7 @@ class Agent extends Mobile_Detect {
      * @return bool
      */
     public function isRobot($userAgent = null) {
-        $rules = $this->mergeRules(array(static::$utilities['Bot']), array(static::$utilities['MobileBot']), static::$robots // NEW
+        $rules = $this->mergeRules([static::$utilities['Bot']], [static::$utilities['MobileBot']], static::$robots // NEW
         );
         foreach($rules as $regex) {
             if($this->match($regex, $userAgent))
@@ -225,7 +225,7 @@ class Agent extends Mobile_Detect {
      * @return array
      */
     protected function mergeRules() {
-        $merged = array();
+        $merged = [];
         foreach(func_get_args() as $rules) {
             foreach($rules as $key => $value) {
                 if(empty($merged[$key])) {

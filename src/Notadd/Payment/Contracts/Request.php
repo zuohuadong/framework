@@ -14,7 +14,7 @@ interface Request extends Message {
     /**
      * @param array $parameters
      */
-    public function initialize(array $parameters = array());
+    public function initialize(array $parameters = []);
     /**
      * @return array
      */
