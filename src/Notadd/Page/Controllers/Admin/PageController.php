@@ -23,7 +23,7 @@ class PageController extends AbstractAdminController {
     public function create() {
         $page = new Page();
         $this->share('templates', $page->getTemplateList());
-        return $this->view('content.page.create');
+        return $this->view('page.create');
     }
     /**
      * @param $id
@@ -54,7 +54,7 @@ class PageController extends AbstractAdminController {
         $this->share('crumbs', $crumb);
         $this->share('page', $page);
         $this->share('templates', $page->getTemplateList());
-        return $this->view('content.page.edit');
+        return $this->view('page.edit');
     }
     /**
      * @return \Illuminate\Contracts\View\View
@@ -65,7 +65,7 @@ class PageController extends AbstractAdminController {
         $this->share('crumbs', []);
         $this->share('id', 0);
         $this->share('pages', $page->get());
-        return $this->view('content.page.list');
+        return $this->view('page.list');
     }
     /**
      * @param $id
@@ -80,7 +80,7 @@ class PageController extends AbstractAdminController {
         $this->share('id', $id);
         $this->share('page', $page);
         $this->share('list', $list);
-        return $this->view('content.page.move');
+        return $this->view('page.move');
     }
     /**
      * @param $id
@@ -113,7 +113,7 @@ class PageController extends AbstractAdminController {
         $this->share('crumbs', $crumb);
         $this->share('id', $id);
         $this->share('pages', $page->get());
-        return $this->view('content.page.list');
+        return $this->view('page.list');
     }
     /**
      * @param $id
@@ -129,7 +129,7 @@ class PageController extends AbstractAdminController {
         $this->share('id', $id);
         $this->share('page', $page);
         $this->share('pages', $pages);
-        return $this->view('content.page.sort');
+        return $this->view('page.sort');
     }
     /**
      * @param $id

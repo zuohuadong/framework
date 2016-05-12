@@ -48,7 +48,7 @@ class CategoryController extends AbstractAdminController {
         $this->share('count', $categories->count());
         $this->share('crumbs', []);
         $this->share('id', 0);
-        return $this->view('content.category.show');
+        return $this->view('category.show');
     }
     /**
      * @param $id
@@ -62,7 +62,7 @@ class CategoryController extends AbstractAdminController {
         $this->share('count', $categories->count());
         $this->share('crumbs', $crumbs);
         $this->share('id', $id);
-        return $this->view('content.category.show');
+        return $this->view('category.show');
     }
     /**
      * @param $id
