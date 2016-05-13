@@ -3789,7 +3789,7 @@ body {
     height: calc(100% - 46px)
 }
 .page-auth {
-    background: url("../images/background.png") repeat;
+    background: url("../images/background.webp") repeat;
 }
 .page-auth .site-logo {
     text-transform: uppercase;
