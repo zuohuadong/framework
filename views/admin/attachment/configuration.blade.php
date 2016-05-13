@@ -14,7 +14,7 @@
                         <div class="panel-heading"><i>页面：附件上传配置</i></div>
                         <div class="row mt20">
                             <div class="col-md-12">
-                                <form class="form-horizontal col-md-12" action="{{ url('admin/attachment/upload') }}" autocomplete="off" method="post">
+                                <form class="form-horizontal col-md-12" action="{{ url('admin/attachment/configuration') }}" autocomplete="off" method="post">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="form-group form-group-sm">
                                         <label class="col-md-4 control-label">图片处理引擎</label>
@@ -33,7 +33,19 @@
                                     <div class="form-group form-group-sm">
                                         <label class="col-md-4 control-label">附件上传尺寸限制(KB)</label>
                                         <div class="col-md-4">
-                                            <input type="text" class="form-control" name="size_limit" value="{{ app('request')->old('size_limit', $size_limit) }}">
+                                            <input type="text" class="form-control" name="size_file_limit" value="{{ app('request')->old('size_file_limit', $size_file_limit) }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-sm">
+                                        <label class="col-md-4 control-label">图片上传尺寸限制(KB)</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="size_image_limit" value="{{ app('request')->old('size_image_limit', $size_image_limit) }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-sm">
+                                        <label class="col-md-4 control-label">视频上传尺寸限制(KB)</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="size_video_limit" value="{{ app('request')->old('size_video_limit', $size_video_limit) }}">
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
