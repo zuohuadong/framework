@@ -10,7 +10,6 @@ use Illuminate\Support\ServiceProvider;
 use Notadd\Attachment\Controllers\Admin\AttachmentController as AdminAttachmentController;
 use Notadd\Attachment\Controllers\Admin\Configurations\FormatController as AdminFormatController;
 use Notadd\Attachment\Controllers\Admin\Configurations\SizeController as AdminSizeController;
-use Notadd\Attachment\Controllers\Admin\Configurations\TypeController as AdminTypeController;
 use Notadd\Attachment\Controllers\Admin\Configurations\UploadController as AdminUploadController;
 use Notadd\Attachment\Controllers\Admin\ListController as AdminListController;
 use Notadd\Foundation\Traits\InjectEventsTrait;
@@ -29,7 +28,6 @@ class AttachmentServiceProvider extends ServiceProvider {
             $this->getRouter()->resource('attachment/list', AdminListController::class);
             $this->getRouter()->resource('attachment/format', AdminFormatController::class);
             $this->getRouter()->resource('attachment/size', AdminSizeController::class);
-            $this->getRouter()->resource('attachment/type', AdminTypeController::class);
             $this->getRouter()->resource('attachment/upload', AdminUploadController::class);
             $this->getRouter()->resource('attachment', AdminAttachmentController::class);
         });
