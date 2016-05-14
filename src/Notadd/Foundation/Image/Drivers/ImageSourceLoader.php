@@ -7,6 +7,7 @@
  */
 namespace Notadd\Foundation\Image\Drivers;
 use Notadd\Foundation\Image\Contracts\SourceLoader as SourceLoaderContract;
+use Notadd\Foundation\Image\Exceptions\ImageResourceLoaderException;
 /**
  * Class ImageSourceLoader
  * @package Notadd\Foundation\Image\Drivers
@@ -31,9 +32,8 @@ class ImageSourceLoader implements SourceLoaderContract {
         $this->tmp = sys_get_temp_dir();
     }
     /**
-     * @param string $url file source url
-     * @throws \Thapp\Exception\ImageResourceLoaderException
-     * @return string
+     * @param $url
+     * @return mixed
      */
     public function load($url) {
         if(file_exists($url)) {

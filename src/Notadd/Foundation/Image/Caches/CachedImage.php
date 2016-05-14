@@ -7,6 +7,7 @@
  */
 namespace Notadd\Foundation\Image\Caches;
 use Notadd\Foundation\Image\Contracts\Image as ImageContract;
+use Notadd\Foundation\Image\Contracts\Resolver;
 /**
  * Class CachedImage
  * @package Notadd\Foundation\Image\Caches
@@ -94,9 +95,9 @@ class CachedImage implements ImageContract {
         return false;
     }
     /**
-     * @param \Notadd\Foundation\Image\Caches\ResolverInterface $resolver
+     * @param \Notadd\Foundation\Image\Contracts\Resolver $resolver
      */
-    public function process(ResolverInterface $resolver) {
+    public function process(Resolver $resolver) {
         throw new \LogicException(sprintf('calling process() on a cached image is not allowed, called with %s', get_class($resolver)));
     }
     /**
