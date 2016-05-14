@@ -26,6 +26,7 @@ use Notadd\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
 use Notadd\Foundation\Exceptions\Handler;
+use Notadd\Foundation\Image\ImageServiceProvider;
 use Notadd\Install\InstallServiceProvider;
 use Notadd\Link\LinkServiceProvider;
 use Notadd\Menu\MenuServiceProvider;
@@ -72,6 +73,7 @@ class Server {
         $this->application->singleton(ExceptionHandler::class, Handler::class);
         if($this->application->isInstalled()) {
             $this->application->register(AgentServiceProvider::class);
+            $this->application->register(ImageServiceProvider::class);
             $this->application->register(ThemeServiceProvider::class);
             $this->application->register(MenuServiceProvider::class);
             $this->application->register(EditorServiceProvider::class);
