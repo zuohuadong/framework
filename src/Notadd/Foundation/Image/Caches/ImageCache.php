@@ -6,6 +6,8 @@
  * @datetime 2016-05-14 13:01
  */
 namespace Notadd\Foundation\Image\Caches;
+use Exception;
+use FilesystemIterator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\NamespacedItemResolver;
 use Notadd\Foundation\Image\Contracts\Cache;
@@ -40,9 +42,9 @@ class ImageCache extends NamespacedItemResolver implements Cache {
         $this->setPath($path, $permission);
     }
     /**
-     * @param $key
+     * @param string $key
      * @param bool $raw
-     * @return \Notadd\Foundation\Image\Caches\ImageInterface|\Thapp\JitImage\ImageInterface
+     * @return \Notadd\Foundation\Image\Contracts\Image
      */
     public function get($key, $raw = false) {
         if($this->has($key)) {
@@ -107,7 +109,7 @@ class ImageCache extends NamespacedItemResolver implements Cache {
             foreach(new FilesystemIterator($this->path, FilesystemIterator::SKIP_DOTS) as $file) {
                 $this->files->remove($file);
             }
-        } catch(\Exception $e) {
+        } catch(Exception $e) {
         }
     }
     /**
