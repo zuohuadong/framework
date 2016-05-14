@@ -59,7 +59,7 @@ interface Driver {
      */
     public function getTargetSize();
     /**
-     * @return void
+     * @return mixed
      */
     public function getResource();
     /**
