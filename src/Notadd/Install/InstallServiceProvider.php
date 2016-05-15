@@ -29,6 +29,12 @@ class InstallServiceProvider extends ServiceProvider {
         $this->loadViewsFrom(realpath(__DIR__ . '/../../../views/install'), 'install');
         $this->getRouter()->get('/', PrerequisiteController::class . '@render');
         $this->getRouter()->post('/', InstallController::class . '@handle');
+        $this->publishes([
+            framework_path('statics/admin') => public_path('statics/admin')
+        ], 'theme');
+        $this->publishes([
+            framework_path('statics/ueditor') => public_path('statics/ueditor')
+        ], 'theme');
     }
     /**
      * @return void

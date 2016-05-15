@@ -129,6 +129,10 @@ class InstallCommand extends Command {
         $this->setting->set('seo.title', $this->data->get('title'));
         $this->createAdministrationUser();
         $this->writingConfiguration();
+        $this->call('vendor:publish', [
+            '--force' => true,
+            '--tag' => ['theme'],
+        ]);
         $this->comment('Application Installed!');
     }
     /**
