@@ -15,17 +15,23 @@ use Notadd\Foundation\Image\Contracts\BinLocator;
 use Notadd\Foundation\Image\Contracts\Cache;
 use Notadd\Foundation\Image\Contracts\Driver;
 use Notadd\Foundation\Image\Contracts\FileResponse;
+use Notadd\Foundation\Image\Contracts\Image as ImageContract;
 use Notadd\Foundation\Image\Contracts\Resolver;
 use Notadd\Foundation\Image\Contracts\ResolverConfiguration;
 use Notadd\Foundation\Image\Contracts\SourceLoader;
 use Notadd\Foundation\Image\Drivers\ImageSourceLoader;
 use Notadd\Foundation\Image\Drivers\ImBinLocator;
 use Notadd\Foundation\Image\Proxies\ProxyImage;
+use Notadd\Foundation\Traits\InjectConfigTrait;
 /**
  * Class ImageServiceProvider
  * @package Notadd\Foundation\Image
  */
 class ImageServiceProvider extends ServiceProvider {
+    use InjectConfigTrait;
+    /**
+     * @var bool
+     */
     protected $deferred = true;
     /**
      * @return void
@@ -51,19 +57,20 @@ class ImageServiceProvider extends ServiceProvider {
             'image.cache'
         ];
     }
+    /**
+     * @return void
+     */
     protected function registerDriver() {
-        $app = $this->app;
-        $config = $app['config'];
-        $storage = $config->get('image::cache.path');
-        $driver = sprintf('\Thapp\JitImage\Driver\%sDriver', $driverName = ucfirst($config->get('image::driver', 'gd')));
-        $app->bind(Cache::class, function () use ($storage) {
-            $cache = new ImageCache(new CachedImage, new Filesystem, $storage . '/jit');
+        $storage = $this->getConfig()->get('image.cache.path');
+        $driver = sprintf('\Notadd\Image\Driver\%sDriver', $driverName = ucfirst($this->getConfig()->get('image.driver', 'gd')));
+        $this->app->bind(Cache::class, function () use ($storage) {
+            $cache = new ImageCache(new CachedImage, new Filesystem, $storage . '/image');
             return $cache;
         });
-        $app->bind(SourceLoader::class, ImageSourceLoader::class);
-        $app->bind(BinLocator::class, function () use ($config) {
+        $this->app->bind(SourceLoader::class, ImageSourceLoader::class);
+        $this->app->bind(BinLocator::class, function () {
             $locator = new ImBinLocator;
-            extract($config->get('image::imagemagick', [
+            extract($this->getConfig()->get('image.imagemagick', [
                 'path' => '/usr/local/bin',
                 'bin' => 'convert'
             ]));
@@ -73,64 +80,58 @@ class ImageServiceProvider extends ServiceProvider {
         $this->app->bind(Driver::class, function () use ($driver) {
             return $this->app->make($driver);
         });
-        $this->app->bind('Thapp\JitImage\ImageInterface', function () use ($app) {
-            return new ProxyImage(function () use ($app) {
-                $image = new Image($app->make(Driver::class));
-                $image->setQuality($app['config']->get('image::quality', 80));
+        $this->app->bind(ImageContract::class, function () {
+            return new ProxyImage(function () {
+                $image = new Image($this->app->make(Driver::class));
+                $image->setQuality($this->getConfig()->get('image.quality', 80));
                 return $image;
             });
         });
-        $this->app['image'] = $this->app->share(function () use ($app) {
-            $resolver = $app->make(Resolver::class);
+        $this->app['image'] = $this->app->share(function () {
+            $resolver = $this->app->make(Resolver::class);
             $image = new ImageAdapter($resolver, $this->app->make('url')->to('/'));
             return $image;
         });
         $this->app['image.cache'] = $this->app->share(function () {
-            return $this->app->make('Thapp\JitImage\Cache\CacheInterface');
+            return $this->app->make(Cache::class);
         });
         $this->registerFilter($driverName, $this->getFilters());
     }
     /**
-     * @access protected
      * @return void
      */
     protected function registerResolver() {
-        $config = $this->app['config'];
         $this->app->singleton(Resolver::class, ImageResolver::class);
-        $this->app->bind(ResolverConfiguration::class, function () use ($config) {
+        $this->app->bind(ResolverConfiguration::class, function () {
             $conf = [
-                'trusted_sites' => $config->get('jitimage::trusted-sites', []),
-                'cache_prefix' => $config->get('jitimage::cache.prefix', 'jit_'),
-                'base_route' => $config->get('jitimage::route', 'images'),
-                'cache_route' => $config->get('jitimage::cache.route', 'jit/storage'),
-                'base' => $config->get('jitimage::base', public_path()),
-                'cache' => in_array($config->getEnvironment(), $config->get('jitimage::cache.environments', [])),
-                'format_filter' => $config->get('jitimage::filter.Convert', 'conv')
+                'trusted_sites' => $this->getConfig()->get('image.trusted-sites', []),
+                'cache_prefix' => $this->getConfig()->get('image.cache.prefix', 'notadd_'),
+                'base_route' => $this->getConfig()->get('image.route', 'images'),
+                'cache_route' => $this->getConfig()->get('image.cache.route', 'jit/storage'),
+                'base' => $this->getConfig()->get('image.base', public_path()),
+                'cache' => in_array($this->app->environment(), $this->getConfig()->get('image.cache.environments', [])),
+                'format_filter' => $this->getConfig()->get('image::filter.Convert', 'conv')
             ];
             return new ResolveConfiguration($conf);
         });
     }
     /**
-     * @access protected
      * @return void
      */
     protected function registerResponse() {
-        $app = $this->app;
-        $type = $this->app['config']->get('image::response-type', 'generic');
-        $response = sprintf('Thapp\JitImage\Response\%sFileResponse', ucfirst($type));
-        $this->app->bind(FileResponse::class, function () use ($response, $app) {
-            return new $response($app['request']);
+        $type = $this->getConfig()->get('image.response-type', 'generic');
+        $response = sprintf('Notadd\Image\Response\%sFileResponse', ucfirst($type));
+        $this->app->bind(FileResponse::class, function () use ($response) {
+            return new $response($this->app['request']);
         });
     }
     /**
-     * @access protected
      * @return void;
      */
     protected function registerController() {
-        $config = $this->app['config'];
-        $recipes = $config->get('image::recipes', []);
-        $route = $config->get('image::route', 'image');
-        $cacheroute = $config->get('image::cache.route', 'jit/storage');
+        $recipes = $this->getConfig()->get('image.recipes', []);
+        $route = $this->getConfig()->get('image.route', 'image');
+        $cacheroute = $this->getConfig()->get('image.cache.route', 'notadd/storage');
         $this->registerCacheRoute($cacheroute);
         if(false === $this->registerStaticRoutes($recipes, $route)) {
             $this->registerDynanmicRoute($route);
@@ -141,7 +142,7 @@ class ImageServiceProvider extends ServiceProvider {
      * @return void
      */
     protected function registerCacheRoute($route) {
-        $this->app['router']->get($route . '/{id}', 'Thapp\JitImage\Controller\JitController@getCached')->where('id', '(.*\/){1}.*');
+        $this->app['router']->get($route . '/{id}', 'Notadd\Image\Controller\JitController@getCached')->where('id', '(.*\/){1}.*');
     }
     /**
      * @param  array $recipes
@@ -152,20 +153,19 @@ class ImageServiceProvider extends ServiceProvider {
         if(empty($recipes)) {
             return false;
         }
-        $ctrl = 'Thapp\JitImage\Controller\JitController';
+        $ctrl = 'Notadd\Image\Controller\Controller';
         foreach($recipes as $aliasRoute => $formular) {
             $param = str_replace('/', '_', $aliasRoute);
             $this->app['router']->get($route . '/{' . $param . '}/{source}', ['uses' => $ctrl . '@getResource'])->where($param, $aliasRoute)->where('source', '(.*)');
         }
         $this->app->bind($ctrl, function () use ($ctrl, $recipes) {
-            $controller = new $ctrl($this->app->make('Thapp\JitImage\ResolverInterface'), $this->app->make('Thapp\JitImage\Response\FileResponseInterface'));
+            $controller = new $ctrl($this->app->make(Resolver::class), $this->app->make(FileResponse::class));
             $controller->setRecieps(new RecipeResolver($recipes));
             return $controller;
         });
     }
     /**
-     * @param  string $route
-     * @access protected
+     * @param string $route
      * @return void
      */
     protected function registerDynanmicRoute($route) {
@@ -175,7 +175,6 @@ class ImageServiceProvider extends ServiceProvider {
             ->where('filter', '(filter:.*)');
     }
     /**
-     * @access protected
      * @return void
      */
     protected function registerCommands() {
@@ -186,12 +185,11 @@ class ImageServiceProvider extends ServiceProvider {
     }
     /**
      * @param mixed $driverName
-     * @access protected
-     * @return void
+     * @param $filters
      */
     protected function registerFilter($driverName, $filters) {
-        $this->app->extend('Thapp\JitImage\Driver\DriverInterface', function ($driver) use ($driverName, $filters) {
-            $addFilters = $this->app['events']->fire('jitimage.registerfilter', [$driverName]);
+        $this->app->extend(Driver::class, function ($driver) use ($driverName, $filters) {
+            $addFilters = $this->app['events']->fire('image.registerfilter', [$driverName]);
             foreach($addFilters as $filter) {
                 foreach((array)$filter as $name => $class) {
                     if(class_exists($class)) {
@@ -202,16 +200,15 @@ class ImageServiceProvider extends ServiceProvider {
                 }
             }
             foreach($filters as $name => $filter) {
-                $driver->registerFilter($filter, sprintf('Thapp\JitImage\Filter\%s\%s%sFilter', $name, $driverName, ucfirst($filter)));
+                $driver->registerFilter($filter, sprintf('Notadd\Image\Filter\%s\%s%sFilter', $name, $driverName, ucfirst($filter)));
             }
             return $driver;
         });
     }
     /**
-     * @access private
      * @return array
      */
     private function getFilters() {
-        return $this->app['config']->get('image::filter', []);
+        return $this->app['config']->get('image.filter', []);
     }
 }

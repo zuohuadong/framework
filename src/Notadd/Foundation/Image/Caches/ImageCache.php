@@ -18,6 +18,10 @@ use Notadd\Foundation\Image\Contracts\Image;
  */
 class ImageCache extends NamespacedItemResolver implements Cache {
     /**
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $files;
+    /**
      * @var array
      */
     protected $pool = [];
@@ -98,7 +102,7 @@ class ImageCache extends NamespacedItemResolver implements Cache {
      */
     public function put($key, $contents) {
         if(false === $this->has($key)) {
-            $this->files->dumpFile($this->realizeDir($key), $contents);
+            $this->files->put($this->realizeDir($key), $contents);
         }
     }
     /**
@@ -107,7 +111,7 @@ class ImageCache extends NamespacedItemResolver implements Cache {
     public function purge() {
         try {
             foreach(new FilesystemIterator($this->path, FilesystemIterator::SKIP_DOTS) as $file) {
-                $this->files->remove($file);
+                $this->files->delete($file);
             }
         } catch(Exception $e) {
         }
@@ -119,7 +123,7 @@ class ImageCache extends NamespacedItemResolver implements Cache {
         $id = $this->createKey($key);
         $dir = substr($id, 0, strpos($id, '.'));
         if($this->files->exists($dir = $this->path . '/' . $dir)) {
-            $this->files->remove($dir);
+            $this->files->deleteDirectory($dir, true);
         }
     }
     /**
@@ -136,7 +140,7 @@ class ImageCache extends NamespacedItemResolver implements Cache {
     protected function realizeDir($key) {
         $path = $this->getPath($key);
         if(!$this->files->exists($dir = dirname($path))) {
-            $this->files->mkdir($dir);
+            $this->files->makeDirectory($dir);
         }
         return $path;
     }
@@ -166,7 +170,7 @@ class ImageCache extends NamespacedItemResolver implements Cache {
      */
     protected function setPath($path, $permission) {
         if(true !== $this->files->exists($path)) {
-            $this->files->mkdir($path, $permission, true);
+            $this->files->makeDirectory($path, $permission, true);
         }
         $this->path = $path;
     }
