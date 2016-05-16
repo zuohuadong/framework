@@ -6,6 +6,7 @@
  * @datetime 2015-10-30 11:21
  */
 namespace Notadd\Setting\Controllers\Admin;
+use Illuminate\Filesystem\Filesystem;
 use Notadd\Admin\Controllers\AbstractAdminController;
 use Notadd\Page\Models\Page;
 use Notadd\Setting\Requests\SeoRequest;
@@ -15,6 +16,18 @@ use Notadd\Setting\Requests\SiteRequest;
  * @package Notadd\Setting\Controllers\Admin
  */
 class ConfigController extends AbstractAdminController {
+    /**
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $file;
+    /**
+     * ConfigController constructor.
+     * @param \Illuminate\Filesystem\Filesystem $file
+     */
+    public function __construct(Filesystem $file) {
+        parent::__construct();
+        $this->file = $file;
+    }
     /**
      * @return \Illuminate\Contracts\View\View
      */
@@ -27,6 +40,7 @@ class ConfigController extends AbstractAdminController {
         $this->share('copyright', $this->setting->get('site.copyright'));
         $this->share('company', $this->setting->get('site.company'));
         $this->share('message', $this->session->get('message'));
+        $this->share('debug', $this->setting->get('site.debug'));
         $this->share('home', $this->setting->get('site.home'));
         $this->share('pages', Page::all());
         return $this->view('config.site');
@@ -43,7 +57,13 @@ class ConfigController extends AbstractAdminController {
         $this->setting->set('site.statistics', $request->get('statistics'));
         $this->setting->set('site.copyright', $request->get('copyright'));
         $this->setting->set('site.company', $request->get('company'));
+        $this->setting->set('site.debug', $request->get('debug'));
         $this->setting->set('site.home', $request->get('home'));
+        if($request->get('debug')) {
+            touch($this->app->storagePath() . '/notadd/debug');
+        } else {
+            $this->file->delete($this->app->storagePath() . '/notadd/debug');
+        }
         return $this->redirect->to('admin/site')->withMessage('更新站点信息成功');
     }
     /**
