@@ -60,11 +60,11 @@ class PageController extends AbstractAdminController {
      * @return \Illuminate\Contracts\View\View
      */
     public function index() {
-        $page = Page::whereParentId(0)->orderBy('created_at', 'desc');
+        $page = Page::whereParentId(0)->orderBy('created_at', 'desc')->get();
         $this->share('count', $page->count());
         $this->share('crumbs', []);
         $this->share('id', 0);
-        $this->share('pages', $page->get());
+        $this->share('pages', $page);
         return $this->view('page.list');
     }
     /**
