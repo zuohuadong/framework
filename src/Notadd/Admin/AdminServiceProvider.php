@@ -164,6 +164,7 @@ class AdminServiceProvider extends ServiceProvider {
                         'title' => '组件管理',
                         'active' => [
                             'admin/attachment*',
+                            'admin/sitemap*',
                             'admin/theme*',
                             'admin/flash*',
                             'admin/ad*',
@@ -183,6 +184,11 @@ class AdminServiceProvider extends ServiceProvider {
                                 'title' => '附件管理',
                                 'active' => 'admin/attachment*',
                                 'url' => 'admin/attachment',
+                            ],
+                            [
+                                'title' => 'Sitemap组件',
+                                'active' => 'admin/sitemap*',
+                                'url' => 'admin/sitemap',
                             ],
                             [
                                 'title' => '菜单组件',
