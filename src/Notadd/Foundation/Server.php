@@ -32,6 +32,7 @@ use Notadd\Link\LinkServiceProvider;
 use Notadd\Menu\MenuServiceProvider;
 use Notadd\Page\PageServiceProvider;
 use Notadd\Payment\PaymentServiceProvider;
+use Notadd\Sitemap\SitemapServiceProvider;
 use Notadd\Theme\ThemeServiceProvider;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -81,6 +82,7 @@ class Server {
             $this->application->register(CategoryServiceProvider::class);
             $this->application->register(ArticleServiceProvider::class);
             $this->application->register(AttachmentServiceProvider::class);
+            $this->application->register(SitemapServiceProvider::class);
             $this->application->register(HttpServiceProvider::class);
             $this->application->register(LinkServiceProvider::class);
             $this->application->register(PageServiceProvider::class);
