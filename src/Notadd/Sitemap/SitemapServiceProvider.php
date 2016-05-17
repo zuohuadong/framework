@@ -7,15 +7,21 @@
  */
 namespace Notadd\Sitemap;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Sitemap\Controllers\Admin\SitemapController as AdminSitemapController;
 /**
  * Class SitemapServiceProvider
  * @package Notadd\Sitemap
  */
 class SitemapServiceProvider extends ServiceProvider {
+    use InjectRouterTrait;
     /**
      * @return void
      */
     public function boot() {
+        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->getRouter()->resource('sitemap', AdminSitemapController::class);
+        });
     }
     /**
      * @return void
