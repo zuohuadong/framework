@@ -170,32 +170,7 @@ class Server {
                 'disks' => []
             ],
             'image' => [
-                'route' => 'images',
-                'base' => public_path(),
-                'driver' => 'gd',
-                'cache' => [
-                    'path' => storage_path(),
-                    'route' => 'notadd/storage',
-                    'prefix' => 'notadd',
-                    'environments' => ['foo']
-                ],
-                'quality' => 80,
-                'imagemagick' => [
-                    'path' => '/usr/local/bin',
-                    'bin' => 'convert',
-                ],
-                'filter' => [
-                    'Circle' => 'circ',
-                    'GreyScale' => 'gs',
-                    'Overlay' => 'ovly',
-                    'Colorize' => 'clrz',
-                    'Convert' => 'conv',
-                ],
-                'recipes' => [
-                ],
-                'trusted-sites' => [
-                ],
-                'response-type' => 'generic'
+                'driver' => 'gd'
             ],
             'mail' => [
                 'driver' => 'mail',
