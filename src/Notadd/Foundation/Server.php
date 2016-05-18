@@ -214,6 +214,12 @@ class Server {
                 'domain' => null,
                 'secure' => false,
             ],
+            'sitemap' => [
+                'use_cache' => false,
+                'cache_key' => 'notadd_sitemap',
+                'cache_duration' => 3600,
+                'escaping' => true,
+            ],
             'view' => [
                 'paths' => [],
                 'compiled' => $this->application->storagePath() . '/views',
