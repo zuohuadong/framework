@@ -108,11 +108,11 @@ class PageController extends AbstractAdminController {
     public function show($id) {
         $crumb = [];
         Page::getCrumbMenu($id, $crumb);
-        $page = Page::whereParentId($id)->orderBy('order_id', 'asc');
+        $page = Page::whereParentId($id)->orderBy('order_id', 'asc')->get();
         $this->share('count', $page->count());
         $this->share('crumbs', $crumb);
         $this->share('id', $id);
-        $this->share('pages', $page->get());
+        $this->share('pages', $page);
         return $this->view('page.list');
     }
     /**
@@ -166,12 +166,6 @@ class PageController extends AbstractAdminController {
      */
     public function update(PageEditRequest $request, $id) {
         $page = Page::findOrFail($id);
-        //if($request->hasFile('thumb_image') && $request->file('thumb_image')->isValid()) {
-        //    $file_name = Str::random() . '.' . $request->file('thumb_image')->getClientOriginalExtension();
-        //    $request->file('thumb_image')->move('uploads/pages/thumbs/', $file_name);
-         //   $request->offsetSet('thumb_image', 'uploads/pages/thumbs/' . $file_name);
-        //}
-        //$request->files->replace();
         $page->update($request->all());
         return $this->redirect->to('admin/page/' . $id . '/edit');
     }
