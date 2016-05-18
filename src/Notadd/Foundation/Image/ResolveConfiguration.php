@@ -33,7 +33,7 @@ class ResolveConfiguration implements ResolverConfiguration {
      * @param array $data
      */
     public function __construct(array $data = []) {
-        return $this->setAttributesArray($data);
+        $this->setAttributesArray($data);
     }
     /**
      * @param $attribute
@@ -63,7 +63,7 @@ class ResolveConfiguration implements ResolverConfiguration {
             return $this->attributes;
         }
         if(!in_array($attribute, static::$allowedAttributes)) {
-            return;
+            return null;
         }
         return isset($this->attributes[$attribute]) ? $this->attributes[$attribute] : null;
     }

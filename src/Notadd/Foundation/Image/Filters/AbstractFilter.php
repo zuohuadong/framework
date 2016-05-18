@@ -24,6 +24,9 @@ abstract class AbstractFilter implements Filter {
      * @var array
      */
     protected $options;
+    /**
+     * @var array
+     */
     protected $availableOptions = [];
     /**
      * @return void

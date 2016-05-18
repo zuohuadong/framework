@@ -13,17 +13,9 @@ use Notadd\Foundation\Image\Contracts\Resolver;
  */
 class ImageAdapter {
     /**
-     * @var mixed
+     * @var array
      */
-    protected $resolver;
-    /**
-     * @var mixed
-     */
-    protected $targetSize;
-    /**
-     * @var mixed
-     */
-    protected $mode;
+    protected $arguments;
     /**
      * @var string
      */
@@ -32,6 +24,22 @@ class ImageAdapter {
      * @var array
      */
     protected $filters;
+    /**
+     * @var mixed
+     */
+    protected $mode;
+    /**
+     * @var mixed
+     */
+    protected $resolver;
+    /**
+     * @var mixed
+     */
+    protected $source;
+    /**
+     * @var mixed
+     */
+    protected $targetSize;
     /**
      * ImageAdapter constructor.
      * @param \Notadd\Foundation\Image\Contracts\Resolver $resolver
@@ -68,6 +76,12 @@ class ImageAdapter {
      */
     public function toGif() {
         return $this->filter('conv', ['f' => 'gif']);
+    }
+    /**
+     * @return \Notadd\Foundation\Image\ImageAdapter
+     */
+    public function toWebp() {
+        return $this->filter('conv', ['f' => 'webp']);
     }
     /**
      * @param $width
@@ -213,7 +227,7 @@ class ImageAdapter {
             return $src;
         }
         $this->resolver->close();
-        return;
+        return '';
     }
     /**
      * @return array

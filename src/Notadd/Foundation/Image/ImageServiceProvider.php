@@ -62,7 +62,7 @@ class ImageServiceProvider extends ServiceProvider {
      */
     protected function registerDriver() {
         $storage = $this->getConfig()->get('image.cache.path');
-        $driver = sprintf('\Notadd\Image\Driver\%sDriver', $driverName = ucfirst($this->getConfig()->get('image.driver', 'gd')));
+        $driver = sprintf('\Notadd\Foundation\Image\Drivers\%sDriver', $driverName = ucfirst($this->getConfig()->get('image.driver', 'gd')));
         $this->app->bind(Cache::class, function () use ($storage) {
             $cache = new ImageCache(new CachedImage, new Filesystem, $storage . '/image');
             return $cache;
@@ -200,7 +200,7 @@ class ImageServiceProvider extends ServiceProvider {
                 }
             }
             foreach($filters as $name => $filter) {
-                $driver->registerFilter($filter, sprintf('Notadd\Image\Filter\%s\%s%sFilter', $name, $driverName, ucfirst($filter)));
+                $driver->registerFilter($filter, sprintf('Notadd\Foundation\Image\Filters\%sFilters\%s%sFilter', $name, $driverName, ucfirst($filter)));
             }
             return $driver;
         });

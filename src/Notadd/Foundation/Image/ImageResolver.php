@@ -16,26 +16,26 @@ use Notadd\Foundation\Image\Contracts\ResolverConfiguration;
  */
 class ImageResolver implements Resolver {
     /**
+     * @var \Notadd\Foundation\Image\Contracts\ResolverConfiguration
+     */
+    protected $config;
+    /**
      * @var \Notadd\Foundation\Image\Contracts\Image
      */
     protected $image;
     /**
-     * input
      * @var array
      */
     protected $input = [];
     /**
-     * parameter
      * @var mixed
      */
     protected $parameter = [];
     /**
-     * processCache
      * @var mixed
      */
     protected $processCache;
     /**
-     * cachedNames
      * @var mixed
      */
     protected $cachedNames;
@@ -141,16 +141,14 @@ class ImageResolver implements Resolver {
      * @return string
      */
     public function getImageUrl(ImageContract $image) {
-        if(false !== (strpos($image->getSource(), $this->config->base))) {
-            $base = substr($image->getSource(), strlen($this->config->base));
-            $input = $this->input;
-            return sprintf('/%s', trim(implode('/', [
-                    $this->config->base_route,
-                    $input['parameter'],
-                    trim($base, '/'),
-                    $input['filter']
-                ]), '/'));
-        }
+        $base = substr($image->getSource(), strlen($this->config->base));
+        $input = $this->input;
+        return sprintf('/%s', trim(implode('/', [
+                $this->config->base_route,
+                $input['parameter'],
+                trim($base, '/'),
+                $input['filter']
+            ]), '/'));
     }
     /**
      * @param mixed $id
@@ -330,8 +328,12 @@ class ImageResolver implements Resolver {
         if(null !== parse_url($source, PHP_URL_SCHEME)) {
             return $this->isValidDomain($source);
         }
-        if(is_file($file = $this->config->base . '/' . $source)) {
-            return $file;
+        if(is_file($source)) {
+            return $source;
+        } else {
+            if(is_file($file = $this->config->base . '/' . $source)) {
+                return $file;
+            }
         }
         return false;
     }
