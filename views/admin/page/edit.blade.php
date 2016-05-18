@@ -53,11 +53,11 @@
                         <div class="form-group form-group-sm">
                             <label class="col-md-4 control-label">上传缩略图</label>
                             <div class="col-md-8">
-                        <span class="btn btn-success btn-file">
-                            <i class="fa fa-image"></i>
-                            <span>上传图片</span>
-                            <input type="file" data-toggle="upload-image" data-target="thumb-image" name="thumb_image">
-                        </span>
+                                <span class="btn btn-success btn-file">
+                                    <i class="fa fa-image"></i>
+                                    <span>上传图片</span>
+                                    <input type="file" data-toggle="upload-image" data-target="thumb-image" name="thumb_image">
+                                </span>
                                 @if($page->thumb_image)
                                     <div id="thumb-image" class="image-preview">
                                         <img src="{{ asset($page->thumb_image) }}" alt="" class="img-responsive">
