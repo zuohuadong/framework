@@ -52,7 +52,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * @var string
      */
-    const VERSION = '0.1.7.7';
+    const VERSION = '0.1.7.8';
     /**
      * @var string
      */
@@ -141,7 +141,6 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     }
     /**
      * @param array $bootstrappers
-     * @return void
      */
     public function bootstrapWith(array $bootstrappers) {
         $this->hasBeenBootstrapped = true;
@@ -153,7 +152,6 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     }
     /**
      * @param \Closure $callback
-     * @return void
      */
     public function afterLoadingEnvironment(Closure $callback) {
         return $this->afterBootstrapping('Illuminate\Foundation\Bootstrap\DetectEnvironment', $callback);
@@ -167,9 +165,8 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this['events']->listen('bootstrapping: ' . $bootstrapper, $callback);
     }
     /**
-     * @param string $bootstrapper
-     * @param Closure $callback
-     * @return void
+     * @param $bootstrapper
+     * @param \Closure $callback
      */
     public function afterBootstrapping($bootstrapper, Closure $callback) {
         $this['events']->listen('bootstrapped: ' . $bootstrapper, $callback);
@@ -461,7 +458,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     }
     /**
      * @param \Illuminate\Support\ServiceProvider $provider
-     * @return void
+     * @return mixed
      */
     protected function bootProvider(ServiceProvider $provider) {
         if(method_exists($provider, 'boot')) {
