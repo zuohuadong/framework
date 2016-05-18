@@ -6,6 +6,7 @@
  * @datetime 2016-05-12 10:25
  */
 namespace Notadd\Editor\Controllers;
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Notadd\Editor\Lists;
 use Notadd\Editor\Uploaders\UploadCatch;
@@ -22,11 +23,16 @@ class UEditorController extends Controller {
      */
     protected $config = [];
     /**
+     * @var \Intervention\Image\ImageManager
+     */
+    protected $image;
+    /**
      * UEditorController constructor.
      */
     public function __construct() {
         parent::__construct();
         $this->config();
+        $this->image = Container::getInstance()->make('image');
     }
     /**
      * @return void
@@ -36,7 +42,7 @@ class UEditorController extends Controller {
             "imageActionName" => "uploadimage",
             "imageFieldName" => "upfile",
             "imageMaxSize" => $this->setting->get('attachment.size.image.limit') * 1000,
-            "imageAllowFiles" => $this->setting->get('attachment.format.allow.image'),
+            "imageAllowFiles" => explode(',', $this->setting->get('attachment.format.allow.image')),
             "imageCompressEnable" => true,
             "imageCompressBorder" => 1600,
             "imageInsertAlign" => "none",
@@ -62,7 +68,7 @@ class UEditorController extends Controller {
             "catcherPathFormat" => "/uploads/ueditor/php/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}",
             "catcherUrlPrefix" => "",
             "catcherMaxSize" => $this->setting->get('attachment.size.image.limit') * 1000,
-            "catcherAllowFiles" => $this->setting->get('attachment.format.allow.catcher'),
+            "catcherAllowFiles" => explode(',', $this->setting->get('attachment.format.allow.catcher')),
             "videoActionName" => "uploadvideo",
             "videoFieldName" => "upfile",
             "videoPathFormat" => "/uploads/ueditor/php/upload/video/{yyyy}{mm}{dd}/{time}{rand:6}",
@@ -74,18 +80,19 @@ class UEditorController extends Controller {
             "filePathFormat" => "/uploads/ueditor/php/upload/file/{yyyy}{mm}{dd}/{time}{rand:6}",
             "fileUrlPrefix" => "",
             "fileMaxSize" => $this->setting->get('attachment.size.file.limit') * 1000,
-            "fileAllowFiles" => $this->setting->get('attachment.format.allow.file'),
+            "fileAllowFiles" => explode(',', $this->setting->get('attachment.format.allow.file')),
             "imageManagerActionName" => "listimage",
             "imageManagerListPath" => "/uploads/ueditor/php/upload/image/",
             "imageManagerListSize" => 20,
             "imageManagerUrlPrefix" => "",
             "imageManagerInsertAlign" => "none",
-            "imageManagerAllowFiles" => $this->setting->get('attachment.format.allow.manager.image'),
+            "imageManagerAllowFiles" => explode(',', $this->setting->get('attachment.format.allow.manager.image')),
             "fileManagerActionName" => "listfile",
             "fileManagerListPath" => "/uploads/ueditor/php/upload/file/",
             "fileManagerUrlPrefix" => "",
             "fileManagerListSize" => 20,
-            "fileManagerAllowFiles" => $this->setting->get('attachment.format.allow.manager.file')
+            "fileManagerAllowFiles" => $this->setting->get('attachment.format.allow.manager.file'),
+            'watermark' => public_path($this->setting->get('attachment.watermark.file'))
         ];
     }
     /**
@@ -104,8 +111,9 @@ class UEditorController extends Controller {
                     "maxSize" => $this->config['imageMaxSize'],
                     "allowFiles" => $this->config['imageAllowFiles'],
                     'fieldName' => $this->config['imageFieldName'],
+                    'watermark' => $this->config['watermark'],
                 ];
-                $result = with(new UploadFile($config, $request))->upload();
+                $result = with(new UploadFile($config, $request, $this->image))->upload();
                 break;
             case 'uploadscrawl':
                 $config = [
@@ -113,8 +121,9 @@ class UEditorController extends Controller {
                     "maxSize" => $this->config['scrawlMaxSize'],
                     "oriName" => "scrawl.png",
                     'fieldName' => $this->config['scrawlFieldName'],
+                    'watermark' => $this->config['watermark'],
                 ];
-                $result = with(new UploadScrawl($config, $request))->upload();
+                $result = with(new UploadScrawl($config, $request, $this->image))->upload();
                 break;
             case 'uploadvideo':
                 $config = [
@@ -122,8 +131,9 @@ class UEditorController extends Controller {
                     "maxSize" => $this->config['videoMaxSize'],
                     "allowFiles" => $this->config['videoAllowFiles'],
                     'fieldName' => $this->config['videoFieldName'],
+                    'watermark' => $this->config['watermark'],
                 ];
-                $result = with(new UploadFile($config, $request))->upload();
+                $result = with(new UploadFile($config, $request, $this->image))->upload();
                 break;
             case 'uploadfile':
                 $config = [
@@ -131,8 +141,9 @@ class UEditorController extends Controller {
                     "maxSize" => $this->config['fileMaxSize'],
                     "allowFiles" => $this->config['fileAllowFiles'],
                     'fieldName' => $this->config['fileFieldName'],
+                    'watermark' => $this->config['watermark'],
                 ];
-                $result = with(new UploadFile($config, $request))->upload();
+                $result = with(new UploadFile($config, $request, $this->image))->upload();
                 break;
             case 'listimage':
                 $result = with(new Lists(
@@ -155,6 +166,7 @@ class UEditorController extends Controller {
                     "allowFiles" => $this->config['catcherAllowFiles'],
                     "oriName" => "remote.png",
                     'fieldName' => $this->config['catcherFieldName'],
+                    'watermark' => $this->config['watermark'],
                 ];
                 $sources = $request->input($config['fieldName']);
                 $list = [];

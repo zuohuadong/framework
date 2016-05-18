@@ -15,12 +15,16 @@ abstract class AbstractUpload {
     protected $file;
     protected $base64;
     protected $config;
-    protected $oriName;
     protected $fileName;
     protected $fullName;
     protected $filePath;
     protected $fileSize;
     protected $fileType;
+    /**
+     * @var \Intervention\Image\ImageManager
+     */
+    protected $image;
+    protected $oriName;
     protected $stateInfo;
     protected $stateMap;
     abstract function doUpload();
@@ -29,8 +33,9 @@ abstract class AbstractUpload {
      * @param array $config
      * @param $request
      */
-    public function __construct(array $config, $request) {
+    public function __construct(array $config, $request, $image) {
         $this->config = $config;
+        $this->image = $image;
         $this->request = $request;
         $this->fileField = $this->config['fieldName'];
         if(isset($config['allowFiles'])) {
