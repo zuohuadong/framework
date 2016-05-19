@@ -26,7 +26,7 @@ use Notadd\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
 use Notadd\Foundation\Exceptions\Handler;
-use Notadd\Foundation\Image\ImageServiceProvider;
+use Notadd\Image\ImageServiceProvider;
 use Notadd\Install\InstallServiceProvider;
 use Notadd\Link\LinkServiceProvider;
 use Notadd\Menu\MenuServiceProvider;

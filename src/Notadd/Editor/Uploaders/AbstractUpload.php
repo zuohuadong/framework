@@ -21,7 +21,7 @@ abstract class AbstractUpload {
     protected $fileSize;
     protected $fileType;
     /**
-     * @var \Intervention\Image\ImageManager
+     * @var \Notadd\Image\ImageManager
      */
     protected $image;
     protected $oriName;

@@ -23,7 +23,7 @@ class UEditorController extends Controller {
      */
     protected $config = [];
     /**
-     * @var \Intervention\Image\ImageManager
+     * @var \Notadd\Image\ImageManager
      */
     protected $image;
     /**
