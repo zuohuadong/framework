@@ -39,9 +39,10 @@ class UploadScrawl extends AbstractUpload {
             $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
             return false;
         }
-        if(!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) { //移动失败
+        if(!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) {
+            $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->getFilePath());
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
-        } else { //移动成功
+        } else {
             $this->stateInfo = $this->stateMap[0];
             return false;
         }

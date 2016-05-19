@@ -63,6 +63,7 @@ class UploadCatch extends AbstractUpload {
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
             return false;
         } else {
+            $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->getFilePath());
             $this->stateInfo = $this->stateMap[0];
             return true;
         }

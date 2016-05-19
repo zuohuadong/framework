@@ -170,9 +170,9 @@ class UEditorController extends Controller {
                 ];
                 $sources = $request->input($config['fieldName']);
                 $list = [];
-                foreach ($sources as $imgUrl) {
+                foreach ((array)$sources as $imgUrl) {
                     $config['imgUrl'] = $imgUrl;
-                    $info = with(new UploadCatch($config, $request))->upload();
+                    $info = with(new UploadCatch($config, $request, $this->image))->upload();
                     array_push($list, [
                         "state" => $info["state"],
                         "url" => $info["url"],
