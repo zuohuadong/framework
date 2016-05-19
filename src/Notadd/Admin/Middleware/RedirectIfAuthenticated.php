@@ -7,6 +7,7 @@
  */
 namespace Notadd\Admin\Middleware;
 use Closure;
+use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\UrlGenerator;
@@ -33,7 +34,7 @@ class RedirectIfAuthenticated {
      */
     public function handle($request, Closure $next) {
         if($this->auth->check()) {
-            return new RedirectResponse(UrlGenerator::to('admin'));
+            return new RedirectResponse(Container::getInstance()->make('url')->to('admin'));
         }
         return $next($request);
     }
