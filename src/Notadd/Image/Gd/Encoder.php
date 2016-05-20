@@ -78,6 +78,14 @@ class Encoder extends AbstractEncoder {
      * @return string
      */
     protected function processWebp() {
-        throw new NotSupportedException("Webp format is not supported by Gd Driver.");
+        if(!function_exists('imagewebp')) {
+            throw new NotSupportedException("Webp format is not supported by Gd Driver.");
+        }
+        ob_start();
+        $result = imagewebp($this->image->getCore());
+        $this->image->mime = 'application/octet-stream';
+        $buffer = ob_get_contents();
+        ob_end_clean();
+        return $buffer;
     }
 }

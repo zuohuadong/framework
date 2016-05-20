@@ -42,8 +42,12 @@ class UploadFile extends AbstractUpload {
         }
         try {
             $this->file->move(dirname($this->filePath), $this->fileName);
-            $path = str_replace($this->fileType, '.webp', $this->getFilePath());
-            $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->getFilePath());
+            $this->filePath = str_replace($this->fileType, '.webp', $this->getFilePath());
+            $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->filePath);
+            $this->oriName = str_replace($this->fileType, '.webp', $this->oriName);
+            $this->fileName = str_replace($this->fileType, '.webp', $this->fileName);
+            $this->fullName = str_replace($this->fileType, '.webp', $this->fullName);
+            $this->fileType = '.webp';
             $this->stateInfo = $this->stateMap[0];
         } catch(FileException $exception) {
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
