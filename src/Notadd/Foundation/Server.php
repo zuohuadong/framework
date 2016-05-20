@@ -170,7 +170,7 @@ class Server {
                 'disks' => []
             ],
             'image' => [
-                'driver' => 'gd'
+                'driver' => 'imagick'
             ],
             'mail' => [
                 'driver' => 'mail',

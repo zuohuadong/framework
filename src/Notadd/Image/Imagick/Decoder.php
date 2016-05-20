@@ -6,6 +6,8 @@
  * @datetime 2016-05-19 18:35
  */
 namespace Notadd\Image\Imagick;
+use Imagick;
+use ImagickException;
 use Notadd\Image\AbstractDecoder;
 use Notadd\Image\Exceptions\NotReadableException;
 use Notadd\Image\Exceptions\NotSupportedException;
@@ -20,11 +22,11 @@ class Decoder extends AbstractDecoder {
      * @return \Notadd\Image\Image
      */
     public function initFromPath($path) {
-        $core = new \Imagick;
+        $core = new Imagick;
         try {
             $core->readImage($path);
-            $core->setImageType(\Imagick::IMGTYPE_TRUECOLORMATTE);
-        } catch(\ImagickException $e) {
+            $core->setImageType(Imagick::IMGTYPE_TRUECOLOR);
+        } catch(ImagickException $e) {
             throw new NotReadableException("Unable to read image from path ({$path}).", 0, $e);
         }
         $image = $this->initFromImagick($core);
@@ -39,12 +41,12 @@ class Decoder extends AbstractDecoder {
         throw new NotSupportedException('Imagick driver is unable to init from GD resource.');
     }
     /**
-     * @param \Imagick $object
+     * @param Imagick $object
      * @return \Notadd\Image\Image
      */
-    public function initFromImagick(\Imagick $object) {
+    public function initFromImagick(Imagick $object) {
         $object = $this->removeAnimation($object);
-        $object->setImageOrientation(\Imagick::ORIENTATION_UNDEFINED);
+        $object->setImageOrientation(Imagick::ORIENTATION_UNDEFINED);
         return new Image(new Driver, $object);
     }
     /**
@@ -52,10 +54,10 @@ class Decoder extends AbstractDecoder {
      * @return \Notadd\Image\Image
      */
     public function initFromBinary($binary) {
-        $core = new \Imagick;
+        $core = new Imagick;
         try {
             $core->readImageBlob($binary);
-        } catch(\ImagickException $e) {
+        } catch(ImagickException $e) {
             throw new NotReadableException("Unable to read image from binary data.", 0, $e);
         }
         $image = $this->initFromImagick($core);
@@ -63,11 +65,11 @@ class Decoder extends AbstractDecoder {
         return $image;
     }
     /**
-     * @param \Imagick $object
-     * @return \Imagick
+     * @param Imagick $object
+     * @return Imagick
      */
-    private function removeAnimation(\Imagick $object) {
-        $imagick = new \Imagick;
+    private function removeAnimation(Imagick $object) {
+        $imagick = new Imagick;
         foreach($object as $frame) {
             $imagick->addImage($frame->getImage());
             break;
