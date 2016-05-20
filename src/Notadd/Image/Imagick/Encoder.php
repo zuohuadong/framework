@@ -111,4 +111,18 @@ class Encoder extends AbstractEncoder {
         $imagick->setImageCompression($compression);
         return $imagick->getImagesBlob();
     }
+    /**
+     * @return string
+     */
+    protected function processWebp() {
+        $format = 'webp';
+        $compression = Imagick::COMPRESSION_UNDEFINED;
+        $imagick = $this->image->getCore();
+        $imagick->setFormat($format);
+        $imagick->setImageFormat($format);
+        $imagick->setCompression($compression);
+        $imagick->setImageCompression($compression);
+        $imagick->setImageCompressionQuality($this->quality);
+        return $imagick->getImagesBlob();
+    }
 }

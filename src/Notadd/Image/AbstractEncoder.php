@@ -54,6 +54,10 @@ abstract class AbstractEncoder {
      */
     abstract protected function processIco();
     /**
+     * @return string
+     */
+    abstract protected function processWebp();
+    /**
      * @param Image $image
      * @param string $format
      * @param integer $quality
@@ -113,6 +117,9 @@ abstract class AbstractEncoder {
             case 'psd':
             case 'image/vnd.adobe.photoshop':
                 $this->result = $this->processPsd();
+                break;
+            case 'webp':
+                $this->result = $this->processWebp();
                 break;
             default:
                 throw new NotSupportedException("Encoding format ({$format}) is not supported.");

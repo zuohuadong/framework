@@ -74,4 +74,10 @@ class Encoder extends AbstractEncoder {
     protected function processPsd() {
         throw new NotSupportedException("PSD format is not supported by Gd Driver.");
     }
+    /**
+     * @return string
+     */
+    protected function processWebp() {
+        throw new NotSupportedException("Webp format is not supported by Gd Driver.");
+    }
 }
