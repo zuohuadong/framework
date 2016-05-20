@@ -103,7 +103,7 @@ class Category extends Model {
      */
     public function getAdminTemplate($key = '') {
         $templates = Collection::make();
-        $templates->put('edit', 'admin::content.category.edit');
+        $templates->put('edit', 'admin::category.edit');
         static::$dispatcher->fire(new GetCategoryAdminTemplates($this, $templates));
         if($key) {
             return $templates->get($key);
@@ -117,9 +117,9 @@ class Category extends Model {
      */
     public function getArticleTemplate($key = '') {
         $templates = Collection::make();
-        $templates->put('create', 'admin::content.article.create');
-        $templates->put('edit', 'admin::content.article.edit');
-        $templates->put('list', 'admin::content.article.list');
+        $templates->put('create', 'admin::article.create');
+        $templates->put('edit', 'admin::article.edit');
+        $templates->put('list', 'admin::article.list');
         static::$dispatcher->fire(new GetArticleAdminTemplates($this, $templates));
         if($key) {
             return $templates->get($key);

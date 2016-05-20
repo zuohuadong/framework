@@ -74,6 +74,20 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-sm">
+                                <label class="col-md-4 control-label">开启调试模式</label>
+                                <div class="col-md-4">
+                                    <div class="btn-group btn-group-sm" data-toggle="buttons">
+                                        @if($debug)
+                                            <label class="btn btn-primary active"><input type="radio" name="debug" value="1" checked>开启</label>
+                                            <label class="btn btn-primary"><input type="radio" name="debug" value="0">关闭</label>
+                                        @else
+                                            <label class="btn btn-primary"><input type="radio" name="debug" value="1">开启</label>
+                                            <label class="btn btn-primary active"><input type="radio" name="debug" value="0" checked>关闭</label>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">首页设置</label>
                                 <div class="col-md-4">
                                     <select class="form-control" name="home">

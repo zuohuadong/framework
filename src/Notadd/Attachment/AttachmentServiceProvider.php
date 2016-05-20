@@ -7,7 +7,9 @@
  */
 namespace Notadd\Attachment;
 use Illuminate\Support\ServiceProvider;
-use Notadd\Attachment\Controllers\Admin\AttachmentController;
+use Notadd\Attachment\Controllers\Admin\AttachmentController as AdminAttachmentController;
+use Notadd\Attachment\Controllers\Admin\ConfigurationController as AdminConfigurationController;
+use Notadd\Attachment\Controllers\Admin\ListController as AdminListController;
 use Notadd\Foundation\Traits\InjectEventsTrait;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 /**
@@ -21,7 +23,9 @@ class AttachmentServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
-            $this->getRouter()->resource('attachment', AttachmentController::class);
+            $this->getRouter()->resource('attachment/list', AdminListController::class);
+            $this->getRouter()->resource('attachment/configuration', AdminConfigurationController::class);
+            $this->getRouter()->resource('attachment', AdminAttachmentController::class);
         });
     }
     /**

@@ -26,11 +26,13 @@ use Notadd\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
 use Notadd\Foundation\Exceptions\Handler;
+use Notadd\Image\ImageServiceProvider;
 use Notadd\Install\InstallServiceProvider;
 use Notadd\Link\LinkServiceProvider;
 use Notadd\Menu\MenuServiceProvider;
 use Notadd\Page\PageServiceProvider;
 use Notadd\Payment\PaymentServiceProvider;
+use Notadd\Sitemap\SitemapServiceProvider;
 use Notadd\Theme\ThemeServiceProvider;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -72,6 +74,7 @@ class Server {
         $this->application->singleton(ExceptionHandler::class, Handler::class);
         if($this->application->isInstalled()) {
             $this->application->register(AgentServiceProvider::class);
+            $this->application->register(ImageServiceProvider::class);
             $this->application->register(ThemeServiceProvider::class);
             $this->application->register(MenuServiceProvider::class);
             $this->application->register(EditorServiceProvider::class);
@@ -79,6 +82,7 @@ class Server {
             $this->application->register(CategoryServiceProvider::class);
             $this->application->register(ArticleServiceProvider::class);
             $this->application->register(AttachmentServiceProvider::class);
+            $this->application->register(SitemapServiceProvider::class);
             $this->application->register(HttpServiceProvider::class);
             $this->application->register(LinkServiceProvider::class);
             $this->application->register(PageServiceProvider::class);
@@ -165,6 +169,9 @@ class Server {
                 'cloud' => 's3',
                 'disks' => []
             ],
+            'image' => [
+                'driver' => 'imagick'
+            ],
             'mail' => [
                 'driver' => 'mail',
             ],
@@ -181,6 +188,12 @@ class Server {
                 'path' => '/',
                 'domain' => null,
                 'secure' => false,
+            ],
+            'sitemap' => [
+                'use_cache' => false,
+                'cache_key' => 'notadd_sitemap',
+                'cache_duration' => 3600,
+                'escaping' => true,
             ],
             'view' => [
                 'paths' => [],

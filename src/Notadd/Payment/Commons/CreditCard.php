@@ -28,7 +28,7 @@ class CreditCard {
     /**
      * @var array
      */
-    protected $supported_cards = array(
+    protected $supported_cards = [
         self::BRAND_VISA => '/^4\d{12}(\d{3})?$/',
         self::BRAND_MASTERCARD => '/^(5[1-5]\d{4}|677189)\d{10}$/',
         self::BRAND_DISCOVER => '/^(6011|65\d{2}|64[4-9]\d)\d{12}|(62\d{14})$/',
@@ -41,7 +41,7 @@ class CreditCard {
         self::BRAND_MAESTRO => '/^(5[06-8]|6\d)\d{10,17}$/',
         self::BRAND_FORBRUGSFORENINGEN => '/^600722\d{10}$/',
         self::BRAND_LASER => '/^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/',
-    );
+    ];
     /**
      * @var
      */
@@ -120,11 +120,11 @@ class CreditCard {
      * @throws \Notadd\Payment\Exceptions\InvalidCreditCardException
      */
     public function validate() {
-        foreach(array(
+        foreach([
                     'number',
                     'expiryMonth',
                     'expiryYear'
-                ) as $key) {
+                ] as $key) {
             if(!$this->getParameter($key)) {
                 throw new InvalidCreditCardException("The $key parameter is required");
             }

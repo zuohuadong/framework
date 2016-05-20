@@ -17,7 +17,6 @@ class PhpExtensions extends Prerequisite {
     public function check() {
         foreach([
                     'mbstring',
-                    'pdo_mysql',
                     'openssl',
                     'json',
                     'gd',
@@ -28,6 +27,11 @@ class PhpExtensions extends Prerequisite {
                     'message' => "必须安装PHP扩展[{$extension}]。",
                 ];
             }
+        }
+        if(!extension_loaded('pdo_mysql') && !extension_loaded('pdo_pgsql') && !extension_loaded('pdo_sqlite')) {
+            $this->errors[] = [
+                'message' => "未安装MySQL、PostgreSQL或SQLite的任何一种数据库支持！",
+            ];
         }
     }
 }

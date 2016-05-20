@@ -28,6 +28,21 @@ class PrerequisiteController extends Controller {
             $view->content->errors = $errors;
         } else {
             $view->content = $this->view->make('install::install');
+            if(extension_loaded('pdo_mysql')) {
+                $view->content->has_mysql = true;
+            } else {
+                $view->content->has_mysql = false;
+            }
+            if(extension_loaded('pdo_pgsql')) {
+                $view->content->has_pgsql = true;
+            } else {
+                $view->content->has_pgsql = false;
+            }
+            if(extension_loaded('pdo_mysql')) {
+                $view->content->has_sqlite = true;
+            } else {
+                $view->content->has_sqlite = false;
+            }
         }
         return $view;
     }

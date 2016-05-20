@@ -18,7 +18,7 @@ class Gateway {
     /**
      * @var array
      */
-    private $gateways = array();
+    private $gateways = [];
     /**
      * @return array
      */

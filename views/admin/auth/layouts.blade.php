@@ -21,6 +21,7 @@
         <p class="right">v{{ app()->version() }}</p>
     </footer>
 </div>
+<script src="{{ asset('statics/admin/js/webp.min.js') }}"></script>
 <script src="{{ asset('statics/admin/js/jquery-2.1.3.min.js') }}"></script>
 <script src="{{ asset('statics/admin/js/perfect-scrollbar.jquery.min.js') }}"></script>
 <script src="{{ asset('statics/admin/js/bootstrap.min.js') }}"></script>

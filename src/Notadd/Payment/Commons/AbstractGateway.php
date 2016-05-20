@@ -48,7 +48,7 @@ abstract class AbstractGateway implements GatewayContract {
      * @param array $parameters
      * @return $this
      */
-    public function initialize(array $parameters = array()) {
+    public function initialize(array $parameters = []) {
         $this->parameters = new ParameterBag;
         foreach($this->getDefaultParameters() as $key => $value) {
             if(is_array($value)) {
@@ -64,7 +64,7 @@ abstract class AbstractGateway implements GatewayContract {
      * @return array
      */
     public function getDefaultParameters() {
-        return array();
+        return [];
     }
     /**
      * @return array
@@ -193,9 +193,9 @@ abstract class AbstractGateway implements GatewayContract {
      * @return \GuzzleHttp\Client
      */
     protected function getDefaultHttpClient() {
-        return new HttpClient(array(
-                'curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60),
-            ));
+        return new HttpClient([
+                'curl.options' => [CURLOPT_CONNECTTIMEOUT => 60],
+            ]);
     }
     /**
      * @return \Symfony\Component\HttpFoundation\Request

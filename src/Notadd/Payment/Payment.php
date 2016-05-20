@@ -38,9 +38,9 @@ class Payment {
      */
     public static function __callStatic($method, $parameters) {
         $factory = static::getFactory();
-        return call_user_func_array(array(
+        return call_user_func_array([
             $factory,
             $method
-        ), $parameters);
+        ], $parameters);
     }
 }

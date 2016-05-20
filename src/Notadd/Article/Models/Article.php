@@ -108,7 +108,7 @@ class Article extends Model {
      */
     public function getThumbImageAttribute($value) {
         if($value == '') {
-            $match = array();
+            $match = [];
             $pattern = "/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/";
             preg_match_all($pattern, $this->attributes['content'], $match);
             if(!empty($match[1])) {

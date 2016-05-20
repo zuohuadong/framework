@@ -74,7 +74,7 @@ class ArticleController extends AbstractAdminController {
         $this->share('category_id', 0);
         $this->share('crumbs', []);
         $this->share('count', Article::count());
-        return $this->view('admin::content.article.list');
+        return $this->view('admin::article.list');
     }
     /**
      * @param $id
@@ -98,7 +98,7 @@ class ArticleController extends AbstractAdminController {
         $this->share('category_id', $id);
         $this->share('crumbs', $crumb);
         $this->share('count', Article::count());
-        return $this->view('admin::content.article.list');
+        return $this->view('admin::article.list');
     }
     /**
      * @param \Notadd\Article\Requests\ArticleCreateRequest $request
