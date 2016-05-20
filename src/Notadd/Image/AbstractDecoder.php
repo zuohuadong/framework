@@ -87,7 +87,7 @@ abstract class AbstractDecoder {
     /**
      * @return boolean
      */
-    public function isInterventionImage() {
+    public function isNotaddImage() {
         return is_a($this->data, '\Notadd\Image\Image');
     }
     /**
@@ -157,7 +157,7 @@ abstract class AbstractDecoder {
      * @param  Image $object
      * @return \Notadd\Image\Image
      */
-    public function initFromInterventionImage($object) {
+    public function initFromNotaddImage($object) {
         return $object;
     }
     /**
@@ -187,8 +187,8 @@ abstract class AbstractDecoder {
                 return $this->initFromGdResource($this->data);
             case $this->isImagick():
                 return $this->initFromImagick($this->data);
-            case $this->isInterventionImage():
-                return $this->initFromInterventionImage($this->data);
+            case $this->isNotaddImage():
+                return $this->initFromNotaddImage($this->data);
             case $this->isSplFileInfo():
                 return $this->initFromPath($this->data->getRealPath());
             case $this->isBinary():

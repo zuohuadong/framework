@@ -71,7 +71,6 @@ class Image extends File {
         if($saved === false) {
             throw new NotWritableException("Can't write image data to path ({$path})");
         }
-        // set new file info
         $this->setFileInfoFromPath($path);
         return $this;
     }
