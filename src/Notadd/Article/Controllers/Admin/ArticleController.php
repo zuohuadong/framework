@@ -9,6 +9,7 @@ namespace Notadd\Article\Controllers\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Article\Events\AfterArticleUpdate;
 use Notadd\Article\Events\OnArticleEdit;
 use Notadd\Article\Models\Article;
 use Notadd\Article\Models\ArticleRecommend;
@@ -121,6 +122,7 @@ class ArticleController extends AbstractAdminController {
         $request->offsetSet('user_id', $this->app->make('auth')->user()->id);
         $request->offsetSet('created_at', new Carbon($request->offsetGet('created_at')));
         $article->update($request->all());
+        $this->events->fire(new AfterArticleUpdate($this->app, $this->view, $article));
         return $this->redirect->to('admin/article');
     }
 }
