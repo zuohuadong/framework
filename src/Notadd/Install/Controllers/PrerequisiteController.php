@@ -43,6 +43,22 @@ class PrerequisiteController extends Controller {
             } else {
                 $view->content->has_sqlite = false;
             }
+            if(extension_loaded("gd") && function_exists("imagewebp")) {
+                $view->content->gd_trouble = false;
+            } else {
+                $view->content->gd_trouble = true;
+            }
+            if(extension_loaded("imagick")) {
+                $imagick = new \Imagick();
+                $formats = $imagick->queryFormats();
+                if(in_array("WEBP", $formats) || in_array("webp", $formats)) {
+                    $view->content->imagemagick_trouble = false;
+                } else {
+                    $view->content->imagemagick_trouble = true;
+                }
+            } else {
+                $view->content->imagemagick_trouble = true;
+            }
         }
         return $view;
     }
