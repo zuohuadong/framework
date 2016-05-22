@@ -7,6 +7,7 @@
  */
 namespace Notadd\Image;
 use Closure;
+use Illuminate\Container\Container;
 use Notadd\Image\Exceptions\MissingDependencyException;
 use Notadd\Image\Exceptions\NotSupportedException;
 /**
@@ -34,6 +35,7 @@ class ImageManager {
      */
     public function configure(array $config = array()) {
         $this->config = array_replace($this->config, $config);
+        $this->config['driver'] = Container::getInstance()->make('setting')->get('attachment.engine', 'gd');
         return $this;
     }
     /**

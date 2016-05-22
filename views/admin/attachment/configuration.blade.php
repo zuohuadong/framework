@@ -22,10 +22,10 @@
                                             <div class="btn-group" data-toggle="buttons">
                                                 @if($engine == 'gd')
                                                     <label class="btn btn-primary btn-sm active"><input name="engine" type="radio" value="gd" checked>GD库</label>
-                                                    <label class="btn btn-primary btn-sm"><input name="engine" type="radio" value="imagemagick">ImageMagick</label>
+                                                    <label class="btn btn-primary btn-sm"><input name="engine" type="radio" value="imagick">ImageMagick</label>
                                                 @else
                                                     <label class="btn btn-primary btn-sm"><input name="engine" type="radio" value="gd">GD库</label>
-                                                    <label class="btn btn-primary btn-sm active"><input name="engine" type="radio" value="imagemagick" checked>ImageMagick</label>
+                                                    <label class="btn btn-primary btn-sm active"><input name="engine" type="radio" value="imagick" checked>ImageMagick</label>
                                                 @endif
                                             </div>
                                         </div>
