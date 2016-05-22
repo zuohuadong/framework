@@ -52,7 +52,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * @var string
      */
-    const VERSION = '0.1.7.8';
+    const VERSION = '0.1.8';
     /**
      * @var string
      */
