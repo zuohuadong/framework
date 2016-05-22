@@ -6,6 +6,7 @@
  * @datetime 2016-05-12 11:05
  */
 namespace Notadd\Editor\Uploaders;
+use Illuminate\Container\Container;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 /**
  * Class UploadFile
@@ -43,7 +44,11 @@ class UploadFile extends AbstractUpload {
         try {
             $this->file->move(dirname($this->filePath), $this->fileName);
             $this->filePath = str_replace($this->fileType, '.webp', $this->getFilePath());
-            $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->filePath);
+            if(Container::getInstance()->make('setting')->get('attachment.watermark', false) && Container::getInstance()->make('files')->exists($this->config['watermark'])) {
+                $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->filePath);
+            } else {
+                $this->image->make($this->getFilePath())->save($this->filePath);
+            }
             $this->oriName = str_replace($this->fileType, '.webp', $this->oriName);
             $this->fileName = str_replace($this->fileType, '.webp', $this->fileName);
             $this->fullName = str_replace($this->fileType, '.webp', $this->fullName);
