@@ -83,7 +83,7 @@ class Encoder extends AbstractEncoder {
         }
         ob_start();
         $result = imagewebp($this->image->getCore());
-        $this->image->mime = 'application/octet-stream';
+        $this->image->mime = 'image/webp';
         $buffer = ob_get_contents();
         ob_end_clean();
         return $buffer;
