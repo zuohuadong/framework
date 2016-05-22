@@ -90,7 +90,7 @@ abstract class AbstractUpload {
      * @return string
      */
     protected function getFileExt() {
-        return '.' . $this->file->guessExtension();
+        return '.' . $this->file->getClientOriginalExtension();
     }
     /**
      * @return string
