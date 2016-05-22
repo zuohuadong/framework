@@ -43,16 +43,18 @@ class UploadFile extends AbstractUpload {
         }
         try {
             $this->file->move(dirname($this->filePath), $this->fileName);
-            $this->filePath = str_replace($this->fileType, '.webp', $this->getFilePath());
-            if(Container::getInstance()->make('setting')->get('attachment.watermark', false) && Container::getInstance()->make('files')->exists($this->config['watermark'])) {
-                $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->filePath);
-            } else {
-                $this->image->make($this->getFilePath())->save($this->filePath);
+            if($this->fileType != '.webp') {
+                $this->filePath = str_replace($this->fileType, '.webp', $this->getFilePath());
+                if(Container::getInstance()->make('setting')->get('attachment.watermark', false) && Container::getInstance()->make('files')->exists($this->config['watermark'])) {
+                    $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->filePath);
+                } else {
+                    $this->image->make($this->getFilePath())->save($this->filePath);
+                }
+                $this->oriName = str_replace($this->fileType, '.webp', $this->oriName);
+                $this->fileName = str_replace($this->fileType, '.webp', $this->fileName);
+                $this->fullName = str_replace($this->fileType, '.webp', $this->fullName);
+                $this->fileType = '.webp';
             }
-            $this->oriName = str_replace($this->fileType, '.webp', $this->oriName);
-            $this->fileName = str_replace($this->fileType, '.webp', $this->fileName);
-            $this->fullName = str_replace($this->fileType, '.webp', $this->fullName);
-            $this->fileType = '.webp';
             $this->stateInfo = $this->stateMap[0];
         } catch(FileException $exception) {
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
