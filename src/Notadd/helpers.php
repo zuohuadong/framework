@@ -563,3 +563,11 @@ if(!function_exists('elixir')) {
         throw new InvalidArgumentException("File {$file} not defined in asset manifest.");
     }
 }
+if(!function_exists('search')) {
+    /**
+     * @param $engine
+     */
+    function search($engine) {
+        return app('search')->export($engine);
+    }
+}

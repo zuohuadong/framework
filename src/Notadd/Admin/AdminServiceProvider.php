@@ -214,6 +214,11 @@ class AdminServiceProvider extends ServiceProvider {
                                 'title' => '友情链接组件',
                                 'active' => 'admin/link*',
                                 'url' => 'admin/link',
+                            ],
+                            [
+                                'title' => '搜索组件',
+                                'active' => 'admin/search*',
+                                'url' => 'admin/search',
                             ]
                         ]
                     ],
