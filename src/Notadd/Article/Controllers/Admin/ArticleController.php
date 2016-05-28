@@ -79,6 +79,33 @@ class ArticleController extends AbstractAdminController {
     }
     /**
      * @param $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function move($id) {
+        $article = Article::findOrFail($id);
+        $crumbs = [];
+        Category::buildCrumb($article->category_id, $crumbs);
+        $category = Category::findOrFail($article->category_id);
+        $list = $category->where('id', '!=', $id)->get();
+        $this->share('article', $article);
+        $this->share('crumbs', $crumbs);
+        $this->share('id', $id);
+        $this->share('category', $category);
+        $this->share('list', $list);
+        return $this->view('article.move');
+    }
+    /**
+     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function moving($id, Request $request) {
+        $article = Article::findOrFail($id);
+        $article->update($request->all());
+        return $this->redirect->to('admin/article/' . $article->getAttribute('category_id'));
+    }
+    /**
+     * @param $id
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
