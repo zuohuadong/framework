@@ -21,14 +21,10 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="col-md-5">文章标题
-                                </td>
-                                <th class="col-md-2">所属栏目
-                                </td>
-                                <th class="col-md-2">创建时间
-                                </td>
-                                <th class="col-md-3">操作
-                                </td>
+                                <th class="col-md-5">文章标题</th>
+                                <th class="col-md-2">所属栏目</th>
+                                <th class="col-md-2">创建时间</th>
+                                <th class="col-md-3">操作</th>
                             </tr>
                             </thead>
                             <tbody>
