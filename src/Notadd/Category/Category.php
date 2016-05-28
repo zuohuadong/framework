@@ -163,13 +163,17 @@ class Category {
      * @return string
      */
     public function getRouting() {
-        $loopParent = Collection::make([$this->model]);
-        $this->getLoopParent($loopParent);
-        $routingString = Collection::make();
-        foreach($loopParent as $model) {
-            $model->getAttribute('alias') && $routingString->push($model->getAttribute('alias'));
+        if($this->model->getAttribute('alias')) {
+            $loopParent = Collection::make([$this->model]);
+            $this->getLoopParent($loopParent);
+            $routingString = Collection::make();
+            foreach($loopParent as $model) {
+                $model->getAttribute('alias') && $routingString->push($model->getAttribute('alias'));
+            }
+            return $routingString->implode('/');
+        } else {
+            return 'category/' . $this->id;
         }
-        return $routingString->implode('/');
     }
     /**
      * @return string

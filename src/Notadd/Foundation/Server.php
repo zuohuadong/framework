@@ -32,6 +32,7 @@ use Notadd\Link\LinkServiceProvider;
 use Notadd\Menu\MenuServiceProvider;
 use Notadd\Page\PageServiceProvider;
 use Notadd\Payment\PaymentServiceProvider;
+use Notadd\Search\SearchServiceProvider;
 use Notadd\Sitemap\SitemapServiceProvider;
 use Notadd\Theme\ThemeServiceProvider;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -86,6 +87,7 @@ class Server {
             $this->application->register(HttpServiceProvider::class);
             $this->application->register(LinkServiceProvider::class);
             $this->application->register(PageServiceProvider::class);
+            $this->application->register(SearchServiceProvider::class);
             $this->application->register(PaymentServiceProvider::class);
             $this->application->register(AdminServiceProvider::class);
             $this->application->register(DevelopServiceProvider::class);
@@ -170,7 +172,7 @@ class Server {
                 'disks' => []
             ],
             'image' => [
-                'driver' => 'imagick'
+                'driver' => 'gd'
             ],
             'mail' => [
                 'driver' => 'mail',

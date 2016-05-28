@@ -1,6 +1,17 @@
 <h2>安装</h2>
-<p>如果您在安装过程中遇到问题，可以进入<a href="https://www.notadd.com/">www.notadd.com</a>获取帮助。</p>
-<p>需要开启的PHP函数列表：exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open</p>
+<p>如果您在安装过程中遇到问题，可以进入<a href="https://www.notadd.com/" target="_blank">www.notadd.com</a>获取帮助。</p>
+<p>需要解决Webp格式图片处理问题，可以进入<a href="https://www.notadd.com/alpha2/" target="_blank">https://www.notadd.com/alpha2/</a>获取帮助。</p>
+<p>需要开启的PHP函数列表：exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open。</p>
+<?php if($gd_trouble) { ?>
+    <p>当前服务器不支持GD引擎处理Webp格式图片。</p>
+<?php } else { ?>
+    <p>当前服务器可以使用GD引擎处理Webp格式图片。</p>
+<?php } ?>
+<?php if($imagemagick_trouble) { ?>
+    <p>当前服务器不支持Imagemagick引擎处理Webp格式图片。</p>
+<?php } else { ?>
+    <p>当前服务器可以使用Imagemagick引擎处理Webp格式图片。</p>
+<?php } ?>
 <form autocomplete="off" method="post">
     <input type="hidden" name="_token" value="<?php echo app('session')->getToken() ?>">
     <div class="form-group form-group-sm">

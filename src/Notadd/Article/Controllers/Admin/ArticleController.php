@@ -9,6 +9,7 @@ namespace Notadd\Article\Controllers\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Article\Events\AfterArticleUpdate;
 use Notadd\Article\Events\OnArticleEdit;
 use Notadd\Article\Models\Article;
 use Notadd\Article\Models\ArticleRecommend;
@@ -78,6 +79,33 @@ class ArticleController extends AbstractAdminController {
     }
     /**
      * @param $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function move($id) {
+        $article = Article::findOrFail($id);
+        $crumbs = [];
+        Category::buildCrumb($article->category_id, $crumbs);
+        $category = Category::findOrFail($article->category_id);
+        $list = $category->where('id', '!=', $id)->get();
+        $this->share('article', $article);
+        $this->share('crumbs', $crumbs);
+        $this->share('id', $id);
+        $this->share('category', $category);
+        $this->share('list', $list);
+        return $this->view('article.move');
+    }
+    /**
+     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function moving($id, Request $request) {
+        $article = Article::findOrFail($id);
+        $article->update($request->all());
+        return $this->redirect->to('admin/article/' . $article->getAttribute('category_id'));
+    }
+    /**
+     * @param $id
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -109,7 +137,7 @@ class ArticleController extends AbstractAdminController {
         $request->offsetSet('user_id', $this->app->make('auth')->user()->id);
         $request->offsetSet('created_at', new Carbon());
         $article->create($request->all());
-        return $this->redirect->to('admin/article');
+        return $this->redirect->to('admin/article/' . $request->offsetGet('category_id'));
     }
     /**
      * @param \Notadd\Article\Requests\ArticleEditRequest $request
@@ -121,6 +149,7 @@ class ArticleController extends AbstractAdminController {
         $request->offsetSet('user_id', $this->app->make('auth')->user()->id);
         $request->offsetSet('created_at', new Carbon($request->offsetGet('created_at')));
         $article->update($request->all());
-        return $this->redirect->to('admin/article');
+        $this->events->fire(new AfterArticleUpdate($this->app, $this->view, $article));
+        return $this->redirect->to('admin/article/' . $article->getAttribute('category_id'));
     }
 }

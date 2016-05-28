@@ -5,6 +5,11 @@
  * @copyright (c) 2015, iBenchu.org
  * @datetime 2015-10-18 16:28
  */
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Cookie\Factory as CookieFactory;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Access\Gate;
@@ -14,7 +19,6 @@ if(!function_exists('abort')) {
      * @param int $code
      * @param string $message
      * @param array $headers
-     * @return void
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -70,7 +74,7 @@ if(!function_exists('auth')) {
      * @return \Illuminate\Contracts\Auth\Guard
      */
     function auth() {
-        return app('Illuminate\Contracts\Auth\Guard');
+        return app(Guard::class);
     }
 }
 if(!function_exists('base_path')) {
@@ -139,7 +143,7 @@ if(!function_exists('cookie')) {
      * @return \Symfony\Component\HttpFoundation\Cookie
      */
     function cookie($name = null, $value = null, $minutes = 0, $path = null, $domain = null, $secure = false, $httpOnly = true) {
-        $cookie = app('Illuminate\Contracts\Cookie\Factory');
+        $cookie = app(CookieFactory::class);
         if(is_null($name)) {
             return $cookie;
         }
@@ -247,7 +251,7 @@ if(!function_exists('method_field')) {
      * @return string
      */
     function method_field($method) {
-        return new Illuminate\View\Expression('<input type="hidden" name="_method" value="' . $method . '">');
+        return new HtmlString('<input type="hidden" name="_method" value="' . $method . '">');
     }
 }
 if(!function_exists('old')) {
@@ -370,7 +374,6 @@ if(!function_exists('resource')) {
      * @param string $name
      * @param string $controller
      * @param array $options
-     * @return void
      */
     function resource($name, $controller, array $options = []) {
         return app('router')->resource($name, $controller, $options);
@@ -483,7 +486,7 @@ if(!function_exists('url')) {
      * @return string
      */
     function url($path = null, $parameters = [], $secure = null) {
-        return app('Illuminate\Contracts\Routing\UrlGenerator')->to($path, $parameters, $secure);
+        return app(UrlGenerator::class)->to($path, $parameters, $secure);
     }
 }
 if(!function_exists('view')) {
@@ -494,7 +497,7 @@ if(!function_exists('view')) {
      * @return \Illuminate\View\View
      */
     function view($view = null, $data = [], $mergeData = []) {
-        $factory = app('Illuminate\Contracts\View\Factory');
+        $factory = app(ViewFactory::class);
         if(func_num_args() === 0) {
             return $factory;
         }
@@ -558,5 +561,13 @@ if(!function_exists('elixir')) {
             return '/build/' . $manifest[$file];
         }
         throw new InvalidArgumentException("File {$file} not defined in asset manifest.");
+    }
+}
+if(!function_exists('search')) {
+    /**
+     * @param $engine
+     */
+    function search($engine) {
+        return app('search')->export($engine);
     }
 }

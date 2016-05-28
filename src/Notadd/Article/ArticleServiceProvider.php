@@ -25,6 +25,8 @@ class ArticleServiceProvider extends ServiceProvider {
         $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
             $this->getRouter()->resource('article', AdminArticleController::class);
             $this->getRouter()->post('article/{id}/delete', AdminArticleController::class . '@delete');
+            $this->getRouter()->get('article/{id}/move', AdminArticleController::class . '@move');
+            $this->getRouter()->post('article/{id}/moving', AdminArticleController::class . '@moving');
             $this->getRouter()->post('article/{id}/restore', AdminArticleController::class . '@restore');
             $this->getRouter()->post('article/select', AdminArticleController::class . '@select');
         });

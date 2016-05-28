@@ -40,6 +40,8 @@ class CategoryServiceProvider extends ServiceProvider {
         }
         $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
             $this->getRouter()->resource('category', AdminCategoryController::class);
+            $this->getRouter()->get('category/{id}/move', AdminCategoryController::class . '@move');
+            $this->getRouter()->post('category/{id}/moving', AdminCategoryController::class . '@moving');
             $this->getRouter()->post('category/{id}/status', AdminCategoryController::class . '@status');
         });
         $this->getRouter()->resource('category', CategoryController::class);

@@ -78,8 +78,12 @@ class Article {
      */
     public function getRouting() {
         $category = new Category($this->model->getAttribute('category_id'));
-        $path = $category->getRouting();
-        return $path . '/' . $this->id;
+        if($category->getModel()->getAttribute('alias')) {
+            $path = $category->getRouting();
+            return $path . '/' . $this->id;
+        } else {
+            return 'article/' . $this->id;
+        }
     }
     /**
      * @return string

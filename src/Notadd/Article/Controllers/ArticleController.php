@@ -19,6 +19,8 @@ class ArticleController extends Controller {
     public function show($id) {
         $article = new Article($id);
         $this->events->fire(new OnArticleShow($this->app, $this->view, $article));
+        $this->seo->setTitleMeta($article->getTitle() . ' - {sitename}');
+        $this->seo->setDescriptionMeta($article->getDescription());
         $this->share('title', $article->getTitle());
         $this->share('content', $article->getContent());
         $this->share('category', $article->getCategory());

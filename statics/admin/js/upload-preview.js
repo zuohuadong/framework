@@ -1,30 +1,20 @@
 (function ($) {
-    /**
-     *
-     * 图片上传前预览插件
-     * @author 马德成
-     * @date 2014-12-8
-     *
-     */
     $.fn.uploadPreview = function (opts) {
         if (this.length < 1) {
             return this;
         }
         var $this = $(this);
-        var msie = $.fn.uploadPreview.msie;// IE版本
+        var msie = $.fn.uploadPreview.msie;
         opts = $.extend({
             container: '#preView',
-            css: {}, //设置按钮的样式map类型
-            text: '', //按钮上的文字
-            width: '100%', //图片宽度,如果width和height只设置其中一个,
-            //则没有设置的属性按等比缩放,都为null则显示原始图像大小
-            //可以设置百分比(基于容器的大小按比例进行缩放)
-            height: '100%', //图片高度, 数字或string类型
-            imgType: ["gif", "jpeg", "jpg", "bmp", "png"]//支持的图片格式
+            css: {},
+            text: '',
+            width: '100%',
+            height: '100%',
+            imgType: ["gif", "jpeg", "jpg", "bmp", "png", "webp"]
         }, opts || {});
-        if (msie) { //IE 浏览器
-            if (msie == 6) { //IE6
-                //<change>
+        if (msie) {
+            if (msie == 6) {
                 $.fn.uploadPreview.loopInput($this, opts, function (input) {
                     $(input).change({opts: opts}, function () {
                         if (!$.fn.uploadPreview.checkFileType(input.value, opts)) {
@@ -35,11 +25,8 @@
                     });
 
                 });
-                //</change>
                 return $this;
             }
-            // 大于IE6
-            //<change>
             $.fn.uploadPreview.loopInput($this, opts, function (input) {
                 $(input).change({opts: opts}, function () {
                     if (!$.fn.uploadPreview.checkFileType(input.value, opts)) {
@@ -66,8 +53,6 @@
             });
             return $this;
         }
-        //非IE浏览器
-        //<change>
         $.fn.uploadPreview.loopInput($this, opts, function (input) {
             $(input).change({opts: opts}, function () {
                 if (!$.fn.uploadPreview.checkFileType(input.value, opts)) {
@@ -77,10 +62,8 @@
                 $.fn.uploadPreview.getImage(opts).attr('src', URL.createObjectURL(input.files[0]));
             });
         });
-        //</change>
         return $this;
     };
-//检测IE版本,不是每次获取,而是在初始化时只执行一次
     $.fn.uploadPreview.msie = (function () {
         var undef,
                 v = 3,
@@ -90,7 +73,6 @@
             ;
         return v > 4 ? v : undef;
     })();
-//检测文件类型
     $.fn.uploadPreview.checkFileType = function (value, opts) {
         if (value) {
             if (!RegExp('\.(' + opts.imgType.join('|') + ')$', 'i').test(value)) {
@@ -101,7 +83,6 @@
         }
         return false;
     };
-//获取图片对象
     $.fn.uploadPreview.getImage = function (opts) {
         var img = $('.upload-pre-view-image', opts.container); //获取图片
         if (img.length > 0) {
@@ -138,15 +119,14 @@
         }
         img = $('<img />');
         img.addClass('upload-pre-view-image');
-        img.css(wh);//设置高宽
+        img.css(wh);
         $(opts.container).empty().prepend(img);
         img = $('.upload-pre-view-image', opts.container); //获取图片
         return img;
     };
-//获取图片需要缩放的高和宽
     $.fn.uploadPreview.getImageWH = function (container, width, height, imgSrc) {
-        var wh = {}; //存储图片需要缩放的宽和高
-        if (width) { //如果width有值
+        var wh = {};
+        if (width) {
             if (isNaN(width - 0)) {
                 width = $.trim(width);
                 if (width.lastIndexOf('%') != -1) {
@@ -157,7 +137,7 @@
             } else {
                 wh.width = width + 'px';
             }
-            if (height) { //高度有值,则直接返回指定值,不需要缩放处理
+            if (height) {
                 if (isNaN(height - 0)) {
                     height = $.trim(height);
                     if (height.lastIndexOf('%') != -1) {
@@ -170,49 +150,41 @@
                 }
                 return wh;
             }
-            //计算图片需要缩放的大小
-            var img = new Image(); //创建一个对象
-            img.src = imgSrc; //图片大小
+            var img = new Image();
+            img.src = imgSrc;
             var w = wh.width.toLowerCase().split('px')[0] - 0;
             if (w != img.width) {
                 wh.height = ((w / img.width) * img.height) + 'px';
             }
             return wh;
         }
-        //height
         if (height) {
             if (isNaN(height - 0)) {
                 wh.height = height;
             } else {
                 wh.height = height + 'px';
             }
-            //计算图片需要缩放的大小
-            var img = new Image(); //创建一个对象
-            img.src = imgSrc; //图片大小
+            var img = new Image();
+            img.src = imgSrc;
             var h = wh.height.toLowerCase().split('px')[0] - 0;
             if (img.height != h) {
                 wh.width = ((h / img.height) * img.width) + 'px';
             }
             return wh;
         }
-        //如果宽度和高度都设置为null,则设置为图片的原始大小
-        //计算图片需要缩放的大小
-        var img = new Image(); //创建一个对象
-        img.src = imgSrc; //图片大小
+        var img = new Image();
+        img.src = imgSrc;
         if (img.width)
             wh.width = img.width;
         if (img.height)
             wh.height = img.height;
         return wh;
     };
-//循环input元素
     $.fn.uploadPreview.loopInput = function (obj, opts, callback) {
         var file;
         for (var i = 0; i < obj.length; i++) {
             file = obj[i];
             if (file.tagName.toLowerCase() == 'input' && $(file).attr('type').toLowerCase() == 'file') {
-                //$(file).wrap('<span class="upload-pre-view"></span>').before('<span>' + opts.text + '</span>');
-                //$(file).parent().css(opts.css);
                 callback(file);
             }
 

@@ -21,14 +21,10 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="col-md-5">文章标题
-                                </td>
-                                <th class="col-md-2">所属栏目
-                                </td>
-                                <th class="col-md-2">创建时间
-                                </td>
-                                <th class="col-md-3">操作
-                                </td>
+                                <th class="col-md-5">文章标题</th>
+                                <th class="col-md-2">所属栏目</th>
+                                <th class="col-md-2">创建时间</th>
+                                <th class="col-md-3">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,6 +44,7 @@
                                             <div class="btn-group">
                                                 <a href="{{ url('article/' . $article->id) }}" class="btn btn-primary btn-xs" target="_blank">
                                                     <i class="fa fa-search-plus"></i>查看 </a>
+                                                <a class="btn btn-info btn-xs" href="{{ url('admin/article/' . $article->id . '/move') }}"><i class="fa fa-arrows"></i>移动</a>
                                                 <a href="{{ url('admin/article/'. $article->id . '/edit') }}" class="btn btn-success btn-xs">
                                                     <i class="fa fa-edit"></i>编辑 </a>
                                                 <button type="submit" class="btn btn-danger btn-xs">
