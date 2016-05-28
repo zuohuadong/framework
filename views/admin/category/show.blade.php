@@ -52,6 +52,7 @@
                                                     <span class="badge" title="该分类下子级页面数量">{{ $category->countSubCategories() }}</span>
                                                 </a>
                                                 <a class="btn btn-success btn-xs" href="{{ url('admin/category/' . $category->id . '/edit') }}"><i class="fa fa-edit"></i>编辑</a>
+                                                <a class="btn btn-info btn-xs" href="{{ url('admin/category/' . $category->id . '/move') }}"><i class="fa fa-arrows"></i>移动</a>
                                                 <a class="btn btn-info btn-xs" href="{{ url('admin/article/' . $category->id) }}">
                                                     <i class="fa fa-list"></i>文章列表
                                                     <span class="badge" title="该分类下文章数量">{{ $category->countArticles() }}</span>
