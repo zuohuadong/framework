@@ -15,7 +15,6 @@
                             <div class="panel-heading mb20"><i>支付宝配置</i></div>
                             <div class="form-horizontal col-md-12">
                                 <div class="form-group form-group-sm">
-                                <div class="form-group form-group-sm">
                                     <label class="col-md-4 control-label">商户身份</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="alipay_partner_id" value="{{ $alipay_partner_id }}">
