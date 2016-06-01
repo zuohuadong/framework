@@ -8,6 +8,7 @@
 namespace Notadd\Foundation\Http;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Notadd\Foundation\SearchEngine\Optimization;
 use Notadd\Foundation\Traits\InjectRouterTrait;
 use Notadd\Foundation\Traits\InjectSettingTrait;
 use Notadd\Page\Models\Page;
@@ -41,6 +42,8 @@ class HttpServiceProvider extends ServiceProvider {
                 return $this->app->call('Notadd\Page\Controllers\PageController@show', ['id' => $page_id]);
             }
             $this->app->make('view')->share('logo', file_get_contents(realpath($this->app->frameworkPath() . '/views/install') . DIRECTORY_SEPARATOR . 'logo.svg'));
+            $this->app->make(Optimization::class)->setDescriptionMeta($this->getSetting()->get('seo.description'));
+            $this->app->make(Optimization::class)->setKeywordsMeta($this->getSetting()->get('seo.keyword'));
             return $this->app->make('view')->make('themes::index');
         });
     }
