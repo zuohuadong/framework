@@ -21,6 +21,16 @@ class HttpServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+        switch($this->getSetting()->get('', 0)) {
+            case 1:
+                $this->app->make('url')->forceSchema('https');
+                break;
+            case 2:
+                $this->app->make('url')->forceSchema('http');
+                break;
+            default;
+                break;
+        }
         $this->getRouter()->get('/', function() {
             $home = $this->getSetting()->get('site.home', 'default');
             $page_id = 0;
