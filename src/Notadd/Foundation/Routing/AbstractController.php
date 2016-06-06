@@ -61,7 +61,6 @@ abstract class AbstractController extends IlluminateController {
         $this->setting = $this->app->make('setting');
         $this->seo = $this->app->make(Optimization::class);
         $this->view = $this->app->make('view');
-        dd($this);
     }
     /**
      * @param string $command
