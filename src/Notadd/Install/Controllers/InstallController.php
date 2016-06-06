@@ -6,7 +6,7 @@
  * @datetime 2015-11-27 23:17
  */
 namespace Notadd\Install\Controllers;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 use Notadd\Install\Requests\InstallRequest;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
  * Class InstallController
  * @package Notadd\Install\Controllers
  */
-class InstallController extends Controller {
+class InstallController extends AbstractController {
     /**
      * @var \Notadd\Install\Console\InstallCommand
      */

@@ -4,14 +4,14 @@
  * @copyright (c) 2015, iBenchu.com
  */
 namespace Notadd\Page\Controllers;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 use Notadd\Page\Events\OnPageShow;
 use Notadd\Page\Page;
 /**
  * Class PageController
  * @package Notadd\Page\Controllers
  */
-class PageController extends Controller {
+class PageController extends AbstractController {
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\View

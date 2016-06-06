@@ -6,12 +6,12 @@
 namespace Notadd\Article\Controllers;
 use Notadd\Article\Article;
 use Notadd\Article\Events\OnArticleShow;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 /**
  * Class ArticleController
  * @package Notadd\Article\Controllers
  */
-class ArticleController extends Controller {
+class ArticleController extends AbstractController {
     /**
      * @param int $id
      * @return \Illuminate\Contracts\View\View

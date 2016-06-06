@@ -6,12 +6,12 @@
 namespace Notadd\Category\Controllers;
 use Notadd\Category\Category;
 use Notadd\Category\Events\OnCategoryShow;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 /**
  * Class CategoryController
  * @package Notadd\Category\Controllers
  */
-class CategoryController extends Controller {
+class CategoryController extends AbstractController {
     /**
      * @return \Illuminate\Contracts\View\View
      */
