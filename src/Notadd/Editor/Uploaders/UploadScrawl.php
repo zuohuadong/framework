@@ -43,14 +43,6 @@ class UploadScrawl extends AbstractUpload {
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
             return false;
         } else {
-            if($this->fileType != '.webp') {
-                $this->filePath = str_replace($this->fileType, '.webp', $this->getFilePath());
-                $this->image->make($this->getFilePath())->insert($this->config['watermark'], 'center')->save($this->filePath);
-                $this->oriName = str_replace($this->fileType, '.webp', $this->oriName);
-                $this->fileName = str_replace($this->fileType, '.webp', $this->fileName);
-                $this->fullName = str_replace($this->fileType, '.webp', $this->fullName);
-                $this->fileType = '.webp';
-            }
             $this->stateInfo = $this->stateMap[0];
             return false;
         }
