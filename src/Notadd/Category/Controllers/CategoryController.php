@@ -29,8 +29,8 @@ class CategoryController extends AbstractController {
         $this->seo->setDescriptionMeta($category->getDescription());
         $this->seo->setKeywordsMeta($category->getKeywords());
         $this->share('category', $category->getModel());
-        $this->share('links', $category->getLinks());
         $this->share('list', $category->getList());
+        $this->share('links', $category->getLinks());
         $this->share('name', $category->getTitle());
         $this->share('relations', $category->getRelationCategoryList());
         return $this->view($category->getShowTemplate());
