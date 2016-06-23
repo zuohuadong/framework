@@ -81,7 +81,7 @@
         ],
         "psr-4": {
             "Notadd\\": "src/Notadd/",
-            "Notadd\\Api": "src/Api/"
+            "Notadd\\Api\\": "src/Api/"
         }
     },
     "config": {
