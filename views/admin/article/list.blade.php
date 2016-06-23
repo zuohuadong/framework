@@ -7,7 +7,7 @@
             <li><a href="{{ url('admin/article') }}">文章管理</a></li>
             @if($crumbs)
                 @foreach($crumbs as $crumb)
-                    <li><a href="{{ url('admin/article/' . $crumb->id) }}">{{ $crumb->title }}</a></li>
+                    <li><a href="{{ url('admin/category/' . $crumb->id) }}">{{ $crumb->title }}</a></li>
                 @endforeach
             @else
                 <li><a href="{{ url('admin/article') }}">所有文章</a></li>
@@ -34,7 +34,7 @@
                                         <a href="{{ url('article/' . $article->id) }}" target="_blank"><strong>{{ $article->title }}</strong></a>
                                     </td>
                                     <td>
-                                        <a href="{{ url('admin/article/' . $article->category->id) }}">{{ $article->category->title }}</a>
+                                        <a href="{{ url('admin/category/' . $article->category->id) }}">{{ $article->category->title }}</a>
                                     </td>
                                     <td>{{ $article->created_at }}</td>
                                     <td>

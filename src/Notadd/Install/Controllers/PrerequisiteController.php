@@ -6,14 +6,14 @@
  * @datetime 2015-10-18 16:39
  */
 namespace Notadd\Install\Controllers;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 use Notadd\Install\Contracts\Prerequisite;
 use Psr\Http\Message\ServerRequestInterface;
 /**
  * Class PrerequisiteController
  * @package Notadd\Install\Controllers
  */
-class PrerequisiteController extends Controller {
+class PrerequisiteController extends AbstractController {
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Notadd\Install\Contracts\Prerequisite $prerequisite

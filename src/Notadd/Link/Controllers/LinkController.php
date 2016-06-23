@@ -6,13 +6,13 @@
  * @datetime 2016-03-11 13:47
  */
 namespace Notadd\Link\Controllers;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 use Notadd\Link\Models\Link;
 /**
  * Class LinkController
  * @package Notadd\Link\Controllers
  */
-class LinkController extends Controller {
+class LinkController extends AbstractController {
     /**
      * @return \Illuminate\Contracts\View\View
      */

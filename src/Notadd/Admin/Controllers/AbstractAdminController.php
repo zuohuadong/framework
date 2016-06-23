@@ -7,12 +7,12 @@
  */
 namespace Notadd\Admin\Controllers;
 use Illuminate\Support\Str;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 /**
  * Class AbstractAdminController
  * @package Notadd\Admin\Controllers
  */
-class AbstractAdminController extends Controller {
+class AbstractAdminController extends AbstractController {
     /**
      * @var \Illuminate\Session\SessionManager
      */

@@ -83,7 +83,7 @@ class Server {
             $this->application->register(CategoryServiceProvider::class);
             $this->application->register(ArticleServiceProvider::class);
             $this->application->register(AttachmentServiceProvider::class);
-            $this->application->register(SitemapServiceProvider::class);
+            //$this->application->register(SitemapServiceProvider::class);
             $this->application->register(HttpServiceProvider::class);
             $this->application->register(LinkServiceProvider::class);
             $this->application->register(PageServiceProvider::class);

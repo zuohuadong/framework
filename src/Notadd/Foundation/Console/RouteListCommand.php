@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 use Symfony\Component\Console\Input\InputOption;
 /**
  * Class RouteListCommand
@@ -120,7 +120,7 @@ class RouteListCommand extends Command {
      * @return array
      */
     protected function getControllerMiddleware($actionName) {
-        Controller::setRouter($this->laravel['router']);
+        AbstractController::setRouter($this->laravel['router']);
         $segments = explode('@', $actionName);
         return $this->getControllerMiddlewareFromInstance($this->laravel->make($segments[0]), $segments[1]);
     }

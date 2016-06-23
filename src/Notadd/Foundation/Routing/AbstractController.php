@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Class Controller
  * @package Notadd\Foundation\Routing
  */
-abstract class Controller extends IlluminateController {
+abstract class AbstractController extends IlluminateController {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     /**
      * @var \Illuminate\Contracts\Foundation\Application

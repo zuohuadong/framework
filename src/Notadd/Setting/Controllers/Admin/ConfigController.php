@@ -41,6 +41,7 @@ class ConfigController extends AbstractAdminController {
         $this->share('company', $this->setting->get('site.company'));
         $this->share('message', $this->session->get('message'));
         $this->share('debug', $this->setting->get('site.debug'));
+        $this->share('scheme', $this->setting->get('site.scheme'), '0');
         $this->share('home', $this->setting->get('site.home'));
         $this->share('pages', Page::all());
         return $this->view('config.site');
@@ -58,6 +59,7 @@ class ConfigController extends AbstractAdminController {
         $this->setting->set('site.copyright', $request->get('copyright'));
         $this->setting->set('site.company', $request->get('company'));
         $this->setting->set('site.debug', $request->get('debug'));
+        $this->setting->set('site.scheme', $request->get('scheme'));
         $this->setting->set('site.home', $request->get('home'));
         if($request->get('debug')) {
             touch($this->app->storagePath() . '/notadd/debug');

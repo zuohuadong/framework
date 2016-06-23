@@ -88,6 +88,28 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-sm">
+                                <label class="col-md-4 control-label">URL方案</label>
+                                <div class="col-md-4">
+                                    <div class="btn-group btn-group-sm" data-toggle="buttons">
+                                        @if($scheme == 1)
+                                            <label class="btn btn-primary active"><input type="radio" name="scheme" value="1" checked>仅HTTPS</label>
+                                            <label class="btn btn-primary"><input type="radio" name="scheme" value="2">仅HTTP</label>
+                                            <label class="btn btn-primary"><input type="radio" name="scheme" value="0">自动</label>
+                                        @endif
+                                        @if($scheme == 2)
+                                            <label class="btn btn-primary"><input type="radio" name="scheme" value="1">仅HTTPS</label>
+                                            <label class="btn btn-primary active"><input type="radio" name="scheme" value="2" checked>仅HTTP</label>
+                                            <label class="btn btn-primary"><input type="radio" name="scheme" value="0">自动</label>
+                                        @endif
+                                        @if($scheme == 0)
+                                            <label class="btn btn-primary"><input type="radio" name="scheme" value="1">仅HTTPS</label>
+                                            <label class="btn btn-primary"><input type="radio" name="scheme" value="2">仅HTTP</label>
+                                            <label class="btn btn-primary active"><input type="radio" name="scheme" value="0" checked>自动</label>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
                                 <label class="col-md-4 control-label">首页设置</label>
                                 <div class="col-md-4">
                                     <select class="form-control" name="home">

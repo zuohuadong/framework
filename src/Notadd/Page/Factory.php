@@ -10,6 +10,7 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Notadd\Article\Article;
 use Notadd\Article\Models\Article as ArticleModel;
 use Notadd\Article\Models\ArticleRecommend;
@@ -56,7 +57,12 @@ class Factory {
      */
     public function article($category, $limit) {
         $articles = new Collection();
-        $data = ArticleModel::whereCategoryId($category)->limit($limit)->orderBy('created_at', 'desc')->get();
+        if(Str::contains($category, '-')) {
+            $categories = explode('-', $category);
+            $data = ArticleModel::whereIn('category_id', $categories)->limit($limit)->orderBy('created_at', 'desc')->get();
+        } else {
+            $data = ArticleModel::whereCategoryId($category)->limit($limit)->orderBy('created_at', 'desc')->get();
+        }
         foreach($data as $item) {
             $id = $item->getAttribute('id');
             $article = new Article($id);

@@ -61,7 +61,7 @@ class PageServiceProvider extends ServiceProvider {
         });
         $this->getBlade()->directive('article', function($expression) {
             $segments = explode(',', preg_replace("/[\(\)\\\"\']/", '', $expression));
-            return "<?php \$__tmp = \$__call->article(" . trim($segments[0]) . ", " . trim($segments[1]) ."); foreach(\$__tmp as \$" . trim($segments[2]) . "=>\$" . trim($segments[3]) . "): ?>";
+            return "<?php \$__tmp = \$__call->article('" . trim($segments[0]) . "', " . trim($segments[1]) ."); foreach(\$__tmp as \$" . trim($segments[2]) . "=>\$" . trim($segments[3]) . "): ?>";
         });
         $this->getBlade()->directive('endarticle', function($expression) {
             return "<?php endforeach; ?>";

@@ -8,13 +8,13 @@
 namespace Notadd\Payment\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Notadd\Foundation\Routing\Controller;
+use Notadd\Foundation\Routing\AbstractController;
 use Notadd\Payment\Models\Payment;
 /**
  * Class NotifyController
  * @package Notadd\Payment\Controllers
  */
-class NotifyController extends Controller {
+class NotifyController extends AbstractController {
     /**
      * @var \Notadd\Payment\PaymentManager
      */
