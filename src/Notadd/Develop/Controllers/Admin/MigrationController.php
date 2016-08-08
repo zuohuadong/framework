@@ -8,7 +8,7 @@
 namespace Notadd\Develop\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 /**

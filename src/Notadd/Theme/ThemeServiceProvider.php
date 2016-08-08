@@ -7,16 +7,8 @@
  */
 namespace Notadd\Theme;
 use Illuminate\Routing\Events\RouteMatched;
-use Illuminate\Support\ServiceProvider;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 use Notadd\Foundation\Console\Kernel;
-use Notadd\Foundation\Traits\InjectBladeTrait;
-use Notadd\Foundation\Traits\InjectCookieTrait;
-use Notadd\Foundation\Traits\InjectEventsTrait;
-use Notadd\Foundation\Traits\InjectRequestTrait;
-use Notadd\Foundation\Traits\InjectRouterTrait;
-use Notadd\Foundation\Traits\InjectSettingTrait;
-use Notadd\Foundation\Traits\InjectThemeTrait;
-use Notadd\Foundation\Traits\InjectViewTrait;
 use Notadd\Theme\Controllers\Admin\PublishController;
 use Notadd\Theme\Controllers\Admin\ThemeController;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -25,26 +17,25 @@ use Symfony\Component\Console\Output\BufferedOutput;
  * Class ThemeServiceProvider
  * @package Notadd\Theme
  */
-class ThemeServiceProvider extends ServiceProvider {
-    use InjectBladeTrait, InjectCookieTrait, InjectEventsTrait, InjectSettingTrait, InjectRequestTrait, InjectRouterTrait, InjectThemeTrait, InjectViewTrait;
+class ThemeServiceProvider extends AbstractServiceProvider {
     /**
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
-            $this->getRouter()->post('theme/cookie', function() {
-                $default = $this->getRequest()->input('theme');
-                $this->getCookie()->queue($this->getCookie()->forever('admin-theme', $default));
+        $this->router->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->router->post('theme/cookie', function() {
+                $default = $this->request->input('theme');
+                $this->app['cookie']->queue($this->app['cookie']->forever('admin-theme', $default));
             });
-            $this->getRouter()->resource('theme', ThemeController::class);
-            $this->getRouter()->resource('theme/publish', PublishController::class);
+            $this->router->resource('theme', ThemeController::class);
+            $this->router->resource('theme/publish', PublishController::class);
         });
-        $default = $this->getSetting()->get('site.theme', 'default');
-        $this->getEvents()->listen(RouteMatched::class, function () use ($default) {
-            $this->getView()->share('__theme', $this->getTheme());
-            $this->getTheme()->getThemeList()->each(function(Theme $theme) use($default) {
+        $default = $this->setting->get('site.theme', 'default');
+        $this->events->listen(RouteMatched::class, function () use ($default) {
+            $this->view->share('__theme', $this->app['theme']);
+            $this->app['theme']->getThemeList()->each(function(Theme $theme) use($default) {
                 $alias = $theme->getAlias();
-                if($alias == $default && $this->getTheme()->getThemeList()->has($alias)) {
+                if($alias == $default && $this->app['theme']->getThemeList()->has($alias)) {
                     $this->loadViewsFrom($theme->getViewPath(), 'themes');
                 }
                 $this->loadViewsFrom($theme->getViewPath(), $alias);
@@ -61,7 +52,7 @@ class ThemeServiceProvider extends ServiceProvider {
                 }
             });
         });
-        $this->getEvents()->listen('kernel.handled', function() {
+        $this->events->listen('kernel.handled', function() {
             if($this->app->inDebugMode()) {
                 $command = $this->app->make(Kernel::class)->find('vendor:publish');
                 $input = new ArrayInput([

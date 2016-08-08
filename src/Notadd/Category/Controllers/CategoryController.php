@@ -6,7 +6,7 @@
 namespace Notadd\Category\Controllers;
 use Notadd\Category\Category;
 use Notadd\Category\Events\OnCategoryShow;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 /**
  * Class CategoryController
  * @package Notadd\Category\Controllers

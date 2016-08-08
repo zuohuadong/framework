@@ -6,21 +6,19 @@
  * @datetime 2015-11-21 14:49
  */
 namespace Notadd\Search;
-use Illuminate\Support\ServiceProvider;
-use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 use Notadd\Search\Controllers\Admin\SearchController as AdminSearchController;
 /**
  * Class SearchServiceProvider
  * @package Notadd\Search
  */
-class SearchServiceProvider extends ServiceProvider {
-    use InjectRouterTrait;
+class SearchServiceProvider extends AbstractServiceProvider {
     /**
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
-            $this->getRouter()->resource('search', AdminSearchController::class);
+        $this->router->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
+            $this->router->resource('search', AdminSearchController::class);
         });
     }
     /**

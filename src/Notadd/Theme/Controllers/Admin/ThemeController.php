@@ -4,7 +4,7 @@
  * @copyright (c) 2015, iBenchu.com
  */
 namespace Notadd\Theme\Controllers\Admin;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 /**
  * Class ThemeController
  * @package Notadd\Theme\Controllers\Admin

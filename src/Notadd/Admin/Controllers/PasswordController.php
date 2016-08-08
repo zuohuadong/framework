@@ -8,6 +8,7 @@
 namespace Notadd\Admin\Controllers;
 use Illuminate\Container\Container;
 use Notadd\Admin\Requests\PasswordRequest;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 /**
  * Class PasswordController
  * @package Notadd\Admin\Controllers

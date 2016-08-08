@@ -6,7 +6,7 @@
  * @datetime 2015-11-27 23:17
  */
 namespace Notadd\Install\Controllers;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 use Notadd\Install\Requests\InstallRequest;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;

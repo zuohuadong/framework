@@ -6,7 +6,7 @@
 namespace Notadd\Article\Controllers;
 use Notadd\Article\Article;
 use Notadd\Article\Events\OnArticleShow;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 /**
  * Class ArticleController
  * @package Notadd\Article\Controllers

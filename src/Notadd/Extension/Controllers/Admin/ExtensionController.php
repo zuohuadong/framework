@@ -7,7 +7,7 @@
  */
 namespace Notadd\Extension\Controllers\Admin;
 use Illuminate\Support\Collection;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Extension\ExtensionManager;
 use Symfony\Component\Finder\Finder;
 /**

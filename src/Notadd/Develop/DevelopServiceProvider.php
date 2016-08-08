@@ -6,23 +6,21 @@
  * @datetime 2016-02-29 20:36
  */
 namespace Notadd\Develop;
-use Illuminate\Support\ServiceProvider;
 use Notadd\Develop\Controllers\Admin\MigrateController;
 use Notadd\Develop\Controllers\Admin\MigrationController;
-use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 /**
  * Class DevelopServiceProvider
  * @package Notadd\Develop
  */
-class DevelopServiceProvider extends ServiceProvider {
-    use InjectRouterTrait;
+class DevelopServiceProvider extends AbstractServiceProvider {
     /**
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
-            $this->getRouter()->resource('migrate', MigrateController::class, ['only' => ['store']]);
-            $this->getRouter()->resource('migration', MigrationController::class, ['only' => ['index', 'store']]);
+        $this->router->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
+            $this->router->resource('migrate', MigrateController::class, ['only' => ['store']]);
+            $this->router->resource('migration', MigrationController::class, ['only' => ['index', 'store']]);
         });
     }
     /**

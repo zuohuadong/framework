@@ -6,7 +6,7 @@
  * @datetime 2016-03-01 13:45
  */
 namespace Notadd\Flash\Controllers\Admin;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Flash\Models\Flash;
 use Notadd\Flash\Models\FlashItem;
 use Notadd\Flash\Requests\FlashCreateRequest;

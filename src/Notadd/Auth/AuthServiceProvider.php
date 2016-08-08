@@ -10,23 +10,20 @@ use Illuminate\Auth\Access\Gate;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Support\ServiceProvider;
 use Notadd\Auth\Controllers\Admin\ThirdController;
 use Notadd\Auth\Social\SocialManager;
-use Notadd\Foundation\Traits\InjectRouterTrait;
-use Notadd\Foundation\Traits\InjectSettingTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 /**
  * Class AuthServiceProvider
  * @package Notadd\Auth
  */
-class AuthServiceProvider extends ServiceProvider {
-    use InjectRouterTrait, InjectSettingTrait;
+class AuthServiceProvider extends AbstractServiceProvider {
     /**
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group(['prefix' => 'admin'], function () {
-            $this->getRouter()->resource('third', ThirdController::class, [
+        $this->router->group(['prefix' => 'admin'], function () {
+            $this->router->resource('third', ThirdController::class, [
                 'only' => ['index', 'store']
             ]);
         });
@@ -42,19 +39,19 @@ class AuthServiceProvider extends ServiceProvider {
         $this->app->singleton(SocialManager::class, function () {
             $config = [
                 'qq' => [
-                    'client_id' => $this->getSetting()->get('third.qq.key'),
-                    'client_secret' => $this->getSetting()->get('third.qq.secret'),
-                    'redirect' => $this->getSetting()->get('third.qq.callback'),
+                    'client_id' => $this->setting->get('third.qq.key'),
+                    'client_secret' => $this->setting->get('third.qq.secret'),
+                    'redirect' => $this->setting->get('third.qq.callback'),
                 ],
                 'weibo' => [
-                    'client_id' => $this->getSetting()->get('third.weibo.key'),
-                    'client_secret' => $this->getSetting()->get('third.weibo.secret'),
-                    'redirect' => $this->getSetting()->get('third.weibo.callback'),
+                    'client_id' => $this->setting->get('third.weibo.key'),
+                    'client_secret' => $this->setting->get('third.weibo.secret'),
+                    'redirect' => $this->setting->get('third.weibo.callback'),
                 ],
                 'wechat' => [
-                    'client_id' => $this->getSetting()->get('third.weixin.key'),
-                    'client_secret' => $this->getSetting()->get('third.weixin.secret'),
-                    'redirect' => $this->getSetting()->get('third.weixin.callback'),
+                    'client_id' => $this->setting->get('third.weixin.key'),
+                    'client_secret' => $this->setting->get('third.weixin.secret'),
+                    'redirect' => $this->setting->get('third.weixin.callback'),
                 ],
             ];
             return new SocialManager($config);

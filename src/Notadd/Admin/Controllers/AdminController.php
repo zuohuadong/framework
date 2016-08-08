@@ -7,6 +7,7 @@
  */
 namespace Notadd\Admin\Controllers;
 use Illuminate\Database\DatabaseManager;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use PDO;
 /**
  * Class AdminController

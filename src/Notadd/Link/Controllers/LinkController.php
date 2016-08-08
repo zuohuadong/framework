@@ -6,7 +6,7 @@
  * @datetime 2016-03-11 13:47
  */
 namespace Notadd\Link\Controllers;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 use Notadd\Link\Models\Link;
 /**
  * Class LinkController

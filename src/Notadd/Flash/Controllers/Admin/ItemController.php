@@ -4,7 +4,7 @@
  * @copyright (c) 2015, iBenchu.com
  */
 namespace Notadd\Flash\Controllers\Admin;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Flash\Models\FlashItem;
 use Notadd\Flash\Requests\FlashItemRequest;
 /**

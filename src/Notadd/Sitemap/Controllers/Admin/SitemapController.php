@@ -6,7 +6,7 @@
  * @datetime 2016-05-17 12:11
  */
 namespace Notadd\Sitemap\Controllers\Admin;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 /**
  * Class SitemapController
  * @package Notadd\Sitemap\Controllers\Admin

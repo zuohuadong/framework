@@ -7,7 +7,7 @@
  */
 namespace Notadd\Payment\Controllers\Admin;
 use Illuminate\Http\Request;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 /**
  * Class PaymentController
  * @package Notadd\Payment\Controllers\Admin

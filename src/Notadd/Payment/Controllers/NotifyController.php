@@ -8,7 +8,7 @@
 namespace Notadd\Payment\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 use Notadd\Payment\Models\Payment;
 /**
  * Class NotifyController

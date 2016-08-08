@@ -8,9 +8,6 @@
 namespace Notadd\Foundation;
 use Closure;
 use Illuminate\Database\DatabaseServiceProvider;
-use Notadd\Auth\AuthServiceProvider;
-use Notadd\Foundation\SearchEngine\SearchEngineServiceProvider;
-use RuntimeException;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
 use Illuminate\Bus\BusServiceProvider;
@@ -34,12 +31,15 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Routing\RoutingServiceProvider;
 use Notadd\Cache\CacheServiceProvider;
+use Notadd\Foundation\Agent\AgentServiceProvider;
 use Notadd\Foundation\Console\ConsoleServiceProvider;
 use Notadd\Foundation\Console\ConsoleSupportServiceProvider;
 use Notadd\Foundation\Http\FormRequestServiceProvider;
+use Notadd\Foundation\SearchEngine\SearchEngineServiceProvider;
 use Notadd\Foundation\Translation\TranslationServiceProvider;
 use Notadd\Foundation\Validation\ValidationServiceProvider;
 use Notadd\Setting\SettingServiceProvider;
+use RuntimeException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -192,14 +192,14 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     protected function bindPathsInContainer() {
         $this->instance('path', $this->path());
         foreach([
-                    'base',
-                    'config',
-                    'framework',
-                    'lang',
-                    'public',
-                    'storage',
-                    'stubs'
-                ] as $path) {
+            'base',
+            'config',
+            'framework',
+            'lang',
+            'public',
+            'storage',
+            'stubs'
+        ] as $path) {
             $this->instance('path.' . $path, $this->{$path . 'Path'}());
         }
     }
@@ -257,6 +257,9 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this->instance('path.storage', $path);
         return $this;
     }
+    /**
+     * @return string
+     */
     public function stubsPath() {
         return realpath($this->frameworkPath() . DIRECTORY_SEPARATOR . 'stubs');
     }
@@ -304,10 +307,9 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @return void
      */
     public function registerConfiguredProviders() {
-        $this->register(AuthServiceProvider::class);
+        $this->register(AgentServiceProvider::class);
         $this->register(BroadcastServiceProvider::class);
         $this->register(BusServiceProvider::class);
-        $this->register(CacheServiceProvider::class);
         $this->register(ConsoleServiceProvider::class);
         $this->register(ConsoleSupportServiceProvider::class);
         $this->register(FormRequestServiceProvider::class);
@@ -326,6 +328,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this->register(TranslationServiceProvider::class);
         $this->register(ValidationServiceProvider::class);
         $this->register(ViewServiceProvider::class);
+        $this->register(CacheServiceProvider::class);
         $this->register(SettingServiceProvider::class);
         $this->register(SearchEngineServiceProvider::class);
     }

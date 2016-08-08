@@ -6,7 +6,7 @@
  * @datetime 2015-12-27 21:30
  */
 namespace Notadd\Cache\Controllers\Admin;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Foundation\Console\Kernel;
 /**
  * Class CacheController

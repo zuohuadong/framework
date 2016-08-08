@@ -7,23 +7,21 @@
  */
 namespace Notadd\Setting;
 use Illuminate\Support\ServiceProvider;
-use Notadd\Foundation\Traits\InjectRouterTrait;
 use Notadd\Setting\Controllers\Admin\ConfigController;
 /**
  * Class SettingServiceProvider
  * @package Notadd\Setting
  */
 class SettingServiceProvider extends ServiceProvider {
-    use InjectRouterTrait;
     /**
      * @return array
      */
     public function boot() {
-        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
-            $this->getRouter()->get('site', ConfigController::class . '@getSite');
-            $this->getRouter()->post('site', ConfigController::class . '@postSite');
-            $this->getRouter()->get('seo', ConfigController::class . '@getSeo');
-            $this->getRouter()->post('seo', ConfigController::class . '@postSeo');
+        $this->app['router']->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->app['router']->get('site', ConfigController::class . '@getSite');
+            $this->app['router']->post('site', ConfigController::class . '@postSite');
+            $this->app['router']->get('seo', ConfigController::class . '@getSeo');
+            $this->app['router']->post('seo', ConfigController::class . '@postSeo');
         });
     }
     /**

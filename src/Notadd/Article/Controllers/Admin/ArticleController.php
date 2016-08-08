@@ -8,7 +8,7 @@
 namespace Notadd\Article\Controllers\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Article\Events\AfterArticleUpdate;
 use Notadd\Article\Events\OnArticleEdit;
 use Notadd\Article\Models\Article;

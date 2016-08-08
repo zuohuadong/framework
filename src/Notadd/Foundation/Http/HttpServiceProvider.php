@@ -6,23 +6,20 @@
  * @datetime 2015-11-02 17:55
  */
 namespace Notadd\Foundation\Http;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 use Notadd\Foundation\SearchEngine\Optimization;
-use Notadd\Foundation\Traits\InjectRouterTrait;
-use Notadd\Foundation\Traits\InjectSettingTrait;
 use Notadd\Page\Models\Page;
 /**
  * Class HttpServiceProvider
  * @package Notadd\Foundation\Http
  */
-class HttpServiceProvider extends ServiceProvider {
-    use InjectSettingTrait, InjectRouterTrait;
+class HttpServiceProvider extends AbstractServiceProvider {
     /**
      * @return void
      */
     public function boot() {
-        switch($this->getSetting()->get('', 0)) {
+        switch($this->setting->get('', 0)) {
             case 1:
                 $this->app->make('url')->forceSchema('https');
                 break;
@@ -32,8 +29,8 @@ class HttpServiceProvider extends ServiceProvider {
             default;
                 break;
         }
-        $this->getRouter()->get('/', function() {
-            $home = $this->getSetting()->get('site.home', 'default');
+        $this->router->get('/', function() {
+            $home = $this->setting->get('site.home', 'default');
             $page_id = 0;
             if($home != 'default' && Str::contains($home, 'page_')) {
                 $page_id = Str::substr($home, 5);
@@ -42,8 +39,8 @@ class HttpServiceProvider extends ServiceProvider {
                 return $this->app->call('Notadd\Page\Controllers\PageController@show', ['id' => $page_id]);
             }
             $this->app->make('view')->share('logo', file_get_contents(realpath($this->app->frameworkPath() . '/views/install') . DIRECTORY_SEPARATOR . 'logo.svg'));
-            $this->app->make(Optimization::class)->setDescriptionMeta($this->getSetting()->get('seo.description'));
-            $this->app->make(Optimization::class)->setKeywordsMeta($this->getSetting()->get('seo.keyword'));
+            $this->app->make(Optimization::class)->setDescriptionMeta($this->setting->get('seo.description'));
+            $this->app->make(Optimization::class)->setKeywordsMeta($this->setting->get('seo.keyword'));
             return $this->app->make('view')->make('themes::index');
         });
     }

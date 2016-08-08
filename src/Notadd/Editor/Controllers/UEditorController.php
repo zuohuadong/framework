@@ -12,7 +12,7 @@ use Notadd\Editor\Lists;
 use Notadd\Editor\Uploaders\UploadCatch;
 use Notadd\Editor\Uploaders\UploadFile;
 use Notadd\Editor\Uploaders\UploadScrawl;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 /**
  * Class UEditorController
  * @package Notadd\Editor\Controllers

@@ -7,7 +7,7 @@
  */
 namespace Notadd\Setting\Controllers\Admin;
 use Illuminate\Filesystem\Filesystem;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Page\Models\Page;
 use Notadd\Setting\Requests\SeoRequest;
 use Notadd\Setting\Requests\SiteRequest;

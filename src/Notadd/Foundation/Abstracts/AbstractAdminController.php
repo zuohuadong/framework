@@ -5,9 +5,8 @@
  * @copyright (c) 2015, iBenchu.org
  * @datetime 2015-10-29 22:45
  */
-namespace Notadd\Admin\Controllers;
+namespace Notadd\Foundation\Abstracts;
 use Illuminate\Support\Str;
-use Notadd\Foundation\Routing\AbstractController;
 /**
  * Class AbstractAdminController
  * @package Notadd\Admin\Controllers

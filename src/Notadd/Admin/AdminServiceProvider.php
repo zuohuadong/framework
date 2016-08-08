@@ -8,49 +8,44 @@
 namespace Notadd\Admin;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Routing\Events\RouteMatched;
-use Illuminate\Support\ServiceProvider;
 use Notadd\Admin\Controllers\AdminController;
 use Notadd\Admin\Controllers\AuthController;
 use Notadd\Admin\Controllers\PasswordController;
 use Notadd\Admin\Events\GetAdminMenu;
-use Notadd\Foundation\Traits\InjectConfigTrait;
-use Notadd\Foundation\Traits\InjectEventsTrait;
-use Notadd\Foundation\Traits\InjectRequestTrait;
-use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 /**
  * Class AdminServiceProvider
  * @package Notadd\Admin
  */
-class AdminServiceProvider extends ServiceProvider {
-    use InjectConfigTrait, InjectEventsTrait, InjectRequestTrait, InjectRouterTrait;
+class AdminServiceProvider extends AbstractServiceProvider {
     /**
      * @param \Illuminate\Contracts\Auth\Access\Gate $gate
      */
     public function boot(Gate $gate) {
         $this->initAdminConfig();
         $this->loadViewsFrom(realpath($this->app->basePath() . '/../template/admin/views'), 'admin');
-        $this->getRouter()->group(['prefix' => 'admin'], function () {
-            $this->getRouter()->get('login', AuthController::class . '@getLogin');
-            $this->getRouter()->post('login', AuthController::class . '@postLogin');
-            $this->getRouter()->get('logout', AuthController::class . '@getLogout');
-            $this->getRouter()->get('register', AuthController::class . '@getRegister');
-            $this->getRouter()->post('register', AuthController::class . '@postRegister');
+        $this->router->group(['prefix' => 'admin'], function () {
+            $this->router->get('login', AuthController::class . '@getLogin');
+            $this->router->post('login', AuthController::class . '@postLogin');
+            $this->router->get('logout', AuthController::class . '@getLogout');
+            $this->router->get('register', AuthController::class . '@getRegister');
+            $this->router->post('register', AuthController::class . '@postRegister');
         });
-        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
-            $this->getRouter()->get('/', AdminController::class . '@init');
-            $this->getRouter()->resource('password', PasswordController::class);
+        $this->router->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->router->get('/', AdminController::class . '@init');
+            $this->router->resource('password', PasswordController::class);
         });
-        $this->getEvents()->listen(RouteMatched::class, function () {
-            $this->getEvents()->fire(new GetAdminMenu($this->app, $this->getConfig()));
-            if($this->getRequest()->is('admin*')) {
-                $menu = $this->getConfig()->get('admin');
+        $this->events->listen(RouteMatched::class, function () {
+            $this->events->fire(new GetAdminMenu($this->app, $this->config));
+            if($this->request->is('admin*')) {
+                $menu = $this->config->get('admin');
                 foreach($menu as $top_key => $top) {
                     if(isset($top['sub'])) {
                         foreach($top['sub'] as $one_key => $one) {
                             if(isset($one['sub'])) {
                                 $active = false;
                                 foreach((array)$one['active'] as $rule) {
-                                    if($this->getRequest()->is($rule)) {
+                                    if($this->request->is($rule)) {
                                         $active = true;
                                     }
                                 }
@@ -62,7 +57,7 @@ class AdminServiceProvider extends ServiceProvider {
                                 foreach($one['sub'] as $two_key=>$two) {
                                     $active = false;
                                     foreach((array)$two['active'] as $rule) {
-                                        if($this->getRequest()->is($rule)) {
+                                        if($this->request->is($rule)) {
                                             $active = true;
                                         }
                                     }
@@ -73,7 +68,7 @@ class AdminServiceProvider extends ServiceProvider {
                                     }
                                 }
                             } else {
-                                if($this->getRequest()->is($one['active'])) {
+                                if($this->request->is($one['active'])) {
                                     $menu[$top_key]['sub'][$one_key]['active'] = 'active';
                                 } else {
                                     $menu[$top_key]['sub'][$one_key]['active'] = '';
@@ -82,7 +77,7 @@ class AdminServiceProvider extends ServiceProvider {
                         }
                     }
                 }
-                $this->getConfig()->set('admin', $menu);
+                $this->config->set('admin', $menu);
             }
         });
     }
@@ -90,7 +85,7 @@ class AdminServiceProvider extends ServiceProvider {
      * @return void
      */
     public function initAdminConfig() {
-        $this->getConfig()->set('admin', [
+        $this->config->set('admin', [
             'general' => [
                 'title' => '概略导航',
                 'active' => 'admin',

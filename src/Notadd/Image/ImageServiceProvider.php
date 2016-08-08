@@ -6,14 +6,12 @@
  * @datetime 2016-05-19 14:57
  */
 namespace Notadd\Image;
-use Illuminate\Support\ServiceProvider;
-use Notadd\Foundation\Traits\InjectConfigTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 /**
  * Class ImageServiceProvider
  * @package Notadd\Image
  */
-class ImageServiceProvider extends ServiceProvider {
-    use InjectConfigTrait;
+class ImageServiceProvider extends AbstractServiceProvider {
     /**
      * @return bool
      */
@@ -36,7 +34,7 @@ class ImageServiceProvider extends ServiceProvider {
      */
     public function register() {
         $this->app['image'] = $this->app->share(function () {
-            return new ImageManager($this->getConfig()->get('image'));
+            return new ImageManager($this->config->get('image'));
         });
         $this->app->alias('image', 'Notadd\Image\ImageManager');
     }

@@ -7,7 +7,7 @@
  */
 namespace Notadd\Category\Controllers\Admin;
 use Illuminate\Http\Request;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Category\Events\BeforeCategoryDelete;
 use Notadd\Category\Models\Category;
 use Notadd\Category\Requests\CategoryCreateRequest;

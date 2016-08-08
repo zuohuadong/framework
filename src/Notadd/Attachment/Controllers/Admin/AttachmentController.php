@@ -6,7 +6,7 @@
  * @datetime 2016-05-11 12:29
  */
 namespace Notadd\Attachment\Controllers\Admin;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 /**
  * Class AttachmentController
  * @package Notadd\Attachment\Controllers\Admin

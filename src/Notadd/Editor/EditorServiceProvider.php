@@ -6,21 +6,18 @@
  * @datetime 2015-12-10 17:21
  */
 namespace Notadd\Editor;
-use Illuminate\Support\ServiceProvider;
 use Notadd\Editor\Controllers\UEditorController;
-use Notadd\Editor\Controllers\UploadController;
-use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 /**
  * Class EditorServiceProvider
  * @package Notadd\Editor
  */
-class EditorServiceProvider extends ServiceProvider {
-    use InjectRouterTrait;
+class EditorServiceProvider extends AbstractServiceProvider {
     /**
      * @return void
      */
     public function boot() {
-        $this->getRouter()->any('ueditor', UEditorController::class . '@index');
+        $this->router->any('ueditor', UEditorController::class . '@index');
     }
     /**
      * @return void

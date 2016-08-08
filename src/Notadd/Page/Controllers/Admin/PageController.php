@@ -8,7 +8,7 @@
 namespace Notadd\Page\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Page\Models\Page;
 use Notadd\Page\Requests\PageCreateRequest;
 use Notadd\Page\Requests\PageEditRequest;

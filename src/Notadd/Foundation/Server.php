@@ -12,29 +12,13 @@ use Illuminate\Contracts\Console\Kernel as ConsoleKernelContract;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 use Illuminate\Support\Arr;
-use Notadd\Admin\AdminServiceProvider;
-use Notadd\Article\ArticleServiceProvider;
-use Notadd\Attachment\AttachmentServiceProvider;
-use Notadd\Category\CategoryServiceProvider;
-use Notadd\Develop\DevelopServiceProvider;
-use Notadd\Editor\EditorServiceProvider;
-use Notadd\Flash\FlashServiceProvider;
 use Notadd\Foundation\Agent\AgentServiceProvider;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Console\Kernel as ConsoleKernel;
-use Notadd\Extension\ExtensionServiceProvider;
-use Notadd\Foundation\Http\HttpServiceProvider;
+use Notadd\Foundation\Http\AppServiceProvider;
 use Notadd\Foundation\Http\Kernel as HttpKernel;
 use Notadd\Foundation\Exceptions\Handler;
-use Notadd\Image\ImageServiceProvider;
 use Notadd\Install\InstallServiceProvider;
-use Notadd\Link\LinkServiceProvider;
-use Notadd\Menu\MenuServiceProvider;
-use Notadd\Page\PageServiceProvider;
-use Notadd\Payment\PaymentServiceProvider;
-use Notadd\Search\SearchServiceProvider;
-use Notadd\Sitemap\SitemapServiceProvider;
-use Notadd\Theme\ThemeServiceProvider;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 /**
@@ -74,24 +58,7 @@ class Server {
         $this->application->singleton(ConsoleKernelContract::class, ConsoleKernel::class);
         $this->application->singleton(ExceptionHandler::class, Handler::class);
         if($this->application->isInstalled()) {
-            $this->application->register(AgentServiceProvider::class);
-            $this->application->register(ImageServiceProvider::class);
-            $this->application->register(ThemeServiceProvider::class);
-            $this->application->register(MenuServiceProvider::class);
-            $this->application->register(EditorServiceProvider::class);
-            $this->application->register(FlashServiceProvider::class);
-            $this->application->register(CategoryServiceProvider::class);
-            $this->application->register(ArticleServiceProvider::class);
-            $this->application->register(AttachmentServiceProvider::class);
-            //$this->application->register(SitemapServiceProvider::class);
-            $this->application->register(HttpServiceProvider::class);
-            $this->application->register(LinkServiceProvider::class);
-            $this->application->register(PageServiceProvider::class);
-            $this->application->register(SearchServiceProvider::class);
-            $this->application->register(PaymentServiceProvider::class);
-            $this->application->register(AdminServiceProvider::class);
-            $this->application->register(DevelopServiceProvider::class);
-            $this->application->register(ExtensionServiceProvider::class);
+            $this->application->register(AppServiceProvider::class);
         } else {
             $this->application->register(InstallServiceProvider::class);
         }

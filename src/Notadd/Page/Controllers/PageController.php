@@ -4,7 +4,7 @@
  * @copyright (c) 2015, iBenchu.com
  */
 namespace Notadd\Page\Controllers;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 use Notadd\Page\Events\OnPageShow;
 use Notadd\Page\Page;
 /**

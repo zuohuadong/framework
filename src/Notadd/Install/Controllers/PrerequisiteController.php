@@ -6,7 +6,7 @@
  * @datetime 2015-10-18 16:39
  */
 namespace Notadd\Install\Controllers;
-use Notadd\Foundation\Routing\AbstractController;
+use Notadd\Foundation\Abstracts\AbstractController;
 use Notadd\Install\Contracts\Prerequisite;
 use Psr\Http\Message\ServerRequestInterface;
 /**

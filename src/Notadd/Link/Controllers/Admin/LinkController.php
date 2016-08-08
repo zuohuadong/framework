@@ -7,7 +7,7 @@
  */
 namespace Notadd\Link\Controllers\Admin;
 use Illuminate\Http\Request;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Link\Models\Link;
 /**
  * Class LinkController

@@ -9,7 +9,7 @@ namespace Notadd\Attachment\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Class UploadController

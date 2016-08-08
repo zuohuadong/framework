@@ -7,7 +7,7 @@
  */
 namespace Notadd\Menu\Controllers\Admin;
 use Illuminate\Http\Request;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Menu\Models\Menu;
 use Notadd\Menu\Models\MenuGroup;
 use Notadd\Menu\Requests\MenuGroupCreateRequest;

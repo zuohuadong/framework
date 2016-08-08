@@ -6,10 +6,7 @@
  * @datetime 2016-03-11 15:54
  */
 namespace Notadd\Payment;
-use Illuminate\Support\ServiceProvider;
-use Notadd\Foundation\Traits\InjectConfigTrait;
-use Notadd\Foundation\Traits\InjectRouterTrait;
-use Notadd\Foundation\Traits\InjectSettingTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 use Notadd\Payment\Controllers\Admin\PaymentController as AdminPaymentController;
 use Notadd\Payment\Controllers\NotifyController;
 use Notadd\Payment\Factories\Gateway;
@@ -17,8 +14,7 @@ use Notadd\Payment\Factories\Gateway;
  * Class PaymentServiceProvider
  * @package Notadd\Payment
  */
-class PaymentServiceProvider extends ServiceProvider {
-    use InjectConfigTrait, InjectRouterTrait, InjectSettingTrait;
+class PaymentServiceProvider extends AbstractServiceProvider {
     /**
      * @var bool
      */
@@ -27,35 +23,35 @@ class PaymentServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getConfig()->set('pay', [
+        $this->config->set('pay', [
             'default' => 'alipay',
             'gateways' => [
                 'alipay' => [
                     'driver'  => 'Alipay_Express',
                     'options' => [
-                        'partner' => $this->getSetting()->get('payment.alipay.mch.id'),
-                        'key' => $this->getSetting()->get('payment.alipay.mch.secret'),
-                        'sellerEmail' => $this->getSetting()->get('payment.alipay.partner.email'),
-                        'returnUrl' => $this->getSetting()->get('payment.alipay.return.url'),
-                        'notifyUrl' => $this->getSetting()->get('payment.alipay.notify.url'),
+                        'partner' => $this->setting->get('payment.alipay.mch.id'),
+                        'key' => $this->setting->get('payment.alipay.mch.secret'),
+                        'sellerEmail' => $this->setting->get('payment.alipay.partner.email'),
+                        'returnUrl' => $this->setting->get('payment.alipay.return.url'),
+                        'notifyUrl' => $this->setting->get('payment.alipay.notify.url'),
                     ]
                 ],
                 'wechatpay' => [
                     'driver' => 'Wechatpay_Native',
                     'options' => [
-                        'appid' => $this->getSetting()->get('payment.wechat.app.id'),
-                        'api_key' => $this->getSetting()->get('payment.wechat.app.secret'),
-                        'mch_id' => $this->getSetting()->get('payment.wechat.mch.id'),
-                        'mch_key' => $this->getSetting()->get('payment.wechat.mch.secret'),
-                        'notify_url' => $this->getSetting()->get('payment.wechat.notify.url')
+                        'appid' => $this->setting->get('payment.wechat.app.id'),
+                        'api_key' => $this->setting->get('payment.wechat.app.secret'),
+                        'mch_id' => $this->setting->get('payment.wechat.mch.id'),
+                        'mch_key' => $this->setting->get('payment.wechat.mch.secret'),
+                        'notify_url' => $this->setting->get('payment.wechat.notify.url')
                     ]
                 ]
             ]
         ]);
-        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
-            $this->getRouter()->resource('payment', AdminPaymentController::class);
+        $this->router->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function() {
+            $this->router->resource('payment', AdminPaymentController::class);
         });
-        $this->getRouter()->any('notify/{type}', NotifyController::class . '@handle');
+        $this->router->any('notify/{type}', NotifyController::class . '@handle');
     }
     /**
      * @return array

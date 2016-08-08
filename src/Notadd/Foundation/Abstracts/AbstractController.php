@@ -5,7 +5,7 @@
  * @copyright (c) 2015, iBenchu.org
  * @datetime 2015-10-18 16:28
  */
-namespace Notadd\Foundation\Routing;
+namespace Notadd\Foundation\Abstracts;
 use BadMethodCallException;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Console\Kernel;

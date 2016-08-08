@@ -6,16 +6,10 @@
  * @datetime 2015-10-17 20:48
  */
 namespace Notadd\Extension;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Support\ServiceProvider;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 /**
  * Class Extension
  * @package Notadd\Foundation\Extension
  */
-abstract class Extension extends ServiceProvider {
-    /**
-     * @return void
-     */
-    public function register() {
-    }
+abstract class Extension extends AbstractServiceProvider {
 }

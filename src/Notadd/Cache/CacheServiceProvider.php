@@ -12,13 +12,12 @@ use Illuminate\Cache\Console\ClearCommand;
 use Illuminate\Cache\MemcachedConnector;
 use Illuminate\Support\ServiceProvider;
 use Notadd\Cache\Controllers\Admin\CacheController;
-use Notadd\Foundation\Traits\InjectRouterTrait;
+use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 /**
  * Class CacheServiceProvider
  * @package Notadd\Cache
  */
 class CacheServiceProvider extends ServiceProvider {
-    use InjectRouterTrait;
     /**
      * @var bool
      */
@@ -27,11 +26,11 @@ class CacheServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
-            $this->getRouter()->get('cache', CacheController::class . '@index');
-            $this->getRouter()->post('cache', CacheController::class . '@clearCache');
-            $this->getRouter()->post('cache/static', CacheController::class . '@clearStatic');
-            $this->getRouter()->post('cache/view', CacheController::class . '@clearView');
+        $this->app['router']->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->app['router']->get('cache', CacheController::class . '@index');
+            $this->app['router']->post('cache', CacheController::class . '@clearCache');
+            $this->app['router']->post('cache/static', CacheController::class . '@clearStatic');
+            $this->app['router']->post('cache/view', CacheController::class . '@clearView');
         });
     }
     /**

@@ -6,6 +6,7 @@
  * @datetime 2015-10-29 22:44
  */
 namespace Notadd\Admin\Controllers;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Notadd\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Notadd\Foundation\Auth\Models\User;
 use Notadd\Foundation\Auth\ThrottlesLogins;

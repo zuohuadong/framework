@@ -6,7 +6,7 @@
  * @datetime 2016-03-01 10:20
  */
 namespace Notadd\Theme\Controllers\Admin;
-use Notadd\Admin\Controllers\AbstractAdminController;
+use Notadd\Foundation\Abstracts\AbstractAdminController;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 /**
