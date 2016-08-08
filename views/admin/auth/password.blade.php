@@ -1,31 +1,55 @@
-@extends('admin::auth.layouts')
+@extends('admin::layouts')
+@section('title')重置密码@endsection
 @section('content')
-    <div class="page page-auth clearfix">
-        <div class="auth-container">
-            <h1 class="site-logo h2 mb15"><a href="/"><span>Notadd</span>&nbsp;内容管理系统</a> - 重置密码</h1>
-            <div class="form-container">
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
+    <div class="page clearfix">
+        <ol class="breadcrumb breadcrumb-small">
+            <li>后台首页</li>
+            <li class="active"><a href="{{ url('eminem/password')}}">重置密码</a></li>
+        </ol>
+        <div class="page-wrap">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-lined clearfix mb30">
+                        <div class="panel-heading mb20"><i>重置密码</i></div>
+                        <div class="col-md-4 col-md-offset-4 mb5">
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    @foreach ($errors->all() as $error)
+                                        <p><strong>{{ $error }}</strong></p>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                        <form class="form-horizontal col-md-12" action="{{ url('admin/password') }}" autocomplete="off" method="post">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="form-group form-group-sm">
+                                <label class="col-md-4 control-label">原密码</label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" name="oldpassword">
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="col-md-4 control-label">新密码</label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" name="password">
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="col-md-4 control-label">确认新密码</label>
+                                <div class="col-md-4">
+                                    <input type="password" class="form-control" name="password_confirmation">
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">提交</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                @endif
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <strong>喔！</strong>您的填写有误哦！<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <form action="{{ url('admin/password/email') }}" class="form-horizontal" method="POST">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div class="form-group form-group-lg">
-                        <input type="email" class="form-control" name="email" placeholder="输入电子邮箱地址" value="{{ old('email') }}">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block text-uppercase btn-lg">发送重置密码链接到邮箱</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>

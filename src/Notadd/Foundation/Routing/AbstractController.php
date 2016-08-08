@@ -23,9 +23,29 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 abstract class AbstractController extends IlluminateController {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     /**
+     * @var \Notadd\Foundation\Agent\Agent
+     */
+    protected $agent;
+    /**
      * @var \Illuminate\Contracts\Foundation\Application
      */
     protected $app;
+    /**
+     * @var \Illuminate\Auth\AuthManager
+     */
+    protected $auth;
+    /**
+     * @var \Illuminate\Config\Repository
+     */
+    protected $config;
+    /**
+     * @var \Illuminate\Cookie\CookieJar
+     */
+    protected $cookie;
+    /**
+     * @var \Illuminate\Database\ConnectionInterface
+     */
+    protected $db;
     /**
      * @var \Illuminate\Events\Dispatcher
      */
@@ -39,6 +59,14 @@ abstract class AbstractController extends IlluminateController {
      */
     protected $redirect;
     /**
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+    /**
+     * @var \Illuminate\Session\Store
+     */
+    protected $session;
+    /**
      * @var \Notadd\Setting\Factory
      */
     protected $setting;
@@ -47,6 +75,10 @@ abstract class AbstractController extends IlluminateController {
      */
     protected $seo;
     /**
+     * @var \Notadd\Foundation\Auth\Models\User
+     */
+    protected $user;
+    /**
      * @var \Illuminate\Contracts\View\Factory
      */
     protected $view;
@@ -54,13 +86,21 @@ abstract class AbstractController extends IlluminateController {
      * Controller constructor.
      */
     public function __construct() {
+        $this->agent = Container::getInstance()->make('agent');
         $this->app = Container::getInstance();
-        $this->events = $this->app->make('events');
-        $this->log = $this->app->make('log');
-        $this->redirect = $this->app->make('redirect');
-        $this->setting = $this->app->make('setting');
-        $this->seo = $this->app->make(Optimization::class);
-        $this->view = $this->app->make('view');
+        $this->auth = Container::getInstance()->make('auth');
+        $this->config = Container::getInstance()->make('config');
+        $this->cookie = Container::getInstance()->make('cookie');
+        $this->db = Container::getInstance()->make('db');
+        $this->events = Container::getInstance()->make('events');
+        $this->log = Container::getInstance()->make('log');
+        $this->redirect = Container::getInstance()->make('redirect');
+        $this->request = Container::getInstance()->make('request');
+        $this->session = Container::getInstance()->make('session');
+        $this->setting = Container::getInstance()->make('setting');
+        $this->seo = Container::getInstance()->make(Optimization::class);
+        $this->user = $this->auth->user();
+        $this->view = Container::getInstance()->make('view');
     }
     /**
      * @param string $command

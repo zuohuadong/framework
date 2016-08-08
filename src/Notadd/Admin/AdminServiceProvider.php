@@ -9,6 +9,9 @@ namespace Notadd\Admin;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
+use Notadd\Admin\Controllers\AdminController;
+use Notadd\Admin\Controllers\AuthController;
+use Notadd\Admin\Controllers\PasswordController;
 use Notadd\Admin\Events\GetAdminMenu;
 use Notadd\Foundation\Traits\InjectConfigTrait;
 use Notadd\Foundation\Traits\InjectEventsTrait;
@@ -26,19 +29,16 @@ class AdminServiceProvider extends ServiceProvider {
     public function boot(Gate $gate) {
         $this->initAdminConfig();
         $this->loadViewsFrom(realpath($this->app->basePath() . '/../template/admin/views'), 'admin');
-        $this->getRouter()->group(['namespace' => 'Notadd\Admin\Controllers'], function () {
-            $this->getRouter()->group(['prefix' => 'admin'], function () {
-                $this->getRouter()->get('login', 'AuthController@getLogin');
-                $this->getRouter()->post('login', 'AuthController@postLogin');
-                $this->getRouter()->get('logout', 'AuthController@getLogout');
-                $this->getRouter()->get('register', 'AuthController@getRegister');
-                $this->getRouter()->post('register', 'AuthController@postRegister');
-                $this->getRouter()->controllers(['password' => 'PasswordController']);
-            });
-            $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
-                $this->getRouter()->get('/', 'AdminController@init');
-                $this->getRouter()->get('password', 'AuthController@getPassword');
-            });
+        $this->getRouter()->group(['prefix' => 'admin'], function () {
+            $this->getRouter()->get('login', AuthController::class . '@getLogin');
+            $this->getRouter()->post('login', AuthController::class . '@postLogin');
+            $this->getRouter()->get('logout', AuthController::class . '@getLogout');
+            $this->getRouter()->get('register', AuthController::class . '@getRegister');
+            $this->getRouter()->post('register', AuthController::class . '@postRegister');
+        });
+        $this->getRouter()->group(['middleware' => 'auth.admin', 'prefix' => 'admin'], function () {
+            $this->getRouter()->get('/', AdminController::class . '@init');
+            $this->getRouter()->resource('password', PasswordController::class);
         });
         $this->getEvents()->listen(RouteMatched::class, function () {
             $this->getEvents()->fire(new GetAdminMenu($this->app, $this->getConfig()));

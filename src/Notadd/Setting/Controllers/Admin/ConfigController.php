@@ -41,7 +41,7 @@ class ConfigController extends AbstractAdminController {
         $this->share('company', $this->setting->get('site.company'));
         $this->share('message', $this->session->get('message'));
         $this->share('debug', $this->setting->get('site.debug'));
-        $this->share('scheme', $this->setting->get('site.scheme'), '0');
+        $this->share('scheme', $this->setting->get('site.scheme', '0'));
         $this->share('home', $this->setting->get('site.home'));
         $this->share('pages', Page::all());
         return $this->view('config.site');
