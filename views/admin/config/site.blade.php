@@ -8,27 +8,10 @@
         </ol>
         <div class="page-wrap">
             <div class="row">
+                @include('admin::common.messages')
                 <div class="col-md-12">
                     <div class="panel panel-lined clearfix mb30">
                         <div class="panel-heading mb20"><i>网站信息</i></div>
-                        <div class="col-md-4 col-md-offset-4 mb5">
-                            @if (isset($message))
-                                <div class="alert alert-success alert-dismissible" role="alert" style="margin-bottom: 15px;">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <p><strong>提示：</strong>{{ $message }}！</p>
-                                </div>
-                            @endif
-                            @if (count($errors) > 0)
-                                @foreach ($errors->all() as $error)
-                                    <div class="alert alert-danger alert-dismissible" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <p><strong>{{ $error }}</strong></p>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
                         <form class="form-horizontal col-md-12" action="{{ url('admin/site') }}" autocomplete="off" method="post">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group form-group-sm">

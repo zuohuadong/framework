@@ -80,6 +80,176 @@ class Server {
      */
     protected function loadIlluminateConfiguration() {
         return [
+            'admin' => [
+                'general' => [
+                    'title' => '概略导航',
+                    'active' => 'admin',
+                    'sub' => [
+                        [
+                            'title' => '仪表盘',
+                            'active' => 'admin',
+                            'url'   => 'admin',
+                            'icon'  => 'fa-dashboard',
+                        ]
+                    ]
+                ],
+                'group' => [
+                    'title' => '组件导航',
+                    'active' => '',
+                    'sub' => [
+                        'config' => [
+                            'title' => '网站管理',
+                            'active' => [
+                                'admin/cache*',
+                                'admin/seo*',
+                                'admin/site*',
+                                'admin/smtp*',
+                            ],
+                            'icon'  => 'fa-cogs',
+                            'sub' => [
+                                [
+                                    'title' => '网站信息',
+                                    'active' => 'admin/site*',
+                                    'url' => 'admin/site',
+                                ],
+                                [
+                                    'title' => 'SEO设置',
+                                    'active' => 'admin/seo*',
+                                    'url' => 'admin/seo',
+                                ],
+                                [
+                                    'title' => '缓存管理',
+                                    'active' => 'admin/cache*',
+                                    'url' => 'admin/cache',
+                                ],
+                                [
+                                    'title' => 'SMTP配置',
+                                    'active' => 'admin/smtp*',
+                                    'url' => 'admin/smtp',
+                                ],
+                            ]
+                        ],
+                        'content' => [
+                            'title' => '内容管理',
+                            'active' => [
+                                'admin/category*',
+                                'admin/article*',
+                                'admin/page*',
+                                'admin/recycle*',
+                            ],
+                            'icon'  => 'fa-building',
+                            'sub' => [
+                                [
+                                    'title' => '分类管理',
+                                    'active' => 'admin/category*',
+                                    'url' => 'admin/category',
+                                ],
+                                [
+                                    'title' => '文章管理',
+                                    'active' => 'admin/article*',
+                                    'url' => 'admin/article',
+                                ],
+                                [
+                                    'title' => '页面管理',
+                                    'active' => 'admin/page*',
+                                    'url' => 'admin/page',
+                                ],
+                            ]
+                        ],
+                        'group' => [
+                            'title' => '组件管理',
+                            'active' => [
+                                'admin/attachment*',
+                                'admin/sitemap*',
+                                'admin/theme*',
+                                'admin/flash*',
+                                'admin/ad*',
+                                'admin/menu*',
+                                'admin/third*',
+                                'admin/payment*',
+                                'admin/link*',
+                                'admin/search*',
+                            ],
+                            'icon'  => 'fa-table',
+                            'sub' => [
+                                [
+                                    'title' => '主题管理',
+                                    'active' => 'admin/theme*',
+                                    'url' => 'admin/theme',
+                                ],
+                                [
+                                    'title' => '附件管理',
+                                    'active' => 'admin/attachment*',
+                                    'url' => 'admin/attachment',
+                                ],
+                                [
+                                    'title' => 'Sitemap组件',
+                                    'active' => 'admin/sitemap*',
+                                    'url' => 'admin/sitemap',
+                                ],
+                                [
+                                    'title' => '菜单组件',
+                                    'active' => 'admin/menu*',
+                                    'url'   => 'admin/menu',
+                                ],
+                                [
+                                    'title' => '幻灯片组件',
+                                    'active' => 'admin/flash*',
+                                    'url' => 'admin/flash',
+                                ],
+                                [
+                                    'title' => '社交组件',
+                                    'active' => 'admin/third*',
+                                    'url' => 'admin/third',
+                                ],
+                                [
+                                    'title' => '支付组件',
+                                    'active' => 'admin/payment*',
+                                    'url' => 'admin/payment',
+                                ],
+                                [
+                                    'title' => '友情链接组件',
+                                    'active' => 'admin/link*',
+                                    'url' => 'admin/link',
+                                ],
+                                [
+                                    'title' => '搜索组件',
+                                    'active' => 'admin/search*',
+                                    'url' => 'admin/search',
+                                ]
+                            ]
+                        ],
+                        'develop' => [
+                            'title' => '开发者工具',
+                            'active' => [
+                                'admin/migration*'
+                            ],
+                            'icon'  => 'fa-shekel',
+                            'sub' => [
+                                [
+                                    'title' => 'Migration工具',
+                                    'active' => 'admin/migration*',
+                                    'url' => 'admin/migration'
+                                ],
+                            ]
+                        ],
+                        'extension' => [
+                            'title' => '插件配置',
+                            'active' => [
+                                'admin/extension*'
+                            ],
+                            'icon' => 'fa-shekel',
+                            'sub' => [
+                                [
+                                    'title' => '插件管理',
+                                    'active' => 'admin/extension*',
+                                    'url' => 'admin/extension'
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+            ],
             'app' => [
                 'debug' => true,
                 'url' => 'http://localhost',
