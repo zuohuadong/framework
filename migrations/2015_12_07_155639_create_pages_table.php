@@ -7,6 +7,9 @@
  */
 use Illuminate\Database\Schema\Blueprint;
 use Notadd\Foundation\Database\Migrations\Migration;
+/**
+ * Class CreatePagesTable
+ */
 class CreatePagesTable extends Migration {
     /**
      * Run the migrations.
