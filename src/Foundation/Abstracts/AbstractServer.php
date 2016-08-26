@@ -6,7 +6,14 @@
  * @datetime 2016-08-19 22:47
  */
 namespace Notadd\Foundation\Abstracts;
+use Illuminate\Bus\BusServiceProvider;
+use Illuminate\Cache\CacheServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Filesystem\FilesystemServiceProvider;
+use Illuminate\Hashing\HashServiceProvider;
+use Illuminate\Mail\MailServiceProvider;
+use Illuminate\Validation\ValidationServiceProvider;
+use Illuminate\View\ViewServiceProvider;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -36,13 +43,13 @@ abstract class AbstractServer {
         $app->instance('env', 'production');
         $app->instance('config', $config = $this->getIlluminateConfig($app));
         $this->registerLogger($app);
-        $app->register('Illuminate\Bus\BusServiceProvider');
-        $app->register('Illuminate\Cache\CacheServiceProvider');
-        $app->register('Illuminate\Filesystem\FilesystemServiceProvider');
-        $app->register('Illuminate\Hashing\HashServiceProvider');
-        $app->register('Illuminate\Mail\MailServiceProvider');
-        $app->register('Illuminate\View\ViewServiceProvider');
-        $app->register('Illuminate\Validation\ValidationServiceProvider');
+        $app->register(BusServiceProvider::class);
+        $app->register(CacheServiceProvider::class);
+        $app->register(FilesystemServiceProvider::class);
+        $app->register(HashServiceProvider::class);
+        $app->register(MailServiceProvider::class);
+        $app->register(ViewServiceProvider::class);
+        $app->register(ValidationServiceProvider::class);
         $app->boot();
         return $app;
     }
