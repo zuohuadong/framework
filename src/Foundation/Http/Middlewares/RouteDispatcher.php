@@ -8,7 +8,6 @@
 namespace Notadd\Foundation\Http\Middlewares;
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
-use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Events\RouteMatched;
@@ -65,7 +64,7 @@ class RouteDispatcher {
             case Dispatcher::METHOD_NOT_ALLOWED:
                 throw new MethodNotAllowedException;
             case Dispatcher::FOUND:
-                $this->events->fire(new RouteMatched($request, $response));
+                $this->events->fire(new RouteMatched($this->router, $request, $response));
                 $handler = $routeInfo[1];
                 $parameters = $routeInfo[2];
                 return $handler($request, $parameters);
