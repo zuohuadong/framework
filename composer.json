@@ -12,7 +12,6 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.5.9",
         "doctrine/dbal": "^2.5",

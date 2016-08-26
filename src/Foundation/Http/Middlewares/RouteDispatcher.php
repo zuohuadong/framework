@@ -7,8 +7,16 @@
  */
 namespace Notadd\Foundation\Http\Middlewares;
 use FastRoute\Dispatcher;
+use FastRoute\Dispatcher\GroupCountBased;
+use Illuminate\Container\Container;
+use Illuminate\Events\Dispatcher as EventsDispatcher;
+use Notadd\Foundation\Application;
+use Notadd\Foundation\Http\Events\RouteMatched;
+use Notadd\Foundation\Http\Events\RouteRegister;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
+use Notadd\Foundation\Http\Listeners\RouteRegister as RouteRegisterListener;
+use Notadd\Foundation\Http\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 /**
@@ -16,6 +24,29 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  * @package Notadd\Foundation\Http\Middlewares
  */
 class RouteDispatcher {
+    /**
+     * @var \Notadd\Foundation\Application
+     */
+    protected $application;
+    /**
+     * @var \Illuminate\Events\Dispatcher
+     */
+    protected $events;
+    /**
+     * @var \Notadd\Foundation\Http\Routing\RouteCollector
+     */
+    protected $router;
+    /**
+     * RouteDispatcher constructor.
+     * @param \Notadd\Foundation\Application $application
+     * @param \Illuminate\Events\Dispatcher $events
+     */
+    public function __construct(Application $application, EventsDispatcher $events) {
+        $this->application = $application;
+        $this->application->singleton('router', RouteCollector::class);
+        $this->events = $events;
+        $this->events->subscribe(RouteRegisterListener::class);
+    }
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
@@ -34,6 +65,7 @@ class RouteDispatcher {
             case Dispatcher::METHOD_NOT_ALLOWED:
                 throw new MethodNotAllowedException;
             case Dispatcher::FOUND:
+                $this->events->fire(new RouteMatched($request, $response));
                 $handler = $routeInfo[1];
                 $parameters = $routeInfo[2];
                 return $handler($request, $parameters);
@@ -44,8 +76,10 @@ class RouteDispatcher {
      * @return \FastRoute\Dispatcher\GroupCountBased
      */
     protected function getDispatcher() {
+        $this->router = $this->application->make('router');
+        $this->events->fire(new RouteRegister($this->application, $this->router));
         if(!isset($this->dispatcher)) {
-            $this->dispatcher = new Dispatcher\GroupCountBased([]);
+            $this->dispatcher = new GroupCountBased($this->router->getRouteData());
         }
         return $this->dispatcher;
     }
