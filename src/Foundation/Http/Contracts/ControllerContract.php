@@ -6,15 +6,9 @@
  * @datetime 2016-08-26 15:16
  */
 namespace Notadd\Foundation\Http\Contracts;
-use Psr\Http\Message\ServerRequestInterface;
 /**
  * Interface ControllerContract
  * @package Notadd\Foundation\Http\Contracts
  */
 interface ControllerContract {
-    /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function handle(ServerRequestInterface $request);
 }

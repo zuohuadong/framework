@@ -12,4 +12,10 @@ use Notadd\Foundation\Http\Abstracts\AbstractController;
  * @package Notadd\Foundation\Http\Controllers
  */
 class IndexController extends AbstractController {
+    /**
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function handle() {
+        return $this->view('index');
+    }
 }

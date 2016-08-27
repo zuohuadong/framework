@@ -191,6 +191,12 @@ class Application extends Container implements ApplicationContract {
     public function isDownForMaintenance() {
     }
     /**
+     * @return bool
+     */
+    public function isInstalled() {
+        return false;
+    }
+    /**
      * @param $service
      */
     public function loadDeferredProvider($service) {

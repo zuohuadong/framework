@@ -40,7 +40,8 @@
         "symfony/var-dumper": "3.1.*",
         "tobscure/json-api": "^0.2.0",
         "zendframework/zend-diactoros": "^1.2",
-        "zendframework/zend-stratigility": "^1.2"
+        "zendframework/zend-stratigility": "^1.2",
+        "franzl/whoops-middleware": "^0.4.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

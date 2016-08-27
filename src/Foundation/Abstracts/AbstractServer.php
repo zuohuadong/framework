@@ -9,6 +9,7 @@ namespace Notadd\Foundation\Abstracts;
 use Illuminate\Bus\BusServiceProvider;
 use Illuminate\Cache\CacheServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Filesystem\FilesystemServiceProvider;
 use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Mail\MailServiceProvider;
@@ -45,11 +46,12 @@ abstract class AbstractServer {
         $this->registerLogger($app);
         $app->register(BusServiceProvider::class);
         $app->register(CacheServiceProvider::class);
+        $app->register(DatabaseServiceProvider::class);
         $app->register(FilesystemServiceProvider::class);
         $app->register(HashServiceProvider::class);
         $app->register(MailServiceProvider::class);
-        $app->register(ViewServiceProvider::class);
         $app->register(ValidationServiceProvider::class);
+        $app->register(ViewServiceProvider::class);
         $app->boot();
         return $app;
     }
