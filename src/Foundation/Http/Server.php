@@ -8,6 +8,7 @@
 namespace Notadd\Foundation\Http;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Abstracts\AbstractServer;
+use Notadd\Foundation\Http\Middlewares\DecoratePsrHttpInterfaces;
 use Notadd\Foundation\Http\Middlewares\RouteDispatcher;
 use Zend\Stratigility\MiddlewarePipe;
 /**
@@ -22,6 +23,7 @@ class Server extends AbstractServer {
     protected function getMiddleware(Application $app) {
         $pipe = new MiddlewarePipe;
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
         $pipe->pipe($path, $app->make(RouteDispatcher::class));
         return $pipe;
     }

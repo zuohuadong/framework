@@ -11,6 +11,7 @@ use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
 use Notadd\Foundation\Http\Routing\RouteCollector;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response;
 /**
  * Class RouteRegister
  * @package Notadd\Foundation\Http\Events
@@ -47,14 +48,16 @@ class RouteRegister {
      * @return \Closure
      */
     protected function getHandlerGenerator() {
-        return function ($class) use ($container) {
-            return function (ServerRequestInterface $request, $routeParams) use ($class) {
+        return function ($class, $function = 'handle') use ($container) {
+            return function (ServerRequestInterface $request, $routeParams) use ($class, $function) {
                 $controller = $this->application->make($class);
                 if(!($controller instanceof ControllerContract)) {
                     throw new InvalidArgumentException('Route handler must be an instance of ' . ControllerContract::class);
                 }
                 $request = $request->withQueryParams(array_merge($request->getQueryParams(), $routeParams));
-                return $controller->handle($request);
+                $response = new Response;
+                $response->getBody()->write($this->application->call([$controller, $function]));
+                return $response;
             };
         };
     }
