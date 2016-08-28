@@ -12,6 +12,7 @@ use Notadd\Foundation\Http\Events\MiddlewareConfigurer;
 use Notadd\Foundation\Http\Middlewares\DecoratePsrHttpInterfaces;
 use Notadd\Foundation\Http\Middlewares\ErrorHandler;
 use Notadd\Foundation\Http\Middlewares\RouteDispatcher;
+use Notadd\Install\InstallServiceProvider;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Stratigility\MiddlewarePipe;
 /**
@@ -27,7 +28,12 @@ class Server extends AbstractServer {
         $errorDir = realpath(__DIR__ . '/../../../errors');
         $pipe = new MiddlewarePipe;
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        if($app->isInstalled()) {
+        if(!$app->isInstalled()) {
+            $app->register(InstallServiceProvider::class);
+            $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
+            $pipe->pipe($path, $app->make(RouteDispatcher::class));
+            $pipe->pipe($path, new ErrorHandler($errorDir, true));
+        } elseif($app->isInstalled()) {
             $app->register(HttpServiceProvider::class);
             $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
             $app->make('events')->fire(new MiddlewareConfigurer($pipe, $path, $this));

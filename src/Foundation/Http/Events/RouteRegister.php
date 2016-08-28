@@ -6,6 +6,7 @@
  * @datetime 2016-08-26 13:34
  */
 namespace Notadd\Foundation\Http\Events;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
@@ -41,8 +42,14 @@ class RouteRegister {
      * @return \Notadd\Foundation\Http\Routing\RouteCollector
      */
     public function get($path, $name, $class) {
+        $function = 'handle';
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $path, $name, $toController($class));
+        if(Str::contains($class, '@')) {
+            $segments = explode('@', $class);
+            $class = $segments[0];
+            $function = $segments[1];
+        }
+        return $this->router->addRoute('GET', $path, $name, $toController($class, $function));
     }
     /**
      * @return \Closure

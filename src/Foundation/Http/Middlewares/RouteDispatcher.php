@@ -14,7 +14,6 @@ use Notadd\Foundation\Http\Events\RouteMatched;
 use Notadd\Foundation\Http\Events\RouteRegister;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
-use Notadd\Foundation\Http\Listeners\RouteRegister as RouteRegisterListener;
 use Notadd\Foundation\Http\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -44,7 +43,6 @@ class RouteDispatcher {
         $this->application = $application;
         $this->application->singleton('router', RouteCollector::class);
         $this->events = $events;
-        $this->events->subscribe(RouteRegisterListener::class);
     }
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
