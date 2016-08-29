@@ -11,6 +11,7 @@ use Notadd\Foundation\Http\Abstracts\AbstractServer;
 use Notadd\Foundation\Http\Events\MiddlewareConfigurer;
 use Notadd\Foundation\Http\Middlewares\DecoratePsrHttpInterfaces;
 use Notadd\Foundation\Http\Middlewares\ErrorHandler;
+use Notadd\Foundation\Http\Middlewares\JsonBodyParser;
 use Notadd\Foundation\Http\Middlewares\RouteDispatcher;
 use Notadd\Install\InstallServiceProvider;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -36,6 +37,7 @@ class Server extends AbstractServer {
         } elseif($app->isInstalled()) {
             $app->register(HttpServiceProvider::class);
             $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
+            $pipe->pipe($path, $app->make(JsonBodyParser::class));
             $app->make('events')->fire(new MiddlewareConfigurer($pipe, $path, $this));
             $pipe->pipe($path, $app->make(RouteDispatcher::class));
             $pipe->pipe($path, new ErrorHandler($errorDir, true));

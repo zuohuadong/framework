@@ -17,11 +17,12 @@ use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
 use Notadd\Foundation\Http\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Zend\Stratigility\MiddlewareInterface;
 /**
  * Class DispatchRoute
  * @package Notadd\Foundation\Http\Middlewares
  */
-class RouteDispatcher {
+class RouteDispatcher implements MiddlewareInterface {
     /**
      * @var \Notadd\Foundation\Application
      */
