@@ -7,11 +7,11 @@
  */
 namespace Notadd\Foundation;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Notadd\Foundation\Contracts\Application as ApplicationContract;
 /**
  * Class Application
  * @package Notadd\Foundation
@@ -194,7 +194,7 @@ class Application extends Container implements ApplicationContract {
      * @return bool
      */
     public function isInstalled() {
-        return false;
+        return true;
     }
     /**
      * @param $service

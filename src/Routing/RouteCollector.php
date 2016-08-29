@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-21 14:56
  */
-namespace Notadd\Foundation\Http\Routing;
+namespace Notadd\Routing;
 use FastRoute\DataGenerator\GroupCountBased;
 use FastRoute\RouteParser\Std;
 /**
@@ -38,7 +38,7 @@ class RouteCollector {
      * @param $path
      * @param $name
      * @param $handler
-     * @return \Notadd\Foundation\Http\Routing\RouteCollector
+     * @return \Notadd\Routing\RouteCollector
      */
     public function get($path, $name, $handler) {
         return $this->addRoute('GET', $path, $name, $handler);
@@ -47,7 +47,7 @@ class RouteCollector {
      * @param $path
      * @param $name
      * @param $handler
-     * @return \Notadd\Foundation\Http\Routing\RouteCollector
+     * @return \Notadd\Routing\RouteCollector
      */
     public function post($path, $name, $handler) {
         return $this->addRoute('POST', $path, $name, $handler);
@@ -56,7 +56,7 @@ class RouteCollector {
      * @param $path
      * @param $name
      * @param $handler
-     * @return \Notadd\Foundation\Http\Routing\RouteCollector
+     * @return \Notadd\Routing\RouteCollector
      */
     public function put($path, $name, $handler) {
         return $this->addRoute('PUT', $path, $name, $handler);
@@ -65,7 +65,7 @@ class RouteCollector {
      * @param $path
      * @param $name
      * @param $handler
-     * @return \Notadd\Foundation\Http\Routing\RouteCollector
+     * @return \Notadd\Routing\RouteCollector
      */
     public function patch($path, $name, $handler) {
         return $this->addRoute('PATCH', $path, $name, $handler);
@@ -74,7 +74,7 @@ class RouteCollector {
      * @param $path
      * @param $name
      * @param $handler
-     * @return \Notadd\Foundation\Http\Routing\RouteCollector
+     * @return \Notadd\Routing\RouteCollector
      */
     public function delete($path, $name, $handler) {
         return $this->addRoute('DELETE', $path, $name, $handler);
@@ -84,7 +84,7 @@ class RouteCollector {
      * @param $path
      * @param $name
      * @param $handler
-     * @return \Notadd\Foundation\Http\Routing\RouteCollector
+     * @return \Notadd\Routing\RouteCollector
      */
     public function addRoute($method, $path, $name, $handler) {
         $routeDatas = $this->routeParser->parse($path);

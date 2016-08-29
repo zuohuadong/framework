@@ -6,7 +6,7 @@
  * @datetime 2016-08-27 00:16
  */
 namespace Notadd\Foundation\Http\Events;
-use Notadd\Foundation\Http\Routing\RouteCollector;
+use Notadd\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 /**
@@ -23,12 +23,12 @@ class RouteMatched {
      */
     protected $response;
     /**
-     * @var \Notadd\Foundation\Http\Routing\RouteCollector
+     * @var \Notadd\Routing\RouteCollector
      */
     protected $route;
     /**
      * RouteMatched constructor.
-     * @param \Notadd\Foundation\Http\Routing\RouteCollector $route
+     * @param \Notadd\Routing\RouteCollector $route
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      */

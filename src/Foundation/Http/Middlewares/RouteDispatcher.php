@@ -14,7 +14,7 @@ use Notadd\Foundation\Http\Events\RouteMatched;
 use Notadd\Foundation\Http\Events\RouteRegister;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
-use Notadd\Foundation\Http\Routing\RouteCollector;
+use Notadd\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Stratigility\MiddlewareInterface;
@@ -32,7 +32,7 @@ class RouteDispatcher implements MiddlewareInterface {
      */
     protected $events;
     /**
-     * @var \Notadd\Foundation\Http\Routing\RouteCollector
+     * @var \Notadd\Routing\RouteCollector
      */
     protected $router;
     /**
