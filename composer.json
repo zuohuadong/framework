@@ -42,7 +42,8 @@
         "zendframework/zend-diactoros": "^1.2",
         "zendframework/zend-stratigility": "^1.2",
         "franzl/whoops-middleware": "^0.4.1",
-        "dflydev/fig-cookies": "^1.0"
+        "dflydev/fig-cookies": "^1.0",
+        "league/oauth2-client": "^1.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -9,9 +9,11 @@ namespace Notadd\Foundation\Http;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Abstracts\AbstractServer;
 use Notadd\Foundation\Http\Events\MiddlewareConfigurer;
+use Notadd\Foundation\Http\Middlewares\AuthenticateWithSession;
 use Notadd\Foundation\Http\Middlewares\DecoratePsrHttpInterfaces;
 use Notadd\Foundation\Http\Middlewares\ErrorHandler;
 use Notadd\Foundation\Http\Middlewares\JsonBodyParser;
+use Notadd\Foundation\Http\Middlewares\RememberFromCookie;
 use Notadd\Foundation\Http\Middlewares\RouteDispatcher;
 use Notadd\Foundation\Http\Middlewares\SessionStarter;
 use Notadd\Install\InstallServiceProvider;
@@ -34,15 +36,16 @@ class Server extends AbstractServer {
             $app->register(InstallServiceProvider::class);
             $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
             $pipe->pipe($path, $app->make(RouteDispatcher::class));
-            $pipe->pipe($path, new ErrorHandler($errorDir, true));
+            $pipe->pipe($path, new ErrorHandler($errorDir, true, $app->make('log')));
         } elseif($app->isInstalled()) {
-            $app->register(HttpServiceProvider::class);
             $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
             $pipe->pipe($path, $app->make(JsonBodyParser::class));
             $pipe->pipe($path, $app->make(SessionStarter::class));
+            $pipe->pipe($path, $app->make(RememberFromCookie::class));
+            $pipe->pipe($path, $app->make(AuthenticateWithSession::class));
             $app->make('events')->fire(new MiddlewareConfigurer($pipe, $path, $this));
             $pipe->pipe($path, $app->make(RouteDispatcher::class));
-            $pipe->pipe($path, new ErrorHandler($errorDir, true));
+            $pipe->pipe($path, new ErrorHandler($errorDir, true, $app->make('log')));
         } else {
             $pipe->pipe($path, function () use ($errorDir) {
                 return new HtmlResponse(file_get_contents($errorDir.'/503.html', 503));
