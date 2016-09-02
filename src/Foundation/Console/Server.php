@@ -8,7 +8,6 @@
 namespace Notadd\Foundation\Console;
 use Notadd\Foundation\Abstracts\AbstractServer;
 use Notadd\Install\InstallServiceProvider;
-use Symfony\Component\Console\Application;
 /**
  * Class Server
  * @package Notadd\Foundation\Console
@@ -27,7 +26,7 @@ class Server extends AbstractServer{
     protected function getConsoleApplication() {
         $app = $this->getApp();
         $app->register(InstallServiceProvider::class);
-        $console = new Application('Notadd', $app->version());
+        $console = Application::getInstance($app, 'Notadd');
         return $console;
     }
 }

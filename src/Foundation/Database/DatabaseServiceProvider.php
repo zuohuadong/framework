@@ -10,11 +10,18 @@ use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
 use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Database\Migrations\Migrator;
+use Notadd\Foundation\Database\Listeners\CommandRegister;
 /**
  * Class DatabaseServiceProvider
  * @package Notadd\Foundation\Database
  */
 class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider {
+    /**
+     * @return void
+     */
+    public function boot() {
+        $this->app->make('events')->subscribe(CommandRegister::class);
+    }
     /**
      * @return void
      */
