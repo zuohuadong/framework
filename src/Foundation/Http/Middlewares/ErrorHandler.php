@@ -9,8 +9,13 @@ namespace Notadd\Foundation\Http\Middlewares;
 use Franzl\Middleware\Whoops\ErrorMiddleware as WhoopsMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Log\LoggerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Stratigility\ErrorMiddlewareInterface;
+/**
+ * Class ErrorHandler
+ * @package Notadd\Foundation\Http\Middlewares
+ */
 class ErrorHandler implements ErrorMiddlewareInterface {
     /**
      * @var string
@@ -21,12 +26,19 @@ class ErrorHandler implements ErrorMiddlewareInterface {
      */
     protected $debug;
     /**
-     * @param string $templateDir
-     * @param bool $debug
+     * @var \Psr\Log\LoggerInterface
      */
-    public function __construct($templateDir, $debug = false) {
+    protected $logger;
+    /**
+     * ErrorHandler constructor.
+     * @param $templateDir
+     * @param bool $debug
+     * @param \Psr\Log\LoggerInterface $logger
+     */
+    public function __construct($templateDir, $debug = false, LoggerInterface $logger = null) {
         $this->templateDir = $templateDir;
         $this->debug = $debug;
+        $this->logger = $logger;
     }
     /**
      * @param mixed $error
@@ -46,6 +58,9 @@ class ErrorHandler implements ErrorMiddlewareInterface {
                 404
             ])
         ) {
+            if($this->logger instanceof LoggerInterface) {
+                $this->logger->error($error);
+            }
             $whoops = new WhoopsMiddleware;
             return $whoops($error, $request, $response, $out);
         }

@@ -9,16 +9,21 @@ namespace Notadd\Foundation\Abstracts;
 use Illuminate\Bus\BusServiceProvider;
 use Illuminate\Cache\CacheServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
-use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Filesystem\FilesystemServiceProvider;
 use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Mail\MailServiceProvider;
 use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Notadd\Foundation\Application;
+use Notadd\Foundation\Database\DatabaseServiceProvider;
+use Notadd\Foundation\Http\HttpServiceProvider;
+use Notadd\Setting\Contracts\SettingsRepository;
+use Notadd\Setting\SettingServiceProvider;
+use PDO;
 /**
  * Class AbstractServer
  * @package Notadd\Foundation\Abstracts
@@ -52,6 +57,19 @@ abstract class AbstractServer {
         $app->register(MailServiceProvider::class);
         $app->register(ValidationServiceProvider::class);
         $app->register(ViewServiceProvider::class);
+        $app->register(SettingServiceProvider::class);
+        if($app->isInstalled()) {
+            //$setting = $app->make(SettingsRepository::class);
+            //$config->set('mail.driver', $settings->get('mail.driver'));
+            //$config->set('mail.host', $settings->get('mail.host'));
+            //$config->set('mail.port', $settings->get('mail.port'));
+            //$config->set('mail.from.address', $settings->get('mail.from'));
+            //$config->set('mail.from.name', $settings->get('site.title', 'Notadd'));
+            //$config->set('mail.encryption', $settings->get('mail.encryption'));
+            //$config->set('mail.username', $settings->get('mail.username'));
+            //$config->set('mail.password', $settings->get('mail.password'));
+            $app->register(HttpServiceProvider::class);
+        }
         $app->boot();
         return $app;
     }
@@ -71,9 +89,6 @@ abstract class AbstractServer {
                 'paths' => [],
                 'compiled' => $app->storagePath() . '/views',
             ],
-            'mail' => [
-                'driver' => 'mail',
-            ],
             'cache' => [
                 'default' => 'file',
                 'stores' => [
@@ -82,17 +97,32 @@ abstract class AbstractServer {
                         'path' => $app->storagePath() . '/cache',
                     ],
                 ],
-                'prefix' => 'flarum',
+                'prefix' => 'notadd',
+            ],
+            'database' => [
+                'fetch' => PDO::FETCH_OBJ,
+                'default' => 'mysql',
+                'connections' => [
+                    'mysql' => [
+                        'driver' => 'mysql',
+                        'host' => 'localhost',
+                        'port' => '3306',
+                        'database' => '',
+                        'username' => '',
+                        'password' => '',
+                        'charset' => 'utf8',
+                        'collation' => 'utf8_unicode_ci',
+                        'prefix' => 'pre_',
+                        'strict' => true,
+                        'engine' => null,
+                    ],
+                ]
             ],
             'filesystems' => [
                 'default' => 'local',
-                'cloud' => 's3',
-                'disks' => [
-                    'flarum-avatars' => [
-                        'driver' => 'local',
-                        'root' => $app->publicPath() . '/assets/avatars'
-                    ]
-                ]
+            ],
+            'mail' => [
+                'driver' => 'mail',
             ]
         ]);
     }
@@ -102,7 +132,7 @@ abstract class AbstractServer {
     protected function registerLogger(Application $app) {
         $logger = new Logger($app->environment());
         $logPath = $app->storagePath() . '/logs/notadd.log';
-        $handler = new StreamHandler($logPath, Logger::DEBUG);
+        $handler = new RotatingFileHandler($logPath, 0, Logger::DEBUG);
         $handler->setFormatter(new LineFormatter(null, null, true, true));
         $logger->pushHandler($handler);
         $app->instance('log', $logger);

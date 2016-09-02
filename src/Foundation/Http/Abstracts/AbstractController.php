@@ -9,6 +9,7 @@ namespace Notadd\Foundation\Http\Abstracts;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
+use Notadd\Setting\Contracts\SettingsRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 /**
@@ -33,6 +34,10 @@ abstract class AbstractController implements ControllerContract {
      */
     protected $events;
     /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $log;
+    /**
      * @var \Illuminate\Mail\Mailer
      */
     protected $mailer;
@@ -45,6 +50,10 @@ abstract class AbstractController implements ControllerContract {
      */
     protected $response;
     /**
+     * @var \Notadd\Setting\Contracts\SettingsRepository
+     */
+    protected $setting;
+    /**
      * @var \Illuminate\Contracts\View\Factory
      */
     protected $view;
@@ -56,9 +65,11 @@ abstract class AbstractController implements ControllerContract {
         $this->config = $this->application->make('config');
         $this->db = $this->application->make('db');
         $this->events = $this->application->make('events');
+        $this->log = $this->application->make('log');
         $this->mailer = $this->application->make('mailer');
         $this->request = $this->application->make(ServerRequestInterface::class);
         $this->response = $this->application->make(ResponseInterface::class);
+        $this->setting = $this->application->make(SettingsRepository::class);
         $this->view = $this->application->make('view');
     }
     /**
