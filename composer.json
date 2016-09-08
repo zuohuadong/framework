@@ -14,7 +14,9 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "dflydev/fig-cookies": "^1.0",
         "doctrine/dbal": "^2.5",
+        "franzl/whoops-middleware": "^0.4.1",
         "illuminate/bus": "5.3.*",
         "illuminate/cache": "5.3.*",
         "illuminate/config": "5.3.*",
@@ -29,6 +31,7 @@
         "illuminate/validation": "5.3.*",
         "illuminate/view": "5.3.*",
         "league/flysystem": "^1.0.11",
+        "league/oauth2-client": "^1.4",
         "monolog/monolog": "^1.18.0",
         "nikic/fast-route": "^1.0.0",
         "psr/http-message": "^1.0",
@@ -40,10 +43,7 @@
         "symfony/var-dumper": "3.1.*",
         "tobscure/json-api": "^0.2.0",
         "zendframework/zend-diactoros": "^1.2",
-        "zendframework/zend-stratigility": "^1.2",
-        "franzl/whoops-middleware": "^0.4.1",
-        "dflydev/fig-cookies": "^1.0",
-        "league/oauth2-client": "^1.4"
+        "zendframework/zend-stratigility": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
