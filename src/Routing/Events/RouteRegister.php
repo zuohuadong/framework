@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-26 13:34
  */
-namespace Notadd\Foundation\Http\Events;
+namespace Notadd\Routing\Events;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notadd\Foundation\Application;
@@ -15,7 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 /**
  * Class RouteRegister
- * @package Notadd\Foundation\Http\Events
+ * @package Notadd\Routing\Events
  */
 class RouteRegister {
     /**
