@@ -6,42 +6,24 @@
  * @datetime 2016-08-26 13:46
  */
 namespace Notadd\Foundation\Http\Listeners;
-use Illuminate\Events\Dispatcher;
-use Notadd\Foundation\Application;
+use Notadd\Foundation\Abstracts\AbstractEventSubscriber;
 use Notadd\Foundation\Http\Controllers\IndexController;
-use Notadd\Foundation\Http\Events\RouteRegister as RouteRegisterEvent;
+use Notadd\Routing\Events\RouteRegister as RouteRegisterEvent;
 /**
  * Class RouteRegister
  * @package Notadd\Foundation\Http\Listeners
  */
-class RouteRegister {
+class RouteRegister extends AbstractEventSubscriber {
     /**
-     * @var \Notadd\Foundation\Application
+     * @return string
      */
-    protected $application;
-    /**
-     * @var \Illuminate\Events\Dispatcher
-     */
-    protected $events;
-    /**
-     * RouteRegister constructor.
-     * @param \Notadd\Foundation\Application $application
-     * @param \Illuminate\Events\Dispatcher $events
-     */
-    public function __construct(Application $application, Dispatcher $events) {
-        $this->application = $application;
-        $this->events = $events;
+    protected function getEvent() {
+        return RouteRegisterEvent::class;
     }
     /**
-     * @param \Notadd\Foundation\Http\Events\RouteRegister $router
+     * @param \Notadd\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
         $router->get('/', 'default', IndexController::class);
-    }
-    /**
-     * @return void
-     */
-    public function subscribe() {
-        $this->events->listen(RouteRegisterEvent::class, [$this, 'handle']);
     }
 }

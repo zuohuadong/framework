@@ -3,16 +3,15 @@
  * This file is part of Notadd.
  * @author TwilRoad <269044570@qq.com>
  * @copyright (c) 2016, iBenchu.org
- * @datetime 2016-08-27 16:33
+ * @datetime 2016-09-09 18:04
  */
-namespace Notadd\Install\Listeners;
+namespace Notadd\Upgrade\Listeners;
 use Notadd\Foundation\Abstracts\AbstractEventSubscriber;
 use Notadd\Routing\Events\RouteRegister as RouteRegisterEvent;
-use Notadd\Install\Controllers\IndexController;
-use Notadd\Install\Controllers\InstallController;
+use Notadd\Upgrade\Controllers\UpgradeController;
 /**
  * Class RouteRegister
- * @package Notadd\Install\Listeners
+ * @package Notadd\Upgrade\Listeners
  */
 class RouteRegister extends AbstractEventSubscriber {
     /**
@@ -25,7 +24,6 @@ class RouteRegister extends AbstractEventSubscriber {
      * @param \Notadd\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
-        $router->get('/', 'index', IndexController::class);
-        $router->post('/', 'install', InstallController::class);
+        $router->get('upgrade', 'upgrade', UpgradeController::class);
     }
 }
