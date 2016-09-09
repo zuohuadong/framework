@@ -4,7 +4,7 @@
             "Notadd\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/Foundation/helpers.php"
         ]
     },
     "autoload-dev": {
