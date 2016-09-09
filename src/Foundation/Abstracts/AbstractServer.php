@@ -16,7 +16,6 @@ use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Database\DatabaseServiceProvider;
@@ -59,7 +58,7 @@ abstract class AbstractServer {
         $app->register(ViewServiceProvider::class);
         $app->register(SettingServiceProvider::class);
         if($app->isInstalled()) {
-            //$setting = $app->make(SettingsRepository::class);
+            $setting = $app->make(SettingsRepository::class);
             //$config->set('mail.driver', $settings->get('mail.driver'));
             //$config->set('mail.host', $settings->get('mail.host'));
             //$config->set('mail.port', $settings->get('mail.port'));
@@ -107,16 +106,17 @@ abstract class AbstractServer {
                         'driver' => 'mysql',
                         'host' => 'localhost',
                         'port' => '3306',
-                        'database' => '',
-                        'username' => '',
-                        'password' => '',
+                        'database' => 'notadd.io',
+                        'username' => 'root',
+                        'password' => '123456789',
                         'charset' => 'utf8',
                         'collation' => 'utf8_unicode_ci',
                         'prefix' => 'pre_',
                         'strict' => true,
                         'engine' => null,
                     ],
-                ]
+                ],
+                'migrations' => 'migrations'
             ],
             'filesystems' => [
                 'default' => 'local',

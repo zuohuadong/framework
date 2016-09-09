@@ -7,10 +7,13 @@
  */
 namespace Notadd\Foundation\Database;
 use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
+use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Database\Migrations\MigrationCreator;
-use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Notadd\Foundation\Database\Listeners\CommandRegister;
+use Notadd\Foundation\Database\Migrations\Migrator;
 /**
  * Class DatabaseServiceProvider
  * @package Notadd\Foundation\Database
@@ -27,14 +30,16 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider {
      */
     public function register() {
         parent::register();
+        $this->app->alias('db', ConnectionResolverInterface::class);
         $this->app->alias('db.connection', ConnectionInterface::class);
+        $this->app->alias('migration.repository', MigrationRepositoryInterface::class);
         $this->app->singleton('migration.repository', function ($app) {
             $table = $app['config']['database.migrations'];
             return new DatabaseMigrationRepository($app['db'], $table);
         });
         $this->app->singleton('migrator', function ($app) {
             $repository = $app['migration.repository'];
-            return new Migrator($repository, $app['db'], $app['files']);
+            return new Migrator($app, $repository, $app['db'], $app['files']);
         });
         $this->app->singleton('migration.creator', function ($app) {
             return new MigrationCreator($app['files']);
