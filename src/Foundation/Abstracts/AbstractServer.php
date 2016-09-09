@@ -59,14 +59,14 @@ abstract class AbstractServer {
         $app->register(SettingServiceProvider::class);
         if($app->isInstalled()) {
             $setting = $app->make(SettingsRepository::class);
-            //$config->set('mail.driver', $settings->get('mail.driver'));
-            //$config->set('mail.host', $settings->get('mail.host'));
-            //$config->set('mail.port', $settings->get('mail.port'));
-            //$config->set('mail.from.address', $settings->get('mail.from'));
-            //$config->set('mail.from.name', $settings->get('site.title', 'Notadd'));
-            //$config->set('mail.encryption', $settings->get('mail.encryption'));
-            //$config->set('mail.username', $settings->get('mail.username'));
-            //$config->set('mail.password', $settings->get('mail.password'));
+            $config->set('mail.driver', $setting->get('mail.driver'));
+            $config->set('mail.host', $setting->get('mail.host'));
+            $config->set('mail.port', $setting->get('mail.port'));
+            $config->set('mail.from.address', $setting->get('mail.from'));
+            $config->set('mail.from.name', $setting->get('site.title', 'Notadd'));
+            $config->set('mail.encryption', $setting->get('mail.encryption'));
+            $config->set('mail.username', $setting->get('mail.username'));
+            $config->set('mail.password', $setting->get('mail.password'));
             $app->register(HttpServiceProvider::class);
         }
         $app->boot();

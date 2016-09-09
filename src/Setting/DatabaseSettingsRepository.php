@@ -28,7 +28,7 @@ class DatabaseSettingsRepository implements SettingsRepositoryContract {
      * @return mixed
      */
     public function all() {
-        return $this->database->table('settings')->lists('value', 'key');
+        return $this->database->table('settings')->pluck('value', 'key');
     }
     /**
      * @param $keyLike
