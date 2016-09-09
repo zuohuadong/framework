@@ -10,9 +10,9 @@ use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
-use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Notadd\Foundation\Database\Listeners\CommandRegister;
+use Notadd\Foundation\Database\Migrations\MigrationCreator;
 use Notadd\Foundation\Database\Migrations\Migrator;
 /**
  * Class DatabaseServiceProvider

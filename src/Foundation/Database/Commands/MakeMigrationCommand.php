@@ -6,9 +6,9 @@
  * @datetime 2016-09-08 19:01
  */
 namespace Notadd\Foundation\Database\Commands;
-use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Support\Composer;
 use Notadd\Foundation\Console\Abstracts\AbstractCommand;
+use Notadd\Foundation\Database\Migrations\MigrationCreator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 /**
@@ -25,8 +25,8 @@ class MakeMigrationCommand extends AbstractCommand {
      */
     protected $composer;
     /**
-     * MakeMigration constructor.
-     * @param \Illuminate\Database\Migrations\MigrationCreator $creator
+     * MakeMigrationCommand constructor.
+     * @param \Notadd\Foundation\Database\Migrations\MigrationCreator $creator
      * @param \Illuminate\Support\Composer $composer
      */
     public function __construct(MigrationCreator $creator, Composer $composer) {

@@ -7,7 +7,6 @@
  */
 namespace Notadd\Foundation\Database\Migrations;
 use Illuminate\Database\ConnectionInterface;
-use Illuminate\Database\Schema\Builder;
 /**
  * Class Migration
  * @package Notadd\Foundation\Database\Migrations
