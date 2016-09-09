@@ -16,7 +16,8 @@ class InfoCommand extends AbstractCommand {
      * @return void
      */
     protected function configure() {
-        $this->setName('db')->setDescription('查看数据库链接信息');
+        $this->setName('db');
+        $this->setDescription('查看数据库链接信息');
     }
     /**
      * @return void

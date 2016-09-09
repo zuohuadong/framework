@@ -10,6 +10,9 @@ use Illuminate\Events\Dispatcher;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Console\Events\CommandRegister as CommandRegisterEvent;
 use Notadd\Foundation\Database\Commands\InfoCommand;
+use Notadd\Foundation\Database\Commands\InstallCommand;
+use Notadd\Foundation\Database\Commands\MakeMigrationCommand;
+use Notadd\Foundation\Database\Commands\MigrateCommand;
 /**
  * Class CommandRegister
  * @package Notadd\Foundation\Database\Listeners
@@ -29,6 +32,9 @@ class CommandRegister {
      */
     public function handle(CommandRegisterEvent $console) {
         $console->registerCommand(new InfoCommand());
+        $console->registerCommand($this->application->make(InstallCommand::class));
+        $console->registerCommand($this->application->make(MakeMigrationCommand::class));
+        $console->registerCommand($this->application->make(MigrateCommand::class));
     }
     /**
      * @return void
