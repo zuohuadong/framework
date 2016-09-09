@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-28 23:22
  */
-namespace Notadd\Api;
+namespace Notadd\Foundation\Api;
 use Notadd\Foundation\Abstracts\AbstractUrlGenerator;
 /**
  * Class UrlGenerator

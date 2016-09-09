@@ -17,6 +17,9 @@ use Illuminate\View\ViewServiceProvider;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Notadd\Admin\AdminServiceProvider;
+use Notadd\Api\ApiServiceProvider;
+use Notadd\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Database\DatabaseServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
@@ -68,6 +71,9 @@ abstract class AbstractServer {
             $config->set('mail.username', $setting->get('mail.username'));
             $config->set('mail.password', $setting->get('mail.password'));
             $app->register(HttpServiceProvider::class);
+            $app->register(ApiServiceProvider::class);
+            $app->register(AdminServiceProvider::class);
+            $app->register(ExtensionServiceProvider::class);
         }
         $app->boot();
         return $app;

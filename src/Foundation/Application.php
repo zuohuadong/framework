@@ -189,11 +189,18 @@ class Application extends Container implements ApplicationContract {
      * @return bool
      */
     public function isDownForMaintenance() {
+        return false;
     }
     /**
      * @return bool
      */
     public function isInstalled() {
+        return true;
+    }
+    /**
+     * @return bool
+     */
+    public function isUpToDate() {
         return true;
     }
     /**
