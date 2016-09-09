@@ -59,7 +59,7 @@ abstract class AbstractServer {
         $app->register(SettingServiceProvider::class);
         if($app->isInstalled()) {
             $setting = $app->make(SettingsRepository::class);
-            $config->set('mail.driver', $setting->get('mail.driver'));
+            $config->set('mail.driver', $setting->get('mail.driver', 'smtp'));
             $config->set('mail.host', $setting->get('mail.host'));
             $config->set('mail.port', $setting->get('mail.port'));
             $config->set('mail.from.address', $setting->get('mail.from'));
