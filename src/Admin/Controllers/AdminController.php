@@ -6,9 +6,16 @@
  * @datetime 2016-08-29 16:21
  */
 namespace Notadd\Admin\Controllers;
+use Notadd\Foundation\Http\Abstracts\AbstractController;
 /**
  * Class AdminController
  * @package Notadd\Admin\Controllers
  */
-class AdminController {
+class AdminController extends AbstractController {
+    /**
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function index() {
+        return $this->view('admin::index');
+    }
 }
