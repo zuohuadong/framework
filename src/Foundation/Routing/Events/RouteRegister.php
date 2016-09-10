@@ -5,12 +5,12 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-26 13:34
  */
-namespace Notadd\Routing\Events;
+namespace Notadd\Foundation\Routing\Events;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
-use Notadd\Routing\RouteCollector;
+use Notadd\Foundation\Routing\RouteCollector;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 /**
@@ -23,13 +23,13 @@ class RouteRegister {
      */
     protected $application;
     /**
-     * @var \Notadd\Routing\RouteCollector
+     * @var \Notadd\Foundation\Routing\RouteCollector
      */
     protected $router;
     /**
      * RouteRegister constructor.
      * @param \Notadd\Foundation\Application $application
-     * @param \Notadd\Routing\RouteCollector $router
+     * @param \Notadd\Foundation\Routing\RouteCollector $router
      */
     public function __construct(Application $application, RouteCollector $router) {
         $this->application = $application;
@@ -39,7 +39,7 @@ class RouteRegister {
      * @param $path
      * @param $name
      * @param $class
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
     public function get($path, $name, $class) {
         $function = 'handle';
@@ -72,7 +72,7 @@ class RouteRegister {
      * @param $path
      * @param $name
      * @param $class
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
     public function post($path, $name, $class) {
         $toController = $this->getHandlerGenerator();
@@ -82,7 +82,7 @@ class RouteRegister {
      * @param $path
      * @param $name
      * @param $class
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
     public function put($path, $name, $class) {
         $toController = $this->getHandlerGenerator();
@@ -92,7 +92,7 @@ class RouteRegister {
      * @param $path
      * @param $name
      * @param $class
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
     public function patch($path, $name, $class) {
         $toController = $this->getHandlerGenerator();
@@ -102,7 +102,7 @@ class RouteRegister {
      * @param $path
      * @param $name
      * @param $class
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
     public function delete($path, $name, $class) {
         $toController = $this->getHandlerGenerator();

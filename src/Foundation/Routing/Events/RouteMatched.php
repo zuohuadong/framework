@@ -5,8 +5,8 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-27 00:16
  */
-namespace Notadd\Routing\Events;
-use Notadd\Routing\RouteCollector;
+namespace Notadd\Foundation\Routing\Events;
+use Notadd\Foundation\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 /**
@@ -23,12 +23,12 @@ class RouteMatched {
      */
     protected $response;
     /**
-     * @var \Notadd\Routing\RouteCollector
+     * @var \Notadd\Foundation\Routing\RouteCollector
      */
     protected $route;
     /**
      * RouteMatched constructor.
-     * @param \Notadd\Routing\RouteCollector $route
+     * @param \Notadd\Foundation\Routing\RouteCollector $route
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      */

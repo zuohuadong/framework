@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-21 14:56
  */
-namespace Notadd\Routing;
+namespace Notadd\Foundation\Routing;
 use FastRoute\DataGenerator\GroupCountBased;
 use FastRoute\RouteParser\Std;
 /**
