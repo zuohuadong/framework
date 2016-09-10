@@ -13,6 +13,7 @@ use Notadd\Foundation\Database\Commands\InfoCommand;
 use Notadd\Foundation\Database\Commands\InstallCommand;
 use Notadd\Foundation\Database\Commands\MakeMigrationCommand;
 use Notadd\Foundation\Database\Commands\MigrateCommand;
+use Notadd\Foundation\Database\Commands\RollbackCommand;
 /**
  * Class CommandRegister
  * @package Notadd\Foundation\Database\Listeners
@@ -35,6 +36,7 @@ class CommandRegister {
         $console->registerCommand($this->application->make(InstallCommand::class));
         $console->registerCommand($this->application->make(MakeMigrationCommand::class));
         $console->registerCommand($this->application->make(MigrateCommand::class));
+        $console->registerCommand($this->application->make(RollbackCommand::class));
     }
     /**
      * @return void
