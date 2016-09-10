@@ -20,7 +20,7 @@ class Application extends Container implements ApplicationContract {
     /**
      * @var string
      */
-    const VERSION = '0.1.8.3';
+    const VERSION = '0.1.8.4';
     /**
      * @var string
      */
