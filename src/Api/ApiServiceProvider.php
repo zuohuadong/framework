@@ -7,6 +7,9 @@
  */
 namespace Notadd\Api;
 use Notadd\Foundation\Abstracts\AbstractServiceProvider;
+use Tobscure\JsonApi\ErrorHandler;
+use Tobscure\JsonApi\Exception\Handler\FallbackExceptionHandler;
+use Tobscure\JsonApi\Exception\Handler\InvalidParameterExceptionHandler;
 /**
  * Class ApiServiceProvider
  * @package Notadd\Api
@@ -21,5 +24,11 @@ class ApiServiceProvider extends AbstractServiceProvider {
      * @return void
      */
     public function register() {
+        $this->app->singleton(ErrorHandler::class, function() {
+            $handler = new ErrorHandler();
+            $handler->registerHandler(new InvalidParameterExceptionHandler);
+            $handler->registerHandler(new FallbackExceptionHandler($this->app->inDebugMode()));
+            return $handler;
+        });
     }
 }

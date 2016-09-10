@@ -13,6 +13,10 @@ use Illuminate\Support\ServiceProvider;
  */
 abstract class AbstractServiceProvider extends ServiceProvider {
     /**
+     * @var \Notadd\Foundation\Application
+     */
+    protected $app;
+    /**
      * @var \Illuminate\View\Compilers\BladeCompiler
      */
     protected $blade;

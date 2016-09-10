@@ -7,12 +7,12 @@
  */
 namespace Notadd\Foundation\Api\Responses;
 use Tobscure\JsonApi\Document;
-use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\JsonResponse as ZendJsonResponse;
 /**
  * Class JsonApiResponse
  * @package Notadd\Foundation\Api\Responses
  */
-class JsonApiResponse extends JsonResponse {
+class JsonResponse extends ZendJsonResponse {
     /**
      * JsonApiResponse constructor.
      * @param \Tobscure\JsonApi\Document $document

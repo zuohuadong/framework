@@ -182,6 +182,12 @@ class Application extends Container implements ApplicationContract {
     /**
      * @return bool
      */
+    public function inDebugMode() {
+        return true;
+    }
+    /**
+     * @return bool
+     */
     public function isBooted() {
         return $this->booted;
     }

@@ -6,6 +6,7 @@
  * @datetime 2016-09-09 20:03
  */
 namespace Notadd\Foundation\Api\Middlewares;
+use Notadd\Foundation\Api\Handlers\ErrorHandler as ApiErrorHandler;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Stratigility\ErrorMiddlewareInterface;
@@ -20,9 +21,9 @@ class ErrorHandler implements ErrorMiddlewareInterface {
     protected $errorHandler;
     /**
      * ErrorHandler constructor.
-     * @param \Notadd\Foundation\Api\Middlewares\ErrorHandler $errorHandler
+     * @param \Notadd\Foundation\Api\Handlers\ErrorHandler $errorHandler
      */
-    public function __construct(ErrorHandler $errorHandler) {
+    public function __construct(ApiErrorHandler $errorHandler) {
         $this->errorHandler = $errorHandler;
     }
     /**

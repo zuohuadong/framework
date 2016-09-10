@@ -7,7 +7,7 @@
  */
 namespace Notadd\Foundation\Api;
 use Notadd\Foundation\Api\Middlewares\ErrorHandler;
-use Notadd\Foundation\Api\Responses\JsonApiResponse;
+use Notadd\Foundation\Api\Responses\JsonResponse;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Abstracts\AbstractServer;
 use Notadd\Foundation\Http\Events\MiddlewareConfigurer;
@@ -39,7 +39,7 @@ class Server extends AbstractServer {
             $pipe->pipe($path, $app->make(AuthenticateWithSession::class));
             $app->make('events')->fire(new MiddlewareConfigurer($pipe, $path, $this));
             $pipe->pipe($path, $app->make(RouteDispatcher::class));
-            $pipe->pipe($path, new ErrorHandler($errorDir));
+            $pipe->pipe($path, $app->make(ErrorHandler::class));
         } else {
             $pipe->pipe($path, function () {
                 $document = new Document;
@@ -49,7 +49,7 @@ class Server extends AbstractServer {
                         'title' => 'Service Unavailable'
                     ]
                 ]);
-                return new JsonApiResponse($document, 503);
+                return new JsonResponse($document, 503);
             });
         }
         return $pipe;
