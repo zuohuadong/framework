@@ -7,7 +7,7 @@
  */
 namespace Notadd\Foundation\Abstracts;
 use Notadd\Foundation\Application;
-use Notadd\Routing\RouteCollector;
+use Notadd\Foundation\Routing\RouteCollector;
 /**
  * Class AbstractUrlGenerator
  * @package Notadd\Foundation\Abstracts
@@ -22,13 +22,13 @@ abstract class AbstractUrlGenerator {
      */
     protected $path;
     /**
-     * @var \Notadd\Routing\RouteCollector
+     * @var \Notadd\Foundation\Routing\RouteCollector
      */
     protected $route;
     /**
      * AbstractUrlGenerator constructor.
      * @param \Notadd\Foundation\Application $application
-     * @param \Notadd\Routing\RouteCollector $route
+     * @param \Notadd\Foundation\Routing\RouteCollector $route
      */
     public function __construct(Application $application, RouteCollector $route) {
         $this->application = $application;

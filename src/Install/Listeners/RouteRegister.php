@@ -7,7 +7,7 @@
  */
 namespace Notadd\Install\Listeners;
 use Notadd\Foundation\Abstracts\AbstractEventSubscriber;
-use Notadd\Routing\Events\RouteRegister as RouteRegisterEvent;
+use Notadd\Foundation\Routing\Events\RouteRegister as RouteRegisterEvent;
 use Notadd\Install\Controllers\IndexController;
 use Notadd\Install\Controllers\InstallController;
 /**
@@ -22,7 +22,7 @@ class RouteRegister extends AbstractEventSubscriber {
         return RouteRegisterEvent::class;
     }
     /**
-     * @param \Notadd\Routing\Events\RouteRegister $router
+     * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
         $router->get('/', 'index', IndexController::class);

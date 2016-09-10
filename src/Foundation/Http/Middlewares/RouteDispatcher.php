@@ -10,11 +10,11 @@ use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
 use Notadd\Foundation\Application;
-use Notadd\Routing\Events\RouteMatched;
-use Notadd\Routing\Events\RouteRegister;
+use Notadd\Foundation\Routing\Events\RouteMatched;
+use Notadd\Foundation\Routing\Events\RouteRegister;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
-use Notadd\Routing\RouteCollector;
+use Notadd\Foundation\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Stratigility\MiddlewareInterface;
@@ -32,7 +32,7 @@ class RouteDispatcher implements MiddlewareInterface {
      */
     protected $events;
     /**
-     * @var \Notadd\Routing\RouteCollector
+     * @var \Notadd\Foundation\Routing\RouteCollector
      */
     protected $router;
     /**

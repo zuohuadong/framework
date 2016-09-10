@@ -7,7 +7,7 @@
  */
 namespace Notadd\Upgrade\Listeners;
 use Notadd\Foundation\Abstracts\AbstractEventSubscriber;
-use Notadd\Routing\Events\RouteRegister as RouteRegisterEvent;
+use Notadd\Foundation\Routing\Events\RouteRegister as RouteRegisterEvent;
 use Notadd\Upgrade\Controllers\UpgradeController;
 /**
  * Class RouteRegister
@@ -21,7 +21,7 @@ class RouteRegister extends AbstractEventSubscriber {
         return RouteRegisterEvent::class;
     }
     /**
-     * @param \Notadd\Routing\Events\RouteRegister $router
+     * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
         $router->get('upgrade', 'upgrade', UpgradeController::class);
