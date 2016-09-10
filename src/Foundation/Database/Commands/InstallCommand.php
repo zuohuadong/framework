@@ -29,7 +29,7 @@ class InstallCommand extends AbstractCommand {
     /**
      * @return void
      */
-    public function configure() {
+    protected function configure() {
         $this->setDescription('Create the migration repository');
         $this->setName('migrate:install');
         $this->addOption('database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use.');
@@ -37,7 +37,7 @@ class InstallCommand extends AbstractCommand {
     /**
      * @return void
      */
-    public function fire() {
+    protected function fire() {
         $this->repository->setSource($this->input->getOption('database'));
         $this->repository->createRepository();
         $this->info('Migration table created successfully.');

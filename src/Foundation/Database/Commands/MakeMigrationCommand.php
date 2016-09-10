@@ -37,7 +37,7 @@ class MakeMigrationCommand extends AbstractCommand {
     /**
      * @return void
      */
-    public function configure() {
+    protected function configure() {
         $this->addArgument('name', InputArgument::REQUIRED, 'The name of the migration.');
         $this->addOption('create', null, InputOption::VALUE_OPTIONAL, 'The table to be created.');
         $this->addOption('table', null, InputOption::VALUE_OPTIONAL, 'The table to migrate.');
@@ -48,7 +48,7 @@ class MakeMigrationCommand extends AbstractCommand {
     /**
      * @return void
      */
-    public function fire() {
+    protected function fire() {
         $create = $this->input->getOption('create') ?: false;
         $name = $this->input->getArgument('name');
         $table = $this->input->getOption('table');

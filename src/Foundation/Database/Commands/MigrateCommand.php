@@ -29,7 +29,7 @@ class MigrateCommand extends AbstractCommand {
     /**
      * @return void
      */
-    public function configure() {
+    protected function configure() {
         $this->addOption('database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use.');
         $this->addOption('force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.');
         $this->addOption('path', null, InputOption::VALUE_OPTIONAL, 'The path of migrations files to be executed.');
@@ -42,7 +42,7 @@ class MigrateCommand extends AbstractCommand {
     /**
      * @return void
      */
-    public function fire() {
+    protected function fire() {
         $this->prepareDatabase();
         $this->migrator->run($this->getMigrationPath(), [
             'pretend' => $this->input->getOption('pretend'),

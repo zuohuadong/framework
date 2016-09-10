@@ -15,13 +15,13 @@ class UpgradeCommand extends AbstractCommand {
     /**
      * @return void
      */
-    public function configure() {
+    protected function configure() {
         $this->setDescription('Run upgrade program.');
         $this->setName('upgrade');
     }
     /**
      * @return void
      */
-    public function fire() {
+    protected function fire() {
     }
 }
