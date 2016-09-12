@@ -6,8 +6,14 @@
  * @datetime 2016-08-20 18:30
  */
 namespace Notadd\Foundation\Http\Middlewares;
+use FastRoute\Dispatcher;
+use FastRoute\Dispatcher\GroupCountBased;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
 use Notadd\Foundation\Application;
+use Notadd\Foundation\Routing\Events\RouteMatched;
+use Notadd\Foundation\Routing\Events\RouteRegister;
+use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
+use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
 use Notadd\Foundation\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -50,6 +56,29 @@ class RouteDispatcher implements MiddlewareInterface {
     public function __invoke(Request $request, Response $response, callable $out = null) {
         $method = $request->getMethod();
         $uri = $request->getUri()->getPath() ?: '/';
+        $routeInfo = $this->getDispatcher()->dispatch($method, $uri);
+        switch($routeInfo[0]) {
+            case Dispatcher::NOT_FOUND:
+                throw new RouteNotFoundException;
+            case Dispatcher::METHOD_NOT_ALLOWED:
+                throw new MethodNotAllowedException;
+            case Dispatcher::FOUND:
+                $this->events->fire(new RouteMatched($this->router, $request, $response));
+                $handler = $routeInfo[1];
+                $parameters = $routeInfo[2];
+                return $handler($request, $parameters);
+        }
         return null;
+    }
+    /**
+     * @return \FastRoute\Dispatcher\GroupCountBased
+     */
+    protected function getDispatcher() {
+        $this->router = $this->application->make('router');
+        $this->events->fire(new RouteRegister($this->application, $this->router));
+        if(!isset($this->dispatcher)) {
+            $this->dispatcher = new GroupCountBased($this->router->getRouteData());
+        }
+        return $this->dispatcher;
     }
 }
