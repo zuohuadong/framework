@@ -6,18 +6,17 @@
  * @datetime 2016-08-26 13:34
  */
 namespace Notadd\Foundation\Routing\Events;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Notadd\Foundation\Application;
-use Notadd\Foundation\Http\Contracts\ControllerContract;
+use Notadd\Foundation\Routing\Registrars\ResourceRegistrar;
 use Notadd\Foundation\Routing\RouteCollector;
-use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response;
+use Notadd\Foundation\Routing\Traits\GetHandlerGeneratorTrait;
+use Notadd\Foundation\Routing\Traits\ResolveClassMethodTrait;
 /**
  * Class RouteRegister
  * @package Notadd\Routing\Events
  */
 class RouteRegister {
+    use GetHandlerGeneratorTrait, ResolveClassMethodTrait;
     /**
      * @var \Notadd\Foundation\Application
      */
@@ -37,70 +36,65 @@ class RouteRegister {
     }
     /**
      * @param $path
-     * @param $class
+     * @param $handler
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function get($path, $class) {
-        $function = 'handle';
+    public function delete($path, $handler) {
+        list($class, $method) = $this->resolveClassMethod($handler);
         $toController = $this->getHandlerGenerator();
-        if(Str::contains($class, '@')) {
-            $segments = explode('@', $class);
-            $class = $segments[0];
-            $function = $segments[1];
+        return $this->router->addRoute('DELETE', $path, $toController($class, $method));
+    }
+    /**
+     * @param $path
+     * @param $handler
+     * @return \Notadd\Foundation\Routing\RouteCollector
+     */
+    public function get($path, $handler) {
+        list($class, $method) = $this->resolveClassMethod($handler);
+        $toController = $this->getHandlerGenerator();
+        return $this->router->addRoute('GET', $path, $toController($class, $method));
+    }
+    /**
+     * @param $path
+     * @param $handler
+     * @return \Notadd\Foundation\Routing\RouteCollector
+     */
+    public function post($path, $handler) {
+        list($class, $method) = $this->resolveClassMethod($handler);
+        $toController = $this->getHandlerGenerator();
+        return $this->router->addRoute('POST', $path, $toController($class, $method));
+    }
+    /**
+     * @param $path
+     * @param $handler
+     * @return \Notadd\Foundation\Routing\RouteCollector
+     */
+    public function put($path, $handler) {
+        list($class, $method) = $this->resolveClassMethod($handler);
+        $toController = $this->getHandlerGenerator();
+        return $this->router->addRoute('PUT', $path, $toController($class, $method));
+    }
+    /**
+     * @param $path
+     * @param $handler
+     * @return \Notadd\Foundation\Routing\RouteCollector
+     */
+    public function patch($path, $handler) {
+        list($class, $method) = $this->resolveClassMethod($handler);
+        $toController = $this->getHandlerGenerator();
+        return $this->router->addRoute('PATCH', $path, $toController($class, $method));
+    }
+    /**
+     * @param string $path
+     * @param string $controller
+     * @param array $options
+     */
+    public function resource($path, $controller, array $options = []) {
+        if($this->application->bound(ResourceRegistrar::class)) {
+            $registrar = $this->application->make(ResourceRegistrar::class);
+        } else {
+            $registrar = new ResourceRegistrar($this->application, $this->router);
         }
-        return $this->router->addRoute('GET', $path, $toController($class, $function));
-    }
-    /**
-     * @return \Closure
-     */
-    protected function getHandlerGenerator() {
-        return function ($class, $function = 'handle') use ($container) {
-            return function (ServerRequestInterface $request, $routeParams) use ($class, $function) {
-                $controller = $this->application->make($class);
-                if(!($controller instanceof ControllerContract)) {
-                    throw new InvalidArgumentException('Route handler must be an instance of ' . ControllerContract::class);
-                }
-                $request = $request->withQueryParams(array_merge($request->getQueryParams(), $routeParams));
-                $response = new Response;
-                $response->getBody()->write($this->application->call([$controller, $function]));
-                return $response;
-            };
-        };
-    }
-    /**
-     * @param $path
-     * @param $class
-     * @return \Notadd\Foundation\Routing\RouteCollector
-     */
-    public function post($path, $class) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('POST', $path, $toController($class));
-    }
-    /**
-     * @param $path
-     * @param $class
-     * @return \Notadd\Foundation\Routing\RouteCollector
-     */
-    public function put($path, $class) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('PUT', $path, $toController($class));
-    }
-    /**
-     * @param $path
-     * @param $class
-     * @return \Notadd\Foundation\Routing\RouteCollector
-     */
-    public function patch($path, $class) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('PATCH', $path, $toController($class));
-    }
-    /**
-     * @param $path
-     * @param $class
-     * @return \Notadd\Foundation\Routing\RouteCollector
-     */
-    public function delete($path, $class) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('DELETE', $path, $toController($class));
+        $registrar->register($path, $controller, $options);
     }
 }

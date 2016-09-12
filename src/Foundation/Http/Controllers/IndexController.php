@@ -15,7 +15,7 @@ class IndexController extends AbstractController {
     /**
      * @return \Illuminate\Contracts\View\View
      */
-    public function handle() {
+    public function index() {
         return $this->view('index');
     }
 }
