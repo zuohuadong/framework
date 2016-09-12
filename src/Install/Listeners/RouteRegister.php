@@ -25,7 +25,7 @@ class RouteRegister extends AbstractEventSubscriber {
      * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
-        $router->get('/', 'index', IndexController::class);
-        $router->post('/', 'install', InstallController::class);
+        $router->get('/', IndexController::class);
+        $router->post('/', InstallController::class);
     }
 }

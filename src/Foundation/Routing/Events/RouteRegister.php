@@ -37,11 +37,10 @@ class RouteRegister {
     }
     /**
      * @param $path
-     * @param $name
      * @param $class
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function get($path, $name, $class) {
+    public function get($path, $class) {
         $function = 'handle';
         $toController = $this->getHandlerGenerator();
         if(Str::contains($class, '@')) {
@@ -49,7 +48,7 @@ class RouteRegister {
             $class = $segments[0];
             $function = $segments[1];
         }
-        return $this->router->addRoute('GET', $path, $name, $toController($class, $function));
+        return $this->router->addRoute('GET', $path, $toController($class, $function));
     }
     /**
      * @return \Closure
@@ -70,42 +69,38 @@ class RouteRegister {
     }
     /**
      * @param $path
-     * @param $name
      * @param $class
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function post($path, $name, $class) {
+    public function post($path, $class) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('POST', $path, $name, $toController($class));
+        return $this->router->addRoute('POST', $path, $toController($class));
     }
     /**
      * @param $path
-     * @param $name
      * @param $class
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function put($path, $name, $class) {
+    public function put($path, $class) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('PUT', $path, $name, $toController($class));
+        return $this->router->addRoute('PUT', $path, $toController($class));
     }
     /**
      * @param $path
-     * @param $name
      * @param $class
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function patch($path, $name, $class) {
+    public function patch($path, $class) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('PATCH', $path, $name, $toController($class));
+        return $this->router->addRoute('PATCH', $path, $toController($class));
     }
     /**
      * @param $path
-     * @param $name
      * @param $class
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function delete($path, $name, $class) {
+    public function delete($path, $class) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('DELETE', $path, $name, $toController($class));
+        return $this->router->addRoute('DELETE', $path, $toController($class));
     }
 }

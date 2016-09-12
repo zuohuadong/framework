@@ -24,6 +24,6 @@ class RouteRegister extends AbstractEventSubscriber {
      * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
-        $router->get('upgrade', 'upgrade', UpgradeController::class);
+        $router->get('upgrade', UpgradeController::class);
     }
 }

@@ -18,10 +18,6 @@ class RouteCollector {
      */
     protected $dataGenerator;
     /**
-     * @var array
-     */
-    protected $reverse = [];
-    /**
      * @var \FastRoute\RouteParser\Std
      */
     protected $routeParser;
@@ -36,62 +32,55 @@ class RouteCollector {
     }
     /**
      * @param $path
-     * @param $name
      * @param $handler
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function get($path, $name, $handler) {
-        return $this->addRoute('GET', $path, $name, $handler);
+    public function get($path, $handler) {
+        return $this->addRoute('GET', $path, $handler);
     }
     /**
      * @param $path
-     * @param $name
      * @param $handler
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function post($path, $name, $handler) {
-        return $this->addRoute('POST', $path, $name, $handler);
+    public function post($path, $handler) {
+        return $this->addRoute('POST', $path, $handler);
     }
     /**
      * @param $path
-     * @param $name
      * @param $handler
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function put($path, $name, $handler) {
-        return $this->addRoute('PUT', $path, $name, $handler);
+    public function put($path, $handler) {
+        return $this->addRoute('PUT', $path, $handler);
     }
     /**
      * @param $path
-     * @param $name
      * @param $handler
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function patch($path, $name, $handler) {
-        return $this->addRoute('PATCH', $path, $name, $handler);
+    public function patch($path, $handler) {
+        return $this->addRoute('PATCH', $path, $handler);
     }
     /**
      * @param $path
-     * @param $name
      * @param $handler
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function delete($path, $name, $handler) {
-        return $this->addRoute('DELETE', $path, $name, $handler);
+    public function delete($path, $handler) {
+        return $this->addRoute('DELETE', $path, $handler);
     }
     /**
      * @param $method
      * @param $path
-     * @param $name
      * @param $handler
-     * @return \Notadd\Routing\RouteCollector
+     * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addRoute($method, $path, $name, $handler) {
+    public function addRoute($method, $path, $handler) {
         $routeDatas = $this->routeParser->parse($path);
         foreach($routeDatas as $routeData) {
             $this->dataGenerator->addRoute($method, $routeData, $handler);
         }
-        $this->reverse[$name] = $routeDatas;
         return $this;
     }
     /**
@@ -99,31 +88,5 @@ class RouteCollector {
      */
     public function getRouteData() {
         return $this->dataGenerator->getData();
-    }
-    /**
-     * @param $part
-     * @param $key
-     * @param array $parameters
-     */
-    protected function fixPathPart(&$part, $key, array $parameters) {
-        if(is_array($part) && array_key_exists($part[0], $parameters)) {
-            $part = $parameters[$part[0]];
-        }
-    }
-    /**
-     * @param $name
-     * @param array $parameters
-     * @return string
-     */
-    public function getPath($name, array $parameters = []) {
-        if(isset($this->reverse[$name])) {
-            $parts = $this->reverse[$name][0];
-            array_walk($parts, [
-                $this,
-                'fixPathPart'
-            ], $parameters);
-            return '/' . ltrim(implode('', $parts), '/');
-        }
-        throw new \RuntimeException("Route $name not found");
     }
 }
