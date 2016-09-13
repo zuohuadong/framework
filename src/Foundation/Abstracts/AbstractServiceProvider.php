@@ -42,6 +42,9 @@ abstract class AbstractServiceProvider extends ServiceProvider {
         $this->events = $this->app->make('events');
         $this->view = $this->app->make('view');
         $this->blade = $this->view->getEngineResolver()->resolve('blade')->getCompiler();
+        $this->loadViewsFrom(__DIR__ . '/../../../views/admin', 'admin');
+        $this->loadViewsFrom(__DIR__ . '/../../../views/install', 'install');
+        $this->loadViewsFrom(__DIR__ . '/../../../views/theme', 'theme');
     }
     /**
      * @return void

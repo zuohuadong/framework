@@ -8,6 +8,7 @@
 namespace Notadd\Foundation\Http\Abstracts;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Notadd\Foundation\Console\Application;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Psr\Http\Message\ResponseInterface;
@@ -71,6 +72,12 @@ abstract class AbstractController implements ControllerContract {
         $this->response = $this->application->make(ResponseInterface::class);
         $this->setting = $this->application->make(SettingsRepository::class);
         $this->view = $this->application->make('view');
+    }
+    /**
+     * @return \Notadd\Foundation\Console\Application
+     */
+    public function getConsole() {
+        return Application::getInstance($this->application);
     }
     /**
      * @param $key

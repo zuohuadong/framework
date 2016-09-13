@@ -18,6 +18,5 @@ class HttpServiceProvider extends AbstractServiceProvider {
      */
     public function boot() {
         $this->events->subscribe(RouteRegister::class);
-        $this->loadViewsFrom(realpath(__DIR__ . '/../../../views/theme'), 'theme');
     }
 }
