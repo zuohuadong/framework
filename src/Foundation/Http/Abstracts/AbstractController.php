@@ -51,6 +51,10 @@ abstract class AbstractController implements ControllerContract {
      */
     protected $response;
     /**
+     * @var \Symfony\Component\HttpFoundation\Session\Session
+     */
+    protected $session;
+    /**
      * @var \Notadd\Setting\Contracts\SettingsRepository
      */
     protected $setting;
@@ -70,6 +74,7 @@ abstract class AbstractController implements ControllerContract {
         $this->mailer = $this->application->make('mailer');
         $this->request = $this->application->make(ServerRequestInterface::class);
         $this->response = $this->application->make(ResponseInterface::class);
+        $this->session = $this->request->getAttribute('session');
         $this->setting = $this->application->make(SettingsRepository::class);
         $this->view = $this->application->make('view');
     }

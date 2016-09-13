@@ -6,6 +6,7 @@
  * @datetime 2016-08-31 14:30
  */
 namespace Notadd\Foundation\Http\Middlewares;
+use Illuminate\Container\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Stratigility\MiddlewareInterface;

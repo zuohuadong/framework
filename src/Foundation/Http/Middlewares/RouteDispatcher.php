@@ -57,6 +57,8 @@ class RouteDispatcher implements MiddlewareInterface {
         $method = $request->getMethod();
         $uri = $request->getUri()->getPath() ?: '/';
         $routeInfo = $this->getDispatcher()->dispatch($method, $uri);
+        $this->application->instance(Request::class, $request);
+        $this->application->instance(Response::class, $response);
         switch($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
                 throw new RouteNotFoundException;

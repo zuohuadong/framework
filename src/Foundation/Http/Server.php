@@ -35,11 +35,9 @@ class Server extends AbstractServer {
         $path = parse_url($this->getUrl(), PHP_URL_PATH);
         if(!$app->isInstalled()) {
             $app->register(InstallServiceProvider::class);
-            $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
             $pipe->pipe($path, $app->make(RouteDispatcher::class));
             $pipe->pipe($path, new ErrorHandler($errorDir, true, $app->make('log')));
         } elseif($app->isInstalled()) {
-            $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
             $pipe->pipe($path, $app->make(JsonBodyParser::class));
             $pipe->pipe($path, $app->make(SessionStarter::class));
             $pipe->pipe($path, $app->make(RememberFromCookie::class));
