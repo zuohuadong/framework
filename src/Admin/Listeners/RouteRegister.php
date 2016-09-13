@@ -24,6 +24,6 @@ class RouteRegister extends AbstractEventSubscriber {
      * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
-        $router->get('admin', AdminController::class);
+        $router->resource('/admin', AdminController::class);
     }
 }

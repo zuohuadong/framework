@@ -24,6 +24,8 @@ class RouteRegister extends AbstractEventSubscriber {
      * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
      */
     public function handle(RouteRegisterEvent $router) {
-        $router->resource('/', IndexController::class);
+        $router->resource('/', IndexController::class, [
+            'only' => ['index']
+        ]);
     }
 }

@@ -6,8 +6,8 @@
  * @datetime 2016-08-20 00:51
  */
 namespace Notadd\Foundation\Http;
+use Notadd\Foundation\Abstracts\AbstractServer;
 use Notadd\Foundation\Application;
-use Notadd\Foundation\Http\Abstracts\AbstractServer;
 use Notadd\Foundation\Http\Events\MiddlewareConfigurer;
 use Notadd\Foundation\Http\Middlewares\AuthenticateWithSession;
 use Notadd\Foundation\Http\Middlewares\DecoratePsrHttpInterfaces;
@@ -18,6 +18,7 @@ use Notadd\Foundation\Http\Middlewares\RouteDispatcher;
 use Notadd\Foundation\Http\Middlewares\SessionStarter;
 use Notadd\Install\InstallServiceProvider;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Server as ZendServer;
 use Zend\Stratigility\MiddlewarePipe;
 /**
  * Class Server
@@ -31,7 +32,7 @@ class Server extends AbstractServer {
     protected function getMiddleware(Application $app) {
         $errorDir = realpath(__DIR__ . '/../../../errors');
         $pipe = new MiddlewarePipe;
-        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $path = parse_url($this->getUrl(), PHP_URL_PATH);
         if(!$app->isInstalled()) {
             $app->register(InstallServiceProvider::class);
             $pipe->pipe($path, $app->make(DecoratePsrHttpInterfaces::class));
@@ -52,5 +53,37 @@ class Server extends AbstractServer {
             });
         }
         return $pipe;
+    }
+    /**
+     * @param $path
+     * @return mixed|string
+     */
+    protected function getUrl($path = null) {
+        $config = [
+            'url' => 'http://notadd.io',
+            'paths' => [
+                'api' => 'api',
+                'admin' => 'admin',
+            ]
+        ];
+        $url = array_get($config, 'url', $_SERVER['REQUEST_URI']);
+        if(is_array($url)) {
+            if(isset($url[$path])) {
+                return $url[$path];
+            }
+            $url = $url['base'];
+        }
+        if($path) {
+            $url .= '/' . array_get($config, "paths.$path", $path);
+        }
+        return $url;
+    }
+    /**
+     * @return void
+     */
+    public function listen() {
+        $app = $this->getApp();
+        $server = ZendServer::createServer($this->getMiddleware($app), $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+        $server->listen();
     }
 }
