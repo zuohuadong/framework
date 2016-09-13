@@ -10,6 +10,7 @@ use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Notadd\Foundation\Console\Application;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
+use Notadd\Foundation\Routing\RedirectResponse;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -42,6 +43,7 @@ abstract class AbstractController implements ControllerContract {
      * @var \Illuminate\Mail\Mailer
      */
     protected $mailer;
+    protected $redirect;
     /**
      * @var \Psr\Http\Message\ServerRequestInterface
      */
@@ -72,6 +74,7 @@ abstract class AbstractController implements ControllerContract {
         $this->events = $this->application->make('events');
         $this->log = $this->application->make('log');
         $this->mailer = $this->application->make('mailer');
+        $this->redirect = $this->application->make(RedirectResponse::class);
         $this->request = $this->application->make(ServerRequestInterface::class);
         $this->response = $this->application->make(ResponseInterface::class);
         $this->session = $this->request->getAttribute('session');

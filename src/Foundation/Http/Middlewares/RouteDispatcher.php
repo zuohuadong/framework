@@ -14,6 +14,7 @@ use Notadd\Foundation\Routing\Events\RouteMatched;
 use Notadd\Foundation\Routing\Events\RouteRegister;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
+use Notadd\Foundation\Routing\RedirectResponse;
 use Notadd\Foundation\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -57,6 +58,11 @@ class RouteDispatcher implements MiddlewareInterface {
         $method = $request->getMethod();
         $uri = $request->getUri()->getPath() ?: '/';
         $routeInfo = $this->getDispatcher()->dispatch($method, $uri);
+        $this->application->alias('redirect', RedirectResponse::class);
+        $this->application->instance(RedirectResponse::class, function() use($request) {
+            $redirector = new RedirectResponse($request->getUri()->getHost());
+            return $redirector;
+        });
         $this->application->instance(Request::class, $request);
         $this->application->instance(Response::class, $response);
         switch($routeInfo[0]) {

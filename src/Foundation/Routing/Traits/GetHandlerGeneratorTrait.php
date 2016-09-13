@@ -6,6 +6,7 @@
  * @datetime 2016-09-12 17:40
  */
 namespace Notadd\Foundation\Routing\Traits;
+use Illuminate\View\View;
 use InvalidArgumentException;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
 use Psr\Http\Message\ServerRequestInterface;
@@ -26,8 +27,13 @@ trait GetHandlerGeneratorTrait {
                     throw new InvalidArgumentException('Route handler must be an instance of ' . ControllerContract::class);
                 }
                 $request = $request->withQueryParams(array_merge($request->getQueryParams(), $routeParams));
-                $response = new Response;
-                $response->getBody()->write($this->application->call([$controller, $function]));
+                $content = $this->application->call([$controller, $function]);
+                if($content instanceof View) {
+                    $response = new Response;
+                    $response->getBody()->write($content);
+                } else {
+                    $response = $content;
+                }
                 return $response;
             };
         };
