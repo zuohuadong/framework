@@ -77,6 +77,7 @@ class RouteCollector {
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
     public function addRoute($method, $path, $handler) {
+        $path = '/' . trim($path, '/');
         $routeDatas = $this->routeParser->parse($path);
         foreach($routeDatas as $routeData) {
             $this->dataGenerator->addRoute($method, $routeData, $handler);
