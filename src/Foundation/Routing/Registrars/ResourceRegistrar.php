@@ -6,6 +6,7 @@
  * @datetime 2016-09-12 17:20
  */
 namespace Notadd\Foundation\Routing\Registrars;
+use Illuminate\Support\Str;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Routing\RouteCollector;
 use Notadd\Foundation\Routing\Traits\GetHandlerGeneratorTrait;
@@ -32,9 +33,17 @@ class ResourceRegistrar {
         'destroy'
     ];
     /**
+     * @var array|string
+     */
+    protected $parameters;
+    /**
      * @var \Notadd\Foundation\Routing\RouteCollector
      */
     protected $router;
+    /**
+     * @var bool
+     */
+    protected static $singularParameters = true;
     /**
      * ResourceRegistrar constructor.
      * @param \Notadd\Foundation\Application $application
@@ -58,76 +67,102 @@ class ResourceRegistrar {
         return $defaults;
     }
     /**
-     * @param string $path
+     * @param string $name
+     * @param string $base
      * @param string $controller
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addResourceCreate($path, $controller) {
+    public function addResourceCreate($name, $base, $controller) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $path . '/create', $toController($controller, 'create'));
+        return $this->router->addRoute('GET', $name . '/create', $toController($controller, 'create'));
     }
     /**
-     * @param string $path
+     * @param string $name
+     * @param string $base
      * @param string $controller
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addResourceDestroy($path, $controller) {
+    public function addResourceDestroy($name, $base, $controller) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('DELETE', $path . '/{key}', $toController($controller, 'destroy'));
+        return $this->router->addRoute('DELETE', $name . '/{' . $base . '}', $toController($controller, 'destroy'));
     }
     /**
-     * @param string $path
+     * @param string $name
+     * @param string $base
      * @param string $controller
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addResourceEdit($path, $controller) {
+    public function addResourceEdit($name, $base, $controller) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $path . '/{key}/edit', $toController($controller, 'edit'));
+        return $this->router->addRoute('GET', $name . '/{' . $base . '}/edit', $toController($controller, 'edit'));
     }
     /**
-     * @param string $path
+     * @param string $name
+     * @param string $base
      * @param string $controller
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addResourceIndex($path, $controller) {
+    public function addResourceIndex($name, $base, $controller) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $path, $toController($controller, 'index'));
+        return $this->router->addRoute('GET', $name, $toController($controller, 'index'));
     }
     /**
-     * @param string $path
+     * @param string $name
+     * @param string $base
      * @param string $controller
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addResourceShow($path, $controller) {
+    public function addResourceShow($name, $base, $controller) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $path . '/{key}', $toController($controller, 'show'));
+        return $this->router->addRoute('GET', $name . '/{' . $base . '}', $toController($controller, 'show'));
     }
     /**
-     * @param string $path
+     * @param string $name
+     * @param string $base
      * @param string $controller
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addResourceStore($path, $controller) {
+    public function addResourceStore($name, $base, $controller) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('POST', $path . '/{key}', $toController($controller, 'store'));
+        return $this->router->addRoute('POST', $name, $toController($controller, 'store'));
     }
     /**
-     * @param string $path
+     * @param string $name
+     * @param string $base
      * @param string $controller
      * @return \Notadd\Foundation\Routing\RouteCollector
      */
-    public function addResourceUpdate($path, $controller) {
+    public function addResourceUpdate($name, $base, $controller) {
         $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('PUT', $path . '/{key}', $toController($controller, 'update'));
+        return $this->router->addRoute([
+            'PUT',
+            'PATCH'
+        ], $name . '/{' . $base . '}', $toController($controller, 'update'));
     }
     /**
-     * @param string $path
+     * @param $value
+     * @return mixed
+     */
+    public function getResourceWildcard($value) {
+        if(isset($this->parameters[$value])) {
+            $value = $this->parameters[$value];
+        } elseif(static::$singularParameters) {
+            $value = Str::singular($value) . ':\d+';
+        }
+        return str_replace('-', '_', $value);
+    }
+    /**
+     * @param string $name
      * @param string $controller
      * @param array $options
      */
-    public function register($path, $controller, array $options = []) {
+    public function register($name, $controller, array $options = []) {
+        if(isset($options['parameters']) && !isset($this->parameters)) {
+            $this->parameters = $options['parameters'];
+        }
+        $base = $this->getResourceWildcard(last(explode('.', last(explode('/', $name)))));
         foreach($this->getResourceMethods($this->defaults, $options) as $method) {
-            $this->{'addResource' . ucfirst($method)}($path, $controller);
+            $this->{'addResource' . ucfirst($method)}($name, $base, $controller);
         }
     }
 }
