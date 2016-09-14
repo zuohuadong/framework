@@ -7,8 +7,8 @@
  */
 namespace Notadd\Foundation\Routing\Traits;
 use Illuminate\View\View;
-use InvalidArgumentException;
-use Notadd\Foundation\Http\Contracts\ControllerContract;
+use Notadd\Foundation\Routing\Dispatchers\CallableDispatcher;
+use Notadd\Foundation\Routing\Dispatchers\ControllerDispatcher;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 /**
@@ -20,14 +20,15 @@ trait GetHandlerGeneratorTrait {
      * @return \Closure
      */
     protected function getHandlerGenerator() {
-        return function ($class, $function = 'handle') use ($container) {
+        return function ($class, $function = 'handle') {
             return function (ServerRequestInterface $request, $routeParams) use ($class, $function) {
-                $controller = $this->application->make($class);
-                if(!($controller instanceof ControllerContract)) {
-                    throw new InvalidArgumentException('Route handler must be an instance of ' . ControllerContract::class);
+                if($this->isControllerAction($class)) {
+                    $request = $request->withQueryParams(array_merge($request->getQueryParams(), $routeParams));
+                    $this->application->instance(ServerRequestInterface::class, $request);
+                    $content = (new ControllerDispatcher($this->application))->dispatch($routeParams, $class, $function);
+                } else {
+                    $content = (new CallableDispatcher($this->application))->dispatch($routeParams, $class);
                 }
-                $request = $request->withQueryParams(array_merge($request->getQueryParams(), $routeParams));
-                $content = $this->application->call([$controller, $function]);
                 if($content instanceof View) {
                     $response = new Response;
                     $response->getBody()->write($content);
@@ -37,5 +38,21 @@ trait GetHandlerGeneratorTrait {
                 return $response;
             };
         };
+    }
+    /**
+     * @param $handler
+     * @return bool
+     */
+    protected function isControllerAction($handler) {
+        return is_string($handler);
+    }
+    /**
+     * @param array $parameters
+     * @return array
+     */
+    public function parametersWithoutNulls(array $parameters) {
+        return array_filter($parameters, function ($p) {
+            return !is_null($p);
+        });
     }
 }
