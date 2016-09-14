@@ -14,7 +14,7 @@ use Notadd\Foundation\Routing\Events\RouteMatched;
 use Notadd\Foundation\Routing\Events\RouteRegister;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
-use Notadd\Foundation\Routing\RedirectResponse;
+use Notadd\Foundation\Routing\Responses\RedirectResponse;
 use Notadd\Foundation\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

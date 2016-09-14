@@ -10,7 +10,7 @@ use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Notadd\Foundation\Console\Application;
 use Notadd\Foundation\Http\Contracts\ControllerContract;
-use Notadd\Foundation\Routing\RedirectResponse;
+use Notadd\Foundation\Routing\Responses\RedirectResponse;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -43,6 +43,9 @@ abstract class AbstractController implements ControllerContract {
      * @var \Illuminate\Mail\Mailer
      */
     protected $mailer;
+    /**
+     * @var \Notadd\Foundation\Routing\Responses\RedirectResponse
+     */
     protected $redirect;
     /**
      * @var \Psr\Http\Message\ServerRequestInterface
