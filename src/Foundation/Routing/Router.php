@@ -9,15 +9,14 @@ namespace Notadd\Foundation\Routing;
 use Closure;
 use FastRoute\Dispatcher as RouteDispatcher;
 use FastRoute\RouteCollector;
-use HttpResponseException;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
-use Notadd\Foundation\Http\Contracts\Controller;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
-use Notadd\Foundation\Http\Exceptions\MethodNotFoundException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
+use Notadd\Foundation\Routing\Dispatchers\CallableDispatcher;
+use Notadd\Foundation\Routing\Dispatchers\ControllerDispatcher;
 use Notadd\Foundation\Routing\Registrars\ResourceRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 /**
@@ -65,6 +64,15 @@ class Router {
     public function __construct(Container $container, EventsDispatcher $events) {
         $this->container = $container;
         $this->events = $events;
+    }
+    /**
+     * @param string $uri
+     * @param mixed $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function delete($uri, $action) {
+        $this->addRoute('DELETE', $uri, $action);
+        return $this;
     }
     /**
      * @param array $attributes
@@ -181,15 +189,6 @@ class Router {
      */
     public function patch($uri, $action) {
         $this->addRoute('PATCH', $uri, $action);
-        return $this;
-    }
-    /**
-     * @param string $uri
-     * @param mixed $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function delete($uri, $action) {
-        $this->addRoute('DELETE', $uri, $action);
         return $this;
     }
     /**
@@ -381,7 +380,7 @@ class Router {
     protected function callActionOnArrayBasedRoute($routeInfo) {
         $action = $routeInfo[1];
         if(isset($action['uses'])) {
-            return $this->callControllerAction($routeInfo);
+            return (new ControllerDispatcher($this->container, $this))->dispatch($routeInfo);
         }
         foreach($action as $value) {
             if($value instanceof Closure) {
@@ -389,87 +388,36 @@ class Router {
                 break;
             }
         }
-        try {
-            return $this->container->call($closure, $routeInfo[2]);
-        } catch(HttpResponseException $e) {
-            return $e;
-        }
-    }
-    /**
-     * @param $routeInfo
-     * @return mixed
-     * @throws \Notadd\Foundation\Http\Exceptions\MethodNotFoundException
-     */
-    protected function callControllerAction($routeInfo) {
-        list($controller, $method) = explode('@', $routeInfo[1]['uses']);
-        if(!method_exists($instance = $this->container->make($controller), $method)) {
-            throw new MethodNotFoundException('Controller method not found.');
-        }
-        if($instance instanceof Controller) {
-            return $this->callNotaddController($instance, $method, $routeInfo);
-        } else {
-            return $this->callControllerCallable([
-                $instance,
-                $method
-            ], $routeInfo[2]);
-        }
-    }
-    /**
-     * @param \Notadd\Foundation\Http\Contracts\Controller $instance
-     * @param string $method
-     * @param array $routeInfo
-     * @return mixed
-     */
-    protected function callNotaddController(Controller $instance, $method, $routeInfo) {
-        $middleware = $instance->getMiddlewareForMethod($method);
-        if(count($middleware) > 0) {
-            return $this->callNotaddControllerWithMiddleware($instance, $method, $routeInfo, $middleware);
-        } else {
-            return $this->callControllerCallable([
-                $instance,
-                $method
-            ], $routeInfo[2]);
-        }
-    }
-    /**
-     * @param mixed $instance
-     * @param string $method
-     * @param array $routeInfo
-     * @param array $middleware
-     * @return mixed
-     */
-    protected function callNotaddControllerWithMiddleware($instance, $method, $routeInfo, $middleware) {
-        $middleware = $this->gatherMiddlewareClassNames($middleware);
-        return $this->sendThroughPipeline($middleware, function () use ($instance, $method, $routeInfo) {
-            return $this->callControllerCallable([
-                $instance,
-                $method
-            ], $routeInfo[2]);
-        });
-    }
-    /**
-     * @param callable $callable
-     * @param array $parameters
-     * @return mixed
-     */
-    protected function callControllerCallable(callable $callable, array $parameters = []) {
-        try {
-            return $this->container->call($callable, $parameters);
-        } catch(HttpResponseException $e) {
-            return $e;
-        }
+        return (new CallableDispatcher($this->container))->dispatch($closure, $routeInfo[2]);
     }
     /**
      * @param array $middleware
      * @param \Closure $then
      * @return mixed
      */
-    protected function sendThroughPipeline(array $middleware, Closure $then) {
+    public function sendThroughPipeline(array $middleware, Closure $then) {
         $shouldSkipMiddleware = $this->container->bound('middleware.disable') && $this->container->make('middleware.disable') === true;
         if(count($middleware) > 0 && !$shouldSkipMiddleware) {
             return (new Pipeline($this->container))->send($this->container->make(ServerRequestInterface::class))->through($middleware)->then($then);
         }
         return $then();
+    }
+    /**
+     * @param $middleware
+     * @return array
+     */
+    public function gatherMiddlewareClassNames($middleware) {
+        $middleware = is_string($middleware) ? explode('|', $middleware) : (array)$middleware;
+        return array_map(function ($name) {
+            list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
+            return array_get($this->routeMiddleware, $name, $name) . ($parameters ? ':' . $parameters : '');
+        }, $middleware);
+    }
+    /**
+     * @return array
+     */
+    public function getGroupAttributes() {
+        return $this->groupAttributes;
     }
     /**
      * @param $routeInfo
@@ -489,26 +437,9 @@ class Router {
         return null;
     }
     /**
-     * @param $middleware
-     * @return array
-     */
-    protected function gatherMiddlewareClassNames($middleware) {
-        $middleware = is_string($middleware) ? explode('|', $middleware) : (array)$middleware;
-        return array_map(function ($name) {
-            list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
-            return array_get($this->routeMiddleware, $name, $name) . ($parameters ? ':' . $parameters : '');
-        }, $middleware);
-    }
-    /**
      * @return bool
      */
     public function hasGroupAttributes() {
         return !empty($this->groupAttributes);
-    }
-    /**
-     * @return array
-     */
-    public function getGroupAttributes() {
-        return $this->groupAttributes;
     }
 }
