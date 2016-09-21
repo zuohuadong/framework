@@ -13,6 +13,7 @@ use HttpResponseException;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Arr;
 use Notadd\Foundation\Http\Contracts\Controller;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
@@ -40,9 +41,9 @@ class Router {
      */
     protected $events;
     /**
-     * @var array|null
+     * @var array
      */
-    protected $groupAttributes;
+    protected $groupAttributes = [];
     /**
      * @var array
      */
@@ -70,13 +71,80 @@ class Router {
      * @return void
      */
     public function group(array $attributes, Closure $callback) {
-        $parentGroupAttributes = $this->groupAttributes;
-        if(isset($attributes['middleware']) && is_string($attributes['middleware'])) {
-            $attributes['middleware'] = explode('|', $attributes['middleware']);
-        }
-        $this->groupAttributes = $attributes;
+        $this->updateGroupAttributes($attributes);
         call_user_func($callback, $this);
-        $this->groupAttributes = $parentGroupAttributes;
+        array_pop($this->groupAttributes);
+    }
+    /**
+     * @param array $attributes
+     */
+    protected function updateGroupAttributes(array $attributes) {
+        if(!empty($this->groupAttributes)) {
+            $attributes = $this->mergeGroup($attributes, end($this->groupAttributes));
+        }
+        $this->groupAttributes[] = $attributes;
+    }
+    /**
+     * @param string $uri
+     * @return string
+     */
+    protected function prefix($uri) {
+        return trim(trim($this->getLastGroupPrefix(), '/') . '/' . trim($uri, '/'), '/') ?: '/';
+    }
+    /**
+     * @return string
+     */
+    public function getLastGroupPrefix() {
+        if(!empty($this->groupAttributes)) {
+            $last = end($this->groupAttributes);
+            return isset($last['prefix']) ? $last['prefix'] : '';
+        }
+        return '';
+    }
+    /**
+     * @param array $new
+     * @param array $old
+     * @return array
+     */
+    public static function mergeGroup($new, $old) {
+        $new['namespace'] = static::formatUsesPrefix($new, $old);
+        $new['prefix'] = static::formatGroupPrefix($new, $old);
+        if(isset($new['domain'])) {
+            unset($old['domain']);
+        }
+        $new['where'] = array_merge(isset($old['where']) ? $old['where'] : [], isset($new['where']) ? $new['where'] : []);
+        if(isset($old['as'])) {
+            $new['as'] = $old['as'] . (isset($new['as']) ? $new['as'] : '');
+        }
+        return array_merge_recursive(Arr::except($old, [
+            'namespace',
+            'prefix',
+            'where',
+            'as'
+        ]), $new);
+    }
+    /**
+     * @param array $new
+     * @param array $old
+     * @return string|null
+     */
+    protected static function formatUsesPrefix($new, $old) {
+        if(isset($new['namespace'])) {
+            return isset($old['namespace']) ? trim($old['namespace'], '\\') . '\\' . trim($new['namespace'], '\\') : trim($new['namespace'], '\\');
+        }
+        return isset($old['namespace']) ? $old['namespace'] : null;
+    }
+    /**
+     * @param array $new
+     * @param array $old
+     * @return string|null
+     */
+    protected static function formatGroupPrefix($new, $old) {
+        $oldPrefix = isset($old['prefix']) ? $old['prefix'] : null;
+        if(isset($new['prefix'])) {
+            return trim($oldPrefix, '/') . '/' . trim($new['prefix'], '/');
+        }
+        return $oldPrefix;
     }
     /**
      * @param string $uri
@@ -193,6 +261,7 @@ class Router {
             }
             $action = $this->mergeGroupAttributes($action);
         }
+        $uri = $this->prefix($uri);
         $uri = '/' . trim($uri, '/');
         if(isset($action['as'])) {
             $this->namedRoutes[$action['as']] = $uri;
@@ -428,5 +497,17 @@ class Router {
             list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
             return array_get($this->routeMiddleware, $name, $name) . ($parameters ? ':' . $parameters : '');
         }, $middleware);
+    }
+    /**
+     * @return bool
+     */
+    public function hasGroupAttributes() {
+        return !empty($this->groupAttributes);
+    }
+    /**
+     * @return array
+     */
+    public function getGroupAttributes() {
+        return $this->groupAttributes;
     }
 }

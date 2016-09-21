@@ -139,7 +139,10 @@ class ResourceRegistrar {
      */
     public function addResourceUpdate($name, $base, $controller, $options) {
         $action = $this->getResourceAction($name, $controller, 'update', $options);
-        return $this->router->match(['PUT', 'PATCH'], $name . '/{' . $base . '}', $action);
+        return $this->router->match([
+            'PUT',
+            'PATCH'
+        ], $name . '/{' . $base . '}', $action);
     }
     /**
      * Get the action array for a resource route.
@@ -157,14 +160,17 @@ class ResourceRegistrar {
         ];
     }
     /**
-     * @param  string $resource
-     * @param  string $method
-     * @param  array $options
+     * @param string $resource
+     * @param string $method
+     * @param array $options
      * @return string
      */
     protected function getResourceName($resource, $method, $options) {
         $prefix = isset($options['as']) ? $options['as'] . '.' : '';
-        return $prefix . $resource . '.' . $method;
+        if(!$this->router->hasGroupAttributes()) {
+            return $prefix . $resource . '.' . $method;
+        }
+        return trim("{$prefix}{$resource}.{$method}", './');
     }
     /**
      * @param $value
@@ -187,9 +193,37 @@ class ResourceRegistrar {
         if(isset($options['parameters']) && !isset($this->parameters)) {
             $this->parameters = $options['parameters'];
         }
+        if(Str::contains($name, '/')) {
+            $this->prefixedResource($name, $controller, $options);
+            return;
+        }
         $base = $this->getResourceWildcard(last(explode('.', last(explode('/', $name)))));
         foreach($this->getResourceMethods($this->defaults, $options) as $method) {
             $this->{'addResource' . ucfirst($method)}($name, $base, $controller, $options);
         }
+    }
+    /**
+     * @param $name
+     * @param $controller
+     * @param array $options
+     */
+    protected function prefixedResource($name, $controller, array $options) {
+        list($name, $prefix) = $this->getResourcePrefix($name);
+        $callback = function (Router $me) use ($name, $controller, $options) {
+            $me->resource($name, $controller, $options);
+        };
+        $this->router->group(compact('prefix'), $callback);
+    }
+    /**
+     * @param $name
+     * @return array
+     */
+    protected function getResourcePrefix($name) {
+        $segments = explode('/', $name);
+        $prefix = implode('/', array_slice($segments, 0, -1));
+        return [
+            end($segments),
+            $prefix
+        ];
     }
 }
