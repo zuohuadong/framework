@@ -6,20 +6,18 @@
  * @datetime 2016-09-12 17:20
  */
 namespace Notadd\Foundation\Routing\Registrars;
+use Illuminate\Container\Container;
 use Illuminate\Support\Str;
-use Notadd\Foundation\Application;
-use Notadd\Foundation\Routing\RouteCollector;
-use Notadd\Foundation\Routing\Traits\GetHandlerGeneratorTrait;
+use Notadd\Foundation\Routing\Router;
 /**
  * Class ResourceRegistrar
  * @package Notadd\Foundation\Routing\Registrars
  */
 class ResourceRegistrar {
-    use GetHandlerGeneratorTrait;
     /**
-     * @var \Notadd\Foundation\Application
+     * @var \Illuminate\Container\Container
      */
-    protected $application;
+    protected $container;
     /**
      * @var array
      */
@@ -37,7 +35,7 @@ class ResourceRegistrar {
      */
     protected $parameters;
     /**
-     * @var \Notadd\Foundation\Routing\RouteCollector
+     * @var \Notadd\Foundation\Routing\Router
      */
     protected $router;
     /**
@@ -46,11 +44,11 @@ class ResourceRegistrar {
     protected static $singularParameters = true;
     /**
      * ResourceRegistrar constructor.
-     * @param \Notadd\Foundation\Application $application
-     * @param \Notadd\Foundation\Routing\RouteCollector $router
+     * @param \Illuminate\Container\Container $container
+     * @param \Notadd\Foundation\Routing\Router $router
      */
-    public function __construct(Application $application, RouteCollector $router) {
-        $this->application = $application;
+    public function __construct(Container $container, Router $router) {
+        $this->container = $container;
         $this->router = $router;
     }
     /**
@@ -70,74 +68,103 @@ class ResourceRegistrar {
      * @param string $name
      * @param string $base
      * @param string $controller
-     * @return \Notadd\Foundation\Routing\RouteCollector
+     * @param array $options
+     * @return \Notadd\Foundation\Routing\Router
      */
-    public function addResourceCreate($name, $base, $controller) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $name . '/create', $toController($controller, 'create'));
+    public function addResourceCreate($name, $base, $controller, $options) {
+        $action = $this->getResourceAction($name, $controller, 'create', $options);
+        return $this->router->addRoute('GET', $name . '/create', $action);
     }
     /**
      * @param string $name
      * @param string $base
      * @param string $controller
-     * @return \Notadd\Foundation\Routing\RouteCollector
+     * @param array $options
+     * @return \Notadd\Foundation\Routing\Router
      */
-    public function addResourceDestroy($name, $base, $controller) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('DELETE', $name . '/{' . $base . '}', $toController($controller, 'destroy'));
+    public function addResourceDestroy($name, $base, $controller, $options) {
+        $action = $this->getResourceAction($name, $controller, 'destroy', $options);
+        return $this->router->addRoute('DELETE', $name . '/{' . $base . '}', $action);
     }
     /**
      * @param string $name
      * @param string $base
      * @param string $controller
-     * @return \Notadd\Foundation\Routing\RouteCollector
+     * @param array $options
+     * @return \Notadd\Foundation\Routing\Router
      */
-    public function addResourceEdit($name, $base, $controller) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $name . '/{' . $base . '}/edit', $toController($controller, 'edit'));
+    public function addResourceEdit($name, $base, $controller, $options) {
+        $action = $this->getResourceAction($name, $controller, 'edit', $options);
+        return $this->router->addRoute('GET', $name . '/{' . $base . '}/edit', $action);
     }
     /**
      * @param string $name
      * @param string $base
      * @param string $controller
-     * @return \Notadd\Foundation\Routing\RouteCollector
+     * @param array $options
+     * @return \Notadd\Foundation\Routing\Router
      */
-    public function addResourceIndex($name, $base, $controller) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $name, $toController($controller, 'index'));
+    public function addResourceIndex($name, $base, $controller, $options) {
+        $action = $this->getResourceAction($name, $controller, 'index', $options);
+        return $this->router->addRoute('GET', $name, $action);
     }
     /**
      * @param string $name
      * @param string $base
      * @param string $controller
-     * @return \Notadd\Foundation\Routing\RouteCollector
+     * @param array $options
+     * @return \Notadd\Foundation\Routing\Router
      */
-    public function addResourceShow($name, $base, $controller) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('GET', $name . '/{' . $base . '}', $toController($controller, 'show'));
+    public function addResourceShow($name, $base, $controller, $options) {
+        $action = $this->getResourceAction($name, $controller, 'show', $options);
+        return $this->router->addRoute('GET', $name . '/{' . $base . '}', $action);
     }
     /**
      * @param string $name
      * @param string $base
      * @param string $controller
-     * @return \Notadd\Foundation\Routing\RouteCollector
+     * @param array $options
+     * @return \Notadd\Foundation\Routing\Router
      */
-    public function addResourceStore($name, $base, $controller) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute('POST', $name, $toController($controller, 'store'));
+    public function addResourceStore($name, $base, $controller, $options) {
+        $action = $this->getResourceAction($name, $controller, 'store', $options);
+        return $this->router->addRoute('POST', $name, $action);
     }
     /**
      * @param string $name
      * @param string $base
      * @param string $controller
-     * @return \Notadd\Foundation\Routing\RouteCollector
+     * @param array $options
+     * @return \Notadd\Foundation\Routing\Router
      */
-    public function addResourceUpdate($name, $base, $controller) {
-        $toController = $this->getHandlerGenerator();
-        return $this->router->addRoute([
-            'PUT',
-            'PATCH'
-        ], $name . '/{' . $base . '}', $toController($controller, 'update'));
+    public function addResourceUpdate($name, $base, $controller, $options) {
+        $action = $this->getResourceAction($name, $controller, 'update', $options);
+        return $this->router->addRoute('PUT', $name . '/{' . $base . '}', $action);
+    }
+    /**
+     * Get the action array for a resource route.
+     * @param string $resource
+     * @param string $controller
+     * @param string $method
+     * @param array $options
+     * @return array
+     */
+    protected function getResourceAction($resource, $controller, $method, $options) {
+        $name = $this->getResourceName($resource, $method, $options);
+        return [
+            'as' => $name,
+            'uses' => $controller . '@' . $method
+        ];
+    }
+    /**
+     * @param  string $resource
+     * @param  string $method
+     * @param  array $options
+     * @return string
+     */
+    protected function getResourceName($resource, $method, $options) {
+        $prefix = isset($options['as']) ? $options['as'] . '.' : '';
+        return $prefix . $resource . '.' . $method;
     }
     /**
      * @param $value
@@ -162,7 +189,7 @@ class ResourceRegistrar {
         }
         $base = $this->getResourceWildcard(last(explode('.', last(explode('/', $name)))));
         foreach($this->getResourceMethods($this->defaults, $options) as $method) {
-            $this->{'addResource' . ucfirst($method)}($name, $base, $controller);
+            $this->{'addResource' . ucfirst($method)}($name, $base, $controller, $options);
         }
     }
 }

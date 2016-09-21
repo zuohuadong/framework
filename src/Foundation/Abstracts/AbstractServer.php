@@ -23,6 +23,7 @@ use Notadd\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Database\DatabaseServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
+use Notadd\Foundation\Routing\RouterServiceProvider;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Notadd\Setting\SettingServiceProvider;
 use PDO;
@@ -57,6 +58,7 @@ abstract class AbstractServer {
         $app->register(FilesystemServiceProvider::class);
         $app->register(HashServiceProvider::class);
         $app->register(MailServiceProvider::class);
+        $app->register(RouterServiceProvider::class);
         $app->register(ValidationServiceProvider::class);
         $app->register(ViewServiceProvider::class);
         $app->register(SettingServiceProvider::class);

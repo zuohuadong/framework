@@ -6,7 +6,7 @@
  * @datetime 2016-09-03 02:43
  */
 namespace Notadd\Foundation\Console;
-use Notadd\Foundation\Application as Container;
+use Illuminate\Container\Container;
 use Notadd\Foundation\Console\Events\CommandRegister;
 use Symfony\Component\Console\Application as SymfonyApplication;
 /**
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Application as SymfonyApplication;
  */
 class Application extends SymfonyApplication {
     /**
-     * @var \Notadd\Foundation\Application
+     * @var \Illuminate\Container\Container
      */
     protected $container;
     /**
@@ -28,16 +28,16 @@ class Application extends SymfonyApplication {
     protected static $instance;
     /**
      * Application constructor.
-     * @param \Notadd\Foundation\Application $container
+     * @param \Illuminate\Container\Container $container
      * @param string $name
      */
     public function __construct(Container $container, $name = 'Notadd') {
-        parent::__construct($name, $container->version());
+        parent::__construct($name, call_user_func([$container, 'version']));
         $this->container = $container;
         $this->events = $container->make('events');
     }
     /**
-     * @param \Notadd\Foundation\Application $container
+     * @param \Illuminate\Container\Container $container
      * @param string $name
      * @return \Notadd\Foundation\Console\Application
      */

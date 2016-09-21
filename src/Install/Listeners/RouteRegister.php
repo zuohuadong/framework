@@ -6,26 +6,15 @@
  * @datetime 2016-08-27 16:33
  */
 namespace Notadd\Install\Listeners;
-use Notadd\Foundation\Abstracts\AbstractEventSubscriber;
-use Notadd\Foundation\Routing\Events\RouteRegister as RouteRegisterEvent;
-use Notadd\Install\Controllers\IndexController;
-use Notadd\Install\Controllers\InstallController;
+use Notadd\Foundation\Routing\Abstracts\AbstractRouteRegister;
 /**
  * Class RouteRegister
  * @package Notadd\Install\Listeners
  */
-class RouteRegister extends AbstractEventSubscriber {
+class RouteRegister extends AbstractRouteRegister {
     /**
-     * @return string
+     * @return void
      */
-    protected function getEvent() {
-        return RouteRegisterEvent::class;
-    }
-    /**
-     * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
-     */
-    public function handle(RouteRegisterEvent $router) {
-        $router->get('/', IndexController::class);
-        $router->post('/', InstallController::class);
+    public function handle() {
     }
 }

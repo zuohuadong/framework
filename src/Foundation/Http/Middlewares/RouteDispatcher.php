@@ -6,18 +6,14 @@
  * @datetime 2016-08-20 18:30
  */
 namespace Notadd\Foundation\Http\Middlewares;
-use FastRoute\Dispatcher;
-use FastRoute\Dispatcher\GroupCountBased;
+use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
-use Notadd\Foundation\Application;
-use Notadd\Foundation\Routing\Events\RouteMatched;
+use Illuminate\View\View;
 use Notadd\Foundation\Routing\Events\RouteRegister;
-use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
-use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
 use Notadd\Foundation\Routing\Responses\RedirectResponse;
-use Notadd\Foundation\Routing\RouteCollector;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Zend\Diactoros\Response as DiactorosResponse;
 use Zend\Stratigility\MiddlewareInterface;
 /**
  * Class DispatchRoute
@@ -25,25 +21,24 @@ use Zend\Stratigility\MiddlewareInterface;
  */
 class RouteDispatcher implements MiddlewareInterface {
     /**
-     * @var \Notadd\Foundation\Application
+     * @var \Illuminate\Container\Container
      */
-    protected $application;
+    protected $container;
     /**
      * @var \Illuminate\Events\Dispatcher
      */
     protected $events;
     /**
-     * @var \Notadd\Foundation\Routing\RouteCollector
+     * @var \Notadd\Foundation\Routing\Router
      */
     protected $router;
     /**
      * RouteDispatcher constructor.
-     * @param \Notadd\Foundation\Application $application
+     * @param \Illuminate\Container\Container $container
      * @param \Illuminate\Events\Dispatcher $events
      */
-    public function __construct(Application $application, EventsDispatcher $events) {
-        $this->application = $application;
-        $this->application->singleton('router', RouteCollector::class);
+    public function __construct(Container $container, EventsDispatcher $events) {
+        $this->container = $container;
         $this->events = $events;
     }
     /**
@@ -55,38 +50,21 @@ class RouteDispatcher implements MiddlewareInterface {
      * @throws \Notadd\Foundation\Http\Exceptions\RouteNotFoundException
      */
     public function __invoke(Request $request, Response $response, callable $out = null) {
-        $method = $request->getMethod();
-        $uri = $request->getUri()->getPath() ?: '/';
-        $routeInfo = $this->getDispatcher()->dispatch($method, $uri);
-        $this->application->alias('redirect', RedirectResponse::class);
-        $this->application->instance(RedirectResponse::class, function() use($request) {
+        $this->router = $this->container->make('router');
+        $this->events->fire(new RouteRegister($this->container, $this->router));
+        $this->container->alias('redirect', RedirectResponse::class);
+        $this->container->instance(RedirectResponse::class, function() use($request) {
             $redirector = new RedirectResponse($request->getUri()->getHost());
             return $redirector;
         });
-        $this->application->instance(Request::class, $request);
-        $this->application->instance(Response::class, $response);
-        switch($routeInfo[0]) {
-            case Dispatcher::NOT_FOUND:
-                throw new RouteNotFoundException;
-            case Dispatcher::METHOD_NOT_ALLOWED:
-                throw new MethodNotAllowedException;
-            case Dispatcher::FOUND:
-                $this->events->fire(new RouteMatched($this->router, $request, $response));
-                $handler = $routeInfo[1];
-                $parameters = $routeInfo[2];
-                return $handler($request, $parameters);
+        $this->container->instance(Request::class, $request);
+        $this->container->instance(Response::class, $response);
+        $return = $this->router->dispatch($request);
+        if($return instanceof View) {
+            $response = new DiactorosResponse();
+            $response->getBody()->write($return);
+            return $response;
         }
-        return null;
-    }
-    /**
-     * @return \FastRoute\Dispatcher\GroupCountBased
-     */
-    protected function getDispatcher() {
-        $this->router = $this->application->make('router');
-        $this->events->fire(new RouteRegister($this->application, $this->router));
-        if(!isset($this->dispatcher)) {
-            $this->dispatcher = new GroupCountBased($this->router->getRouteData());
-        }
-        return $this->dispatcher;
+        return $return;
     }
 }

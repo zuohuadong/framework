@@ -26,7 +26,7 @@ abstract class Migration {
      */
     public function __construct(ConnectionInterface $connection) {
         $this->connection = $connection;
-        $this->schema = $connection->getSchemaBuilder();
+        $this->schema = call_user_func([$connection, 'getSchemaBuilder']);
     }
     /**
      * @return void

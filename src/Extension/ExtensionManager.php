@@ -6,5 +6,9 @@
  * @datetime 2016-08-29 14:07
  */
 namespace Notadd\Extension;
+/**
+ * Class ExtensionManager
+ * @package Notadd\Extension
+ */
 class ExtensionManager {
 }

@@ -12,6 +12,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Notadd\Foundation\Contracts\Application as ApplicationContract;
+use Notadd\Foundation\Routing\Responses\RedirectResponse;
+use Notadd\Foundation\Routing\Router;
 /**
  * Class Application
  * @package Notadd\Foundation
@@ -334,6 +336,8 @@ class Application extends Container implements ApplicationContract {
                 'Illuminate\Contracts\Mail\Mailer',
                 'Illuminate\Contracts\Mail\MailQueue'
             ],
+            'redirect' => RedirectResponse::class,
+            'router' => Router::class,
             'validator' => [
                 'Illuminate\Validation\Factory',
                 'Illuminate\Contracts\Validation\Factory'

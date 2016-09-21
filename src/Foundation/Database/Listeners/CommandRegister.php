@@ -6,8 +6,8 @@
  * @datetime 2016-09-03 03:09
  */
 namespace Notadd\Foundation\Database\Listeners;
+use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
-use Notadd\Foundation\Application;
 use Notadd\Foundation\Console\Events\CommandRegister as CommandRegisterEvent;
 use Notadd\Foundation\Database\Commands\InfoCommand;
 use Notadd\Foundation\Database\Commands\InstallCommand;
@@ -20,12 +20,20 @@ use Notadd\Foundation\Database\Commands\RollbackCommand;
  */
 class CommandRegister {
     /**
-     * RouteRegister constructor.
-     * @param \Notadd\Foundation\Application $application
+     * @var \Notadd\Foundation\Application
+     */
+    protected $container;
+    /**
+     * @var \Illuminate\Events\Dispatcher
+     */
+    protected $events;
+    /**
+     * CommandRegister constructor.
+     * @param \Illuminate\Container\Container $container
      * @param \Illuminate\Events\Dispatcher $events
      */
-    public function __construct(Application $application, Dispatcher $events) {
-        $this->application = $application;
+    public function __construct(Container $container, Dispatcher $events) {
+        $this->container = $container;
         $this->events = $events;
     }
     /**
@@ -33,10 +41,10 @@ class CommandRegister {
      */
     public function handle(CommandRegisterEvent $console) {
         $console->registerCommand(new InfoCommand());
-        $console->registerCommand($this->application->make(InstallCommand::class));
-        $console->registerCommand($this->application->make(MakeMigrationCommand::class));
-        $console->registerCommand($this->application->make(MigrateCommand::class));
-        $console->registerCommand($this->application->make(RollbackCommand::class));
+        $console->registerCommand($this->container->make(InstallCommand::class));
+        $console->registerCommand($this->container->make(MakeMigrationCommand::class));
+        $console->registerCommand($this->container->make(MigrateCommand::class));
+        $console->registerCommand($this->container->make(RollbackCommand::class));
     }
     /**
      * @return void

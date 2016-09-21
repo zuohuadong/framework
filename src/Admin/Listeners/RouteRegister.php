@@ -7,23 +7,18 @@
  */
 namespace Notadd\Admin\Listeners;
 use Notadd\Admin\Controllers\AdminController;
-use Notadd\Foundation\Abstracts\AbstractEventSubscriber;
-use Notadd\Foundation\Routing\Events\RouteRegister as RouteRegisterEvent;
+use Notadd\Foundation\Routing\Abstracts\AbstractRouteRegister;
 /**
  * Class RouteRegister
  * @package Notadd\Admin\Listeners
  */
-class RouteRegister extends AbstractEventSubscriber {
+class RouteRegister extends AbstractRouteRegister {
     /**
-     * @return mixed
+     * @return void
      */
-    public function getEvent() {
-        return RouteRegisterEvent::class;
-    }
-    /**
-     * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
-     */
-    public function handle(RouteRegisterEvent $router) {
-        $router->resource('/admin', AdminController::class);
+    public function handle() {
+        $this->router->group(['prefix' => 'admin'], function() {
+            $this->router->resource('/', AdminController::class);
+        });
     }
 }

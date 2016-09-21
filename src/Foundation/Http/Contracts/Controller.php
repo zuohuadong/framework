@@ -10,5 +10,10 @@ namespace Notadd\Foundation\Http\Contracts;
  * Interface ControllerContract
  * @package Notadd\Foundation\Http\Contracts
  */
-interface ControllerContract {
+interface Controller {
+    /**
+     * @param string $method
+     * @return array
+     */
+    public function getMiddlewareForMethod($method);
 }

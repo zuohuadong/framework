@@ -6,24 +6,15 @@
  * @datetime 2016-09-09 18:04
  */
 namespace Notadd\Upgrade\Listeners;
-use Notadd\Foundation\Abstracts\AbstractEventSubscriber;
-use Notadd\Foundation\Routing\Events\RouteRegister as RouteRegisterEvent;
-use Notadd\Upgrade\Controllers\UpgradeController;
+use Notadd\Foundation\Routing\Abstracts\AbstractRouteRegister;
 /**
  * Class RouteRegister
  * @package Notadd\Upgrade\Listeners
  */
-class RouteRegister extends AbstractEventSubscriber {
+class RouteRegister extends AbstractRouteRegister {
     /**
-     * @return string
+     * @return void
      */
-    protected function getEvent() {
-        return RouteRegisterEvent::class;
-    }
-    /**
-     * @param \Notadd\Foundation\Routing\Events\RouteRegister $router
-     */
-    public function handle(RouteRegisterEvent $router) {
-        $router->get('upgrade', UpgradeController::class);
+    public function handle() {
     }
 }

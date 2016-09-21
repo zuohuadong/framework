@@ -10,7 +10,6 @@ use Notadd\Foundation\Abstracts\AbstractServer;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Events\MiddlewareConfigurer;
 use Notadd\Foundation\Http\Middlewares\AuthenticateWithSession;
-use Notadd\Foundation\Http\Middlewares\DecoratePsrHttpInterfaces;
 use Notadd\Foundation\Http\Middlewares\ErrorHandler;
 use Notadd\Foundation\Http\Middlewares\JsonBodyParser;
 use Notadd\Foundation\Http\Middlewares\RememberFromCookie;

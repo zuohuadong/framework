@@ -6,29 +6,29 @@
  * @datetime 2016-09-09 18:07
  */
 namespace Notadd\Foundation\Abstracts;
+use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Str;
-use Notadd\Foundation\Application;
 /**
  * Class AbstractEventSubscriber
  * @package Notadd\Foundation\Abstracts
  */
 abstract class AbstractEventSubscriber {
     /**
-     * @var \Notadd\Foundation\Application
+     * @var \Illuminate\Container\Container
      */
-    protected $application;
+    protected $container;
     /**
      * @var \Illuminate\Events\Dispatcher
      */
     protected $events;
     /**
-     * RouteRegister constructor.
-     * @param \Notadd\Foundation\Application $application
+     * AbstractEventSubscriber constructor.
+     * @param \Illuminate\Container\Container $container
      * @param \Illuminate\Events\Dispatcher $events
      */
-    public function __construct(Application $application, Dispatcher $events) {
-        $this->application = $application;
+    public function __construct(Container $container, Dispatcher $events) {
+        $this->container = $container;
         $this->events = $events;
     }
     /**

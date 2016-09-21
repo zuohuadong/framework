@@ -9,7 +9,7 @@ namespace Notadd\Foundation\Http\Abstracts;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Notadd\Foundation\Console\Application;
-use Notadd\Foundation\Http\Contracts\ControllerContract;
+use Notadd\Foundation\Http\Contracts\Controller as ControllerContract;
 use Notadd\Foundation\Routing\Responses\RedirectResponse;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Psr\Http\Message\ResponseInterface;
@@ -20,9 +20,9 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 abstract class AbstractController implements ControllerContract {
     /**
-     * @var \Notadd\Foundation\Application
+     * @var \Illuminate\Container\Container
      */
-    protected $application;
+    protected $container;
     /**
      * @var \Illuminate\Config\Repository
      */
@@ -43,6 +43,10 @@ abstract class AbstractController implements ControllerContract {
      * @var \Illuminate\Mail\Mailer
      */
     protected $mailer;
+    /**
+     * @var array
+     */
+    protected $middleware = [];
     /**
      * @var \Notadd\Foundation\Routing\Responses\RedirectResponse
      */
@@ -71,24 +75,41 @@ abstract class AbstractController implements ControllerContract {
      * AbstractController constructor.
      */
     public function __construct() {
-        $this->application = Container::getInstance();
-        $this->config = $this->application->make('config');
-        $this->db = $this->application->make('db');
-        $this->events = $this->application->make('events');
-        $this->log = $this->application->make('log');
-        $this->mailer = $this->application->make('mailer');
-        $this->redirect = $this->application->make(RedirectResponse::class);
-        $this->request = $this->application->make(ServerRequestInterface::class);
-        $this->response = $this->application->make(ResponseInterface::class);
+        $this->container = Container::getInstance();
+        $this->config = $this->container->make('config');
+        $this->db = $this->container->make('db');
+        $this->events = $this->container->make('events');
+        $this->log = $this->container->make('log');
+        $this->mailer = $this->container->make('mailer');
+        $this->redirect = $this->container->make(RedirectResponse::class);
+        $this->request = $this->container->make(ServerRequestInterface::class);
+        $this->response = $this->container->make(ResponseInterface::class);
         $this->session = $this->request->getAttribute('session');
-        $this->setting = $this->application->make(SettingsRepository::class);
-        $this->view = $this->application->make('view');
+        $this->setting = $this->container->make(SettingsRepository::class);
+        $this->view = $this->container->make('view');
     }
     /**
      * @return \Notadd\Foundation\Console\Application
      */
     public function getConsole() {
-        return Application::getInstance($this->application);
+        return Application::getInstance($this->container);
+    }
+    /**
+     * @param string $method
+     * @return array
+     */
+    public function getMiddlewareForMethod($method) {
+        $middleware = [];
+        foreach($this->middleware as $name => $options) {
+            if(isset($options['only']) && !in_array($method, (array)$options['only'])) {
+                continue;
+            }
+            if(isset($options['except']) && in_array($method, (array)$options['except'])) {
+                continue;
+            }
+            $middleware[] = $name;
+        }
+        return $middleware;
     }
     /**
      * @param $key

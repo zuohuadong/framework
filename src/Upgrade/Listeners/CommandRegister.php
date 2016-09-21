@@ -24,6 +24,6 @@ class CommandRegister extends AbstractEventSubscriber {
      * @param \Notadd\Foundation\Console\Events\CommandRegister $console
      */
     public function handle(CommandRegisterEvent $console) {
-        $console->registerCommand($this->application->make(UpgradeCommand::class));
+        $console->registerCommand($this->container->make(UpgradeCommand::class));
     }
 }
