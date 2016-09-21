@@ -139,7 +139,7 @@ class ResourceRegistrar {
      */
     public function addResourceUpdate($name, $base, $controller, $options) {
         $action = $this->getResourceAction($name, $controller, 'update', $options);
-        return $this->router->addRoute('PUT', $name . '/{' . $base . '}', $action);
+        return $this->router->match(['PUT', 'PATCH'], $name . '/{' . $base . '}', $action);
     }
     /**
      * Get the action array for a resource route.

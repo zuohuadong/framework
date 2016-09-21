@@ -133,6 +133,38 @@ class Router {
         return $this;
     }
     /**
+     * @param $uri
+     * @param null $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function any($uri, $action = null) {
+        $methods = [
+            'GET',
+            'HEAD',
+            'POST',
+            'PUT',
+            'PATCH',
+            'DELETE'
+        ];
+        foreach($methods as $method) {
+            $this->addRoute($method, $uri, $action);
+        }
+        return $this;
+    }
+    /**
+     * @param $methods
+     * @param $uri
+     * @param null $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function match($methods, $uri, $action = null) {
+        $methods = array_map('strtoupper', (array)$methods);
+        foreach($methods as $method) {
+            $this->addRoute($method, $uri, $action);
+        }
+        return $this;
+    }
+    /**
      * @param string $path
      * @param string $controller
      * @param array $options
