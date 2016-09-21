@@ -53,11 +53,7 @@ class ErrorHandler implements ErrorMiddlewareInterface {
         if(is_int($errorCode) && $errorCode >= 400 && $errorCode < 600) {
             $status = $errorCode;
         }
-        if($this->debug && !in_array($errorCode, [
-                403,
-                404
-            ])
-        ) {
+        if($this->debug) {
             if($this->logger instanceof LoggerInterface) {
                 $this->logger->error($error);
             }

@@ -16,6 +16,7 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use Notadd\Foundation\Http\Contracts\Controller;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
+use Notadd\Foundation\Http\Exceptions\MethodNotFoundException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
 use Notadd\Foundation\Routing\Registrars\ResourceRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
@@ -395,14 +396,14 @@ class Router {
         }
     }
     /**
-     * @param array $routeInfo
+     * @param $routeInfo
      * @return mixed
-     * @throws \Notadd\Foundation\Http\Exceptions\RouteNotFoundException
+     * @throws \Notadd\Foundation\Http\Exceptions\MethodNotFoundException
      */
     protected function callControllerAction($routeInfo) {
         list($controller, $method) = explode('@', $routeInfo[1]['uses']);
         if(!method_exists($instance = $this->container->make($controller), $method)) {
-            throw new RouteNotFoundException;
+            throw new MethodNotFoundException('Controller method not found.');
         }
         if($instance instanceof Controller) {
             return $this->callNotaddController($instance, $method, $routeInfo);
