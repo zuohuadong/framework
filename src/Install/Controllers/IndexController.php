@@ -6,7 +6,7 @@
  * @datetime 2016-08-27 18:24
  */
 namespace Notadd\Install\Controllers;
-use Notadd\Foundation\Http\Abstracts\AbstractController;
+use Notadd\Foundation\Routing\Abstracts\AbstractController;
 use Notadd\Install\Contracts\PrerequisiteContract;
 /**
  * Class IndexController

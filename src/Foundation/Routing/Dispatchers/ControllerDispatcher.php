@@ -7,7 +7,7 @@
  */
 namespace Notadd\Foundation\Routing\Dispatchers;
 use Illuminate\Container\Container;
-use Notadd\Foundation\Http\Contracts\Controller as ControllerContract;
+use Notadd\Foundation\Routing\Contracts\Controller as ControllerContract;
 use Notadd\Foundation\Http\Exceptions\MethodNotFoundException;
 use Notadd\Foundation\Routing\Traits\ResolveDependencyTrait;
 /**
@@ -34,7 +34,7 @@ class ControllerDispatcher {
         $this->router = $router;
     }
     /**
-     * @param \Notadd\Foundation\Http\Contracts\Controller $instance
+     * @param \Notadd\Foundation\Routing\Contracts\Controller $instance
      * @param string $method
      * @param array $parameters
      * @return mixed
@@ -50,7 +50,7 @@ class ControllerDispatcher {
         ], $parameters);
     }
     /**
-     * @param \Notadd\Foundation\Http\Contracts\Controller $instance
+     * @param \Notadd\Foundation\Routing\Contracts\Controller $instance
      * @param string $method
      * @param array $routeInfo
      * @return mixed

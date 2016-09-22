@@ -29,6 +29,10 @@ abstract class AbstractServiceProvider extends ServiceProvider {
      */
     protected $events;
     /**
+     * @var \Notadd\Foundation\Routing\Router
+     */
+    protected $router;
+    /**
      * @var \Illuminate\Contracts\View\Factory
      */
     protected $view;
@@ -40,6 +44,7 @@ abstract class AbstractServiceProvider extends ServiceProvider {
         parent::__construct($application);
         $this->config = $this->app->make('config');
         $this->events = $this->app->make('events');
+        $this->router = $this->app->make('router');
         $this->view = $this->app->make('view');
         $this->blade = $this->view->getEngineResolver()->resolve('blade')->getCompiler();
         $this->loadViewsFrom(__DIR__ . '/../../../views/admin', 'admin');

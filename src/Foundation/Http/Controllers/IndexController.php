@@ -6,7 +6,7 @@
  * @datetime 2016-08-26 14:41
  */
 namespace Notadd\Foundation\Http\Controllers;
-use Notadd\Foundation\Http\Abstracts\AbstractController;
+use Notadd\Foundation\Routing\Abstracts\AbstractController;
 /**
  * Class IndexController
  * @package Notadd\Foundation\Http\Controllers

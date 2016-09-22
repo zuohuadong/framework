@@ -51,7 +51,7 @@ class Router {
     /**
      * @var array
      */
-    protected $routeMiddleware = [];
+    protected $middleware = [];
     /**
      * @var array
      */
@@ -194,7 +194,7 @@ class Router {
         $middleware = is_string($middleware) ? explode('|', $middleware) : (array)$middleware;
         return array_map(function ($name) {
             list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
-            return array_get($this->routeMiddleware, $name, $name) . ($parameters ? ':' . $parameters : '');
+            return array_get($this->middleware, $name, $name) . ($parameters ? ':' . $parameters : '');
         }, $middleware);
     }
     /**
@@ -310,29 +310,32 @@ class Router {
      * @return array
      */
     protected function mergeGroupAttributes(array $action) {
-        return $this->mergeNamespaceGroup($this->mergeMiddlewareGroup($action));
+        $groupAttributes = end($this->groupAttributes);
+        return $this->mergeNamespaceGroup($this->mergeMiddlewareGroup($action, $groupAttributes), $groupAttributes);
     }
     /**
      * @param array $action
+     * @param array $groupAttributes
      * @return array
      */
-    protected function mergeMiddlewareGroup($action) {
-        if(isset($this->groupAttributes['middleware'])) {
+    protected function mergeMiddlewareGroup($action, $groupAttributes) {
+        if(isset($groupAttributes['middleware'])) {
             if(isset($action['middleware'])) {
-                $action['middleware'] = array_merge($this->groupAttributes['middleware'], $action['middleware']);
+                $action['middleware'] = array_merge($groupAttributes['middleware'], $action['middleware']);
             } else {
-                $action['middleware'] = $this->groupAttributes['middleware'];
+                $action['middleware'] = $groupAttributes['middleware'];
             }
         }
         return $action;
     }
     /**
      * @param array $action
+     * @param array $groupAttributes
      * @return array
      */
-    protected function mergeNamespaceGroup(array $action) {
-        if(isset($this->groupAttributes['namespace']) && isset($action['uses'])) {
-            $action['uses'] = $this->groupAttributes['namespace'] . '\\' . $action['uses'];
+    protected function mergeNamespaceGroup(array $action, $groupAttributes) {
+        if(isset($groupAttributes['namespace']) && isset($action['uses'])) {
+            $action['uses'] = $groupAttributes['namespace'] . '\\' . $action['uses'];
         }
         return $action;
     }
@@ -411,8 +414,8 @@ class Router {
      * @param array $middleware
      * @return $this
      */
-    public function routeMiddleware(array $middleware) {
-        $this->routeMiddleware = array_merge($this->routeMiddleware, $middleware);
+    public function middleware(array $middleware) {
+        $this->middleware = array_merge($this->middleware, $middleware);
         return $this;
     }
     /**

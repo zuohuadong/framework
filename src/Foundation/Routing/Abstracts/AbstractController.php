@@ -5,11 +5,11 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-26 16:04
  */
-namespace Notadd\Foundation\Http\Abstracts;
+namespace Notadd\Foundation\Routing\Abstracts;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Notadd\Foundation\Console\Application;
-use Notadd\Foundation\Http\Contracts\Controller as ControllerContract;
+use Notadd\Foundation\Routing\Contracts\Controller as ControllerContract;
 use Notadd\Foundation\Routing\Responses\RedirectResponse;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Psr\Http\Message\ResponseInterface;
@@ -110,6 +110,14 @@ abstract class AbstractController implements ControllerContract {
             $middleware[] = $name;
         }
         return $middleware;
+    }
+    /**
+     * @param string $middleware
+     * @param array $options
+     * @return void
+     */
+    public function middleware($middleware, array $options = []) {
+        $this->middleware[$middleware] = $options;
     }
     /**
      * @param $key

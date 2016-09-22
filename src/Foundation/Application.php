@@ -105,7 +105,7 @@ class Application extends Container implements ApplicationContract {
         $this->fireAppCallbacks($this->bootedCallbacks);
     }
     /**
-     * @param  mixed $callback
+     * @param mixed $callback
      * @return void
      */
     public function booted($callback) {
@@ -115,7 +115,7 @@ class Application extends Container implements ApplicationContract {
         }
     }
     /**
-     * @param  mixed $callback
+     * @param mixed $callback
      * @return void
      */
     public function booting($callback) {
@@ -134,7 +134,7 @@ class Application extends Container implements ApplicationContract {
         }
     }
     /**
-     * @param  mixed
+     * @param mixed
      * @return string
      */
     public function environment() {
@@ -243,9 +243,9 @@ class Application extends Container implements ApplicationContract {
         return $this->basePath . DIRECTORY_SEPARATOR . 'public';
     }
     /**
-     * @param  \Illuminate\Support\ServiceProvider|string $provider
-     * @param  array $options
-     * @param  bool $force
+     * @param \Illuminate\Support\ServiceProvider|string $provider
+     * @param array $options
+     * @param bool $force
      * @return \Illuminate\Support\ServiceProvider
      */
     public function register($provider, $options = [], $force = false) {
@@ -279,8 +279,8 @@ class Application extends Container implements ApplicationContract {
     public function registerConfiguredProviders() {
     }
     /**
-     * @param  string $provider
-     * @param  string $service
+     * @param string $provider
+     * @param string $service
      * @return void
      */
     public function registerDeferredProvider($provider, $service = null) {

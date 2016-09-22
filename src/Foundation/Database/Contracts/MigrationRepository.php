@@ -37,7 +37,7 @@ interface MigrationRepository {
      */
     public function repositoryExists();
     /**
-     * @param  string $name
+     * @param string $name
      * @return void
      */
     public function setSource($name);

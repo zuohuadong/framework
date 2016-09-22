@@ -6,7 +6,7 @@
  * @datetime 2016-08-29 16:21
  */
 namespace Notadd\Admin\Controllers;
-use Notadd\Foundation\Http\Abstracts\AbstractController;
+use Notadd\Foundation\Routing\Abstracts\AbstractController;
 /**
  * Class AdminController
  * @package Notadd\Admin\Controllers

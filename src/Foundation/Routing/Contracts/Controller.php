@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-26 15:16
  */
-namespace Notadd\Foundation\Http\Contracts;
+namespace Notadd\Foundation\Routing\Contracts;
 /**
  * Interface ControllerContract
  * @package Notadd\Foundation\Http\Contracts
