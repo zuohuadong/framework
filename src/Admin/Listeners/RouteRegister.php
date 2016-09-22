@@ -17,7 +17,7 @@ class RouteRegister extends AbstractRouteRegister {
      * @return void
      */
     public function handle() {
-        $this->router->group(['prefix' => 'admin'], function() {
+        $this->router->group(['middleware' => 'web', 'prefix' => 'admin'], function() {
             $this->router->resource('/', AdminController::class);
         });
     }

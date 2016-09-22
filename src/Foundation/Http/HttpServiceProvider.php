@@ -8,6 +8,8 @@
 namespace Notadd\Foundation\Http;
 use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 use Notadd\Foundation\Http\Listeners\RouteRegister;
+use Notadd\Foundation\Http\Middlewares\AuthenticateWithSession;
+use Notadd\Foundation\Http\Middlewares\RememberFromCookie;
 /**
  * Class HttpServiceProvider
  * @package Notadd\Foundation\Http
@@ -18,5 +20,9 @@ class HttpServiceProvider extends AbstractServiceProvider {
      */
     public function boot() {
         $this->events->subscribe(RouteRegister::class);
+        $this->router->middlewareGroup('web', [
+            RememberFromCookie::class,
+            AuthenticateWithSession::class
+        ]);
     }
 }
