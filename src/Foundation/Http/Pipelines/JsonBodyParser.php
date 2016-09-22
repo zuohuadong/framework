@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-29 17:42
  */
-namespace Notadd\Foundation\Http\Middlewares;
+namespace Notadd\Foundation\Http\Pipelines;
 use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

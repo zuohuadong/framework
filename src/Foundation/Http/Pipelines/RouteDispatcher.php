@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-20 18:30
  */
-namespace Notadd\Foundation\Http\Middlewares;
+namespace Notadd\Foundation\Http\Pipelines;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
 use Illuminate\View\View;

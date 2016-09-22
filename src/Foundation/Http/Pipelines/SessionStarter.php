@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-29 18:07
  */
-namespace Notadd\Foundation\Http\Middlewares;
+namespace Notadd\Foundation\Http\Pipelines;
 use Dflydev\FigCookies\FigResponseCookies;
 use Dflydev\FigCookies\SetCookie;
 use Illuminate\Support\Str;

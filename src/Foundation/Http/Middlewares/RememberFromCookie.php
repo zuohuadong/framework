@@ -6,21 +6,18 @@
  * @datetime 2016-08-31 14:30
  */
 namespace Notadd\Foundation\Http\Middlewares;
-use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Zend\Stratigility\MiddlewareInterface;
 /**
  * Class RememberFromCookie
  * @package Notadd\Foundation\Http\Middlewares
  */
-class RememberFromCookie implements MiddlewareInterface {
+class RememberFromCookie {
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable|null $out
+     * @param callable $next
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, callable $out = null) {
-        return $out ? $out($request, $response) : $response;
+    public function handle(Request $request, callable $next = null) {
+        return $next($request);
     }
 }

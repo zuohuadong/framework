@@ -5,7 +5,7 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-08-27 11:34
  */
-namespace Notadd\Foundation\Http\Middlewares;
+namespace Notadd\Foundation\Http\Pipelines;
 use Franzl\Middleware\Whoops\ErrorMiddleware as WhoopsMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

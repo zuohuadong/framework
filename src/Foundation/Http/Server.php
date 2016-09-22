@@ -8,13 +8,13 @@
 namespace Notadd\Foundation\Http;
 use Notadd\Foundation\Abstracts\AbstractServer;
 use Notadd\Foundation\Application;
-use Notadd\Foundation\Http\Events\MiddlewareConfigurer;
+use Notadd\Foundation\Http\Events\PipelineInjection;
 use Notadd\Foundation\Http\Middlewares\AuthenticateWithSession;
-use Notadd\Foundation\Http\Middlewares\ErrorHandler;
-use Notadd\Foundation\Http\Middlewares\JsonBodyParser;
+use Notadd\Foundation\Http\Pipelines\ErrorHandler;
+use Notadd\Foundation\Http\Pipelines\JsonBodyParser;
 use Notadd\Foundation\Http\Middlewares\RememberFromCookie;
-use Notadd\Foundation\Http\Middlewares\RouteDispatcher;
-use Notadd\Foundation\Http\Middlewares\SessionStarter;
+use Notadd\Foundation\Http\Pipelines\RouteDispatcher;
+use Notadd\Foundation\Http\Pipelines\SessionStarter;
 use Notadd\Install\InstallServiceProvider;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Server as ZendServer;
@@ -39,9 +39,7 @@ class Server extends AbstractServer {
         } elseif($app->isInstalled()) {
             $pipe->pipe($path, $app->make(JsonBodyParser::class));
             $pipe->pipe($path, $app->make(SessionStarter::class));
-            $pipe->pipe($path, $app->make(RememberFromCookie::class));
-            $pipe->pipe($path, $app->make(AuthenticateWithSession::class));
-            $app->make('events')->fire(new MiddlewareConfigurer($pipe, $path, $this));
+            $app->make('events')->fire(new PipelineInjection($pipe, $path, $this));
             $pipe->pipe($path, $app->make(RouteDispatcher::class));
             $pipe->pipe($path, new ErrorHandler($errorDir, true, $app->make('log')));
         } else {

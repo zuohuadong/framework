@@ -12,7 +12,7 @@ use Zend\Stratigility\MiddlewarePipe;
  * Class MiddlewareConfigurer
  * @package Notadd\Foundation\Http\Events
  */
-class MiddlewareConfigurer {
+class PipelineInjection {
     /**
      * @var string
      */
