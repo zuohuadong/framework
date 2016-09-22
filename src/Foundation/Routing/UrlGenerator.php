@@ -17,11 +17,11 @@ class UrlGenerator {
     /**
      * @var string|null
      */
-    protected $cachedScheme;
+    protected $cachedRoot;
     /**
      * @var string|null
      */
-    protected $cachedRoot;
+    protected $cachedScheme;
     /**
      * @var \Illuminate\Container\Container
      */

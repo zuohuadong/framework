@@ -18,7 +18,6 @@ class SettingServiceProvider extends AbstractServiceProvider {
      * @return void
      */
     public function register() {
-        $this->app->alias(SettingsRepository::class, 'setting');
         $this->app->singleton(SettingsRepository::class, function() {
             return new MemoryCacheSettingsRepository(
                 new DatabaseSettingsRepository(

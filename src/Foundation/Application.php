@@ -7,6 +7,9 @@
  */
 namespace Notadd\Foundation;
 use Illuminate\Container\Container;
+use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
@@ -14,6 +17,8 @@ use Illuminate\Support\Str;
 use Notadd\Foundation\Contracts\Application as ApplicationContract;
 use Notadd\Foundation\Routing\Responses\RedirectResponse;
 use Notadd\Foundation\Routing\Router;
+use Notadd\Foundation\Routing\UrlGenerator;
+use Notadd\Setting\Contracts\SettingsRepository;
 /**
  * Class Application
  * @package Notadd\Foundation
@@ -318,7 +323,8 @@ class Application extends Container implements ApplicationContract {
                 'Illuminate\Config\Repository',
                 'Illuminate\Contracts\Config\Repository'
             ],
-            'db' => 'Illuminate\Database\DatabaseManager',
+            'db' => ConnectionResolverInterface::class,
+            'db.connection' => ConnectionInterface::class,
             'events' => [
                 'Illuminate\Events\Dispatcher',
                 'Illuminate\Contracts\Events\Dispatcher'
@@ -331,13 +337,17 @@ class Application extends Container implements ApplicationContract {
             'filesystem.disk' => 'Illuminate\Contracts\Filesystem\Filesystem',
             'filesystem.cloud' => 'Illuminate\Contracts\Filesystem\Cloud',
             'hash' => 'Illuminate\Contracts\Hashing\Hasher',
+            'log' => 'Psr\Log\LoggerInterface',
             'mailer' => [
                 'Illuminate\Mail\Mailer',
                 'Illuminate\Contracts\Mail\Mailer',
                 'Illuminate\Contracts\Mail\MailQueue'
             ],
+            'migration.repository' => MigrationRepositoryInterface::class,
             'redirect' => RedirectResponse::class,
             'router' => Router::class,
+            SettingsRepository::class => 'setting',
+            'url' => UrlGenerator::class,
             'validator' => [
                 'Illuminate\Validation\Factory',
                 'Illuminate\Contracts\Validation\Factory'

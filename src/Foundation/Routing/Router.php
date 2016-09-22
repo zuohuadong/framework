@@ -66,186 +66,6 @@ class Router {
         $this->events = $events;
     }
     /**
-     * @param string $uri
-     * @param mixed $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function delete($uri, $action) {
-        $this->addRoute('DELETE', $uri, $action);
-        return $this;
-    }
-    /**
-     * @param array $attributes
-     * @param \Closure $callback
-     * @return void
-     */
-    public function group(array $attributes, Closure $callback) {
-        $this->updateGroupAttributes($attributes);
-        call_user_func($callback, $this);
-        array_pop($this->groupAttributes);
-    }
-    /**
-     * @param array $attributes
-     */
-    protected function updateGroupAttributes(array $attributes) {
-        if(!empty($this->groupAttributes)) {
-            $attributes = $this->mergeGroup($attributes, end($this->groupAttributes));
-        }
-        $this->groupAttributes[] = $attributes;
-    }
-    /**
-     * @param string $uri
-     * @return string
-     */
-    protected function prefix($uri) {
-        return trim(trim($this->getLastGroupPrefix(), '/') . '/' . trim($uri, '/'), '/') ?: '/';
-    }
-    /**
-     * @return string
-     */
-    public function getLastGroupPrefix() {
-        if(!empty($this->groupAttributes)) {
-            $last = end($this->groupAttributes);
-            return isset($last['prefix']) ? $last['prefix'] : '';
-        }
-        return '';
-    }
-    /**
-     * @param array $new
-     * @param array $old
-     * @return array
-     */
-    public static function mergeGroup($new, $old) {
-        $new['namespace'] = static::formatUsesPrefix($new, $old);
-        $new['prefix'] = static::formatGroupPrefix($new, $old);
-        if(isset($new['domain'])) {
-            unset($old['domain']);
-        }
-        $new['where'] = array_merge(isset($old['where']) ? $old['where'] : [], isset($new['where']) ? $new['where'] : []);
-        if(isset($old['as'])) {
-            $new['as'] = $old['as'] . (isset($new['as']) ? $new['as'] : '');
-        }
-        return array_merge_recursive(Arr::except($old, [
-            'namespace',
-            'prefix',
-            'where',
-            'as'
-        ]), $new);
-    }
-    /**
-     * @param array $new
-     * @param array $old
-     * @return string|null
-     */
-    protected static function formatUsesPrefix($new, $old) {
-        if(isset($new['namespace'])) {
-            return isset($old['namespace']) ? trim($old['namespace'], '\\') . '\\' . trim($new['namespace'], '\\') : trim($new['namespace'], '\\');
-        }
-        return isset($old['namespace']) ? $old['namespace'] : null;
-    }
-    /**
-     * @param array $new
-     * @param array $old
-     * @return string|null
-     */
-    protected static function formatGroupPrefix($new, $old) {
-        $oldPrefix = isset($old['prefix']) ? $old['prefix'] : null;
-        if(isset($new['prefix'])) {
-            return trim($oldPrefix, '/') . '/' . trim($new['prefix'], '/');
-        }
-        return $oldPrefix;
-    }
-    /**
-     * @param string $uri
-     * @param mixed $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function get($uri, $action) {
-        $this->addRoute('GET', $uri, $action);
-        return $this;
-    }
-    /**
-     * @param string $uri
-     * @param mixed $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function post($uri, $action) {
-        $this->addRoute('POST', $uri, $action);
-        return $this;
-    }
-    /**
-     * @param string $uri
-     * @param mixed $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function put($uri, $action) {
-        $this->addRoute('PUT', $uri, $action);
-        return $this;
-    }
-    /**
-     * @param string $uri
-     * @param mixed $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function patch($uri, $action) {
-        $this->addRoute('PATCH', $uri, $action);
-        return $this;
-    }
-    /**
-     * @param string $uri
-     * @param mixed $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function options($uri, $action) {
-        $this->addRoute('OPTIONS', $uri, $action);
-        return $this;
-    }
-    /**
-     * @param $uri
-     * @param null $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function any($uri, $action = null) {
-        $methods = [
-            'GET',
-            'HEAD',
-            'POST',
-            'PUT',
-            'PATCH',
-            'DELETE'
-        ];
-        foreach($methods as $method) {
-            $this->addRoute($method, $uri, $action);
-        }
-        return $this;
-    }
-    /**
-     * @param $methods
-     * @param $uri
-     * @param null $action
-     * @return \Notadd\Foundation\Routing\Router
-     */
-    public function match($methods, $uri, $action = null) {
-        $methods = array_map('strtoupper', (array)$methods);
-        foreach($methods as $method) {
-            $this->addRoute($method, $uri, $action);
-        }
-        return $this;
-    }
-    /**
-     * @param string $path
-     * @param string $controller
-     * @param array $options
-     */
-    public function resource($path, $controller, array $options = []) {
-        if($this->container->bound(ResourceRegistrar::class)) {
-            $registrar = $this->container->make(ResourceRegistrar::class);
-        } else {
-            $registrar = new ResourceRegistrar($this->container, $this);
-        }
-        $registrar->register($path, $controller, $options);
-    }
-    /**
      * @param string $method
      * @param string $uri
      * @param mixed $action
@@ -273,6 +93,25 @@ class Router {
         ];
     }
     /**
+     * @param $uri
+     * @param null $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function any($uri, $action = null) {
+        $methods = [
+            'GET',
+            'HEAD',
+            'POST',
+            'PUT',
+            'PATCH',
+            'DELETE'
+        ];
+        foreach($methods as $method) {
+            $this->addRoute($method, $uri, $action);
+        }
+        return $this;
+    }
+    /**
      * @return \FastRoute\Dispatcher
      */
     public function createDispatcher() {
@@ -283,63 +122,12 @@ class Router {
         });
     }
     /**
-     * @param \FastRoute\Dispatcher $dispatcher
-     */
-    public function setDispatcher(RouteDispatcher $dispatcher) {
-        $this->dispatcher = $dispatcher;
-    }
-    /**
+     * @param string $uri
      * @param mixed $action
-     * @return array
+     * @return \Notadd\Foundation\Routing\Router
      */
-    protected function parseAction($action) {
-        if(is_string($action)) {
-            return ['uses' => $action];
-        } elseif(!is_array($action)) {
-            return [$action];
-        }
-        if(isset($action['middleware']) && is_string($action['middleware'])) {
-            $action['middleware'] = explode('|', $action['middleware']);
-        }
-        return $action;
-    }
-    /**
-     * @param array $action
-     * @return array
-     */
-    protected function mergeGroupAttributes(array $action) {
-        return $this->mergeNamespaceGroup($this->mergeMiddlewareGroup($action));
-    }
-    /**
-     * @param array $action
-     * @return array
-     */
-    protected function mergeNamespaceGroup(array $action) {
-        if(isset($this->groupAttributes['namespace']) && isset($action['uses'])) {
-            $action['uses'] = $this->groupAttributes['namespace'] . '\\' . $action['uses'];
-        }
-        return $action;
-    }
-    /**
-     * @param array $action
-     * @return array
-     */
-    protected function mergeMiddlewareGroup($action) {
-        if(isset($this->groupAttributes['middleware'])) {
-            if(isset($action['middleware'])) {
-                $action['middleware'] = array_merge($this->groupAttributes['middleware'], $action['middleware']);
-            } else {
-                $action['middleware'] = $this->groupAttributes['middleware'];
-            }
-        }
-        return $action;
-    }
-    /**
-     * @param array $middleware
-     * @return $this
-     */
-    public function routeMiddleware(array $middleware) {
-        $this->routeMiddleware = array_merge($this->routeMiddleware, $middleware);
+    public function delete($uri, $action) {
+        $this->addRoute('DELETE', $uri, $action);
         return $this;
     }
     /**
@@ -362,21 +150,6 @@ class Router {
      * @param array $routeInfo
      * @return mixed
      */
-    public function handleFoundRoute(array $routeInfo) {
-        $this->currentRoute = $routeInfo;
-        $action = $routeInfo[1];
-        if(isset($action['middleware'])) {
-            $middleware = $this->gatherMiddlewareClassNames($action['middleware']);
-            return $this->sendThroughPipeline($middleware, function () use ($routeInfo) {
-                return $this->callActionOnArrayBasedRoute($routeInfo);
-            });
-        }
-        return $this->callActionOnArrayBasedRoute($routeInfo);
-    }
-    /**
-     * @param array $routeInfo
-     * @return mixed
-     */
     protected function callActionOnArrayBasedRoute($routeInfo) {
         $action = $routeInfo[1];
         if(isset($action['uses'])) {
@@ -391,16 +164,27 @@ class Router {
         return (new CallableDispatcher($this->container))->dispatch($closure, $routeInfo[2]);
     }
     /**
-     * @param array $middleware
-     * @param \Closure $then
-     * @return mixed
+     * @param array $new
+     * @param array $old
+     * @return string|null
      */
-    public function sendThroughPipeline(array $middleware, Closure $then) {
-        $shouldSkipMiddleware = $this->container->bound('middleware.disable') && $this->container->make('middleware.disable') === true;
-        if(count($middleware) > 0 && !$shouldSkipMiddleware) {
-            return (new Pipeline($this->container))->send($this->container->make(ServerRequestInterface::class))->through($middleware)->then($then);
+    protected static function formatGroupPrefix($new, $old) {
+        $oldPrefix = isset($old['prefix']) ? $old['prefix'] : null;
+        if(isset($new['prefix'])) {
+            return trim($oldPrefix, '/') . '/' . trim($new['prefix'], '/');
         }
-        return $then();
+        return $oldPrefix;
+    }
+    /**
+     * @param array $new
+     * @param array $old
+     * @return string|null
+     */
+    protected static function formatUsesPrefix($new, $old) {
+        if(isset($new['namespace'])) {
+            return isset($old['namespace']) ? trim($old['namespace'], '\\') . '\\' . trim($new['namespace'], '\\') : trim($new['namespace'], '\\');
+        }
+        return isset($old['namespace']) ? $old['namespace'] : null;
     }
     /**
      * @param $middleware
@@ -414,10 +198,39 @@ class Router {
         }, $middleware);
     }
     /**
+     * @param string $uri
+     * @param mixed $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function get($uri, $action) {
+        $this->addRoute('GET', $uri, $action);
+        return $this;
+    }
+    /**
      * @return array
      */
     public function getGroupAttributes() {
         return $this->groupAttributes;
+    }
+    /**
+     * @return string
+     */
+    public function getLastGroupPrefix() {
+        if(!empty($this->groupAttributes)) {
+            $last = end($this->groupAttributes);
+            return isset($last['prefix']) ? $last['prefix'] : '';
+        }
+        return '';
+    }
+    /**
+     * @param array $attributes
+     * @param \Closure $callback
+     * @return void
+     */
+    public function group(array $attributes, Closure $callback) {
+        $this->updateGroupAttributes($attributes);
+        call_user_func($callback, $this);
+        array_pop($this->groupAttributes);
     }
     /**
      * @param $routeInfo
@@ -437,9 +250,196 @@ class Router {
         return null;
     }
     /**
+     * @param array $routeInfo
+     * @return mixed
+     */
+    public function handleFoundRoute(array $routeInfo) {
+        $this->currentRoute = $routeInfo;
+        $action = $routeInfo[1];
+        if(isset($action['middleware'])) {
+            $middleware = $this->gatherMiddlewareClassNames($action['middleware']);
+            return $this->sendThroughPipeline($middleware, function () use ($routeInfo) {
+                return $this->callActionOnArrayBasedRoute($routeInfo);
+            });
+        }
+        return $this->callActionOnArrayBasedRoute($routeInfo);
+    }
+    /**
      * @return bool
      */
     public function hasGroupAttributes() {
         return !empty($this->groupAttributes);
+    }
+    /**
+     * @param $methods
+     * @param $uri
+     * @param null $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function match($methods, $uri, $action = null) {
+        $methods = array_map('strtoupper', (array)$methods);
+        foreach($methods as $method) {
+            $this->addRoute($method, $uri, $action);
+        }
+        return $this;
+    }
+    /**
+     * @param array $new
+     * @param array $old
+     * @return array
+     */
+    public static function mergeGroup($new, $old) {
+        $new['namespace'] = static::formatUsesPrefix($new, $old);
+        $new['prefix'] = static::formatGroupPrefix($new, $old);
+        if(isset($new['domain'])) {
+            unset($old['domain']);
+        }
+        $new['where'] = array_merge(isset($old['where']) ? $old['where'] : [], isset($new['where']) ? $new['where'] : []);
+        if(isset($old['as'])) {
+            $new['as'] = $old['as'] . (isset($new['as']) ? $new['as'] : '');
+        }
+        return array_merge_recursive(Arr::except($old, [
+            'namespace',
+            'prefix',
+            'where',
+            'as'
+        ]), $new);
+    }
+    /**
+     * @param array $action
+     * @return array
+     */
+    protected function mergeGroupAttributes(array $action) {
+        return $this->mergeNamespaceGroup($this->mergeMiddlewareGroup($action));
+    }
+    /**
+     * @param array $action
+     * @return array
+     */
+    protected function mergeMiddlewareGroup($action) {
+        if(isset($this->groupAttributes['middleware'])) {
+            if(isset($action['middleware'])) {
+                $action['middleware'] = array_merge($this->groupAttributes['middleware'], $action['middleware']);
+            } else {
+                $action['middleware'] = $this->groupAttributes['middleware'];
+            }
+        }
+        return $action;
+    }
+    /**
+     * @param array $action
+     * @return array
+     */
+    protected function mergeNamespaceGroup(array $action) {
+        if(isset($this->groupAttributes['namespace']) && isset($action['uses'])) {
+            $action['uses'] = $this->groupAttributes['namespace'] . '\\' . $action['uses'];
+        }
+        return $action;
+    }
+    /**
+     * @param string $uri
+     * @param mixed $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function options($uri, $action) {
+        $this->addRoute('OPTIONS', $uri, $action);
+        return $this;
+    }
+    /**
+     * @param mixed $action
+     * @return array
+     */
+    protected function parseAction($action) {
+        if(is_string($action)) {
+            return ['uses' => $action];
+        } elseif(!is_array($action)) {
+            return [$action];
+        }
+        if(isset($action['middleware']) && is_string($action['middleware'])) {
+            $action['middleware'] = explode('|', $action['middleware']);
+        }
+        return $action;
+    }
+    /**
+     * @param string $uri
+     * @param mixed $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function patch($uri, $action) {
+        $this->addRoute('PATCH', $uri, $action);
+        return $this;
+    }
+    /**
+     * @param string $uri
+     * @param mixed $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function post($uri, $action) {
+        $this->addRoute('POST', $uri, $action);
+        return $this;
+    }
+    /**
+     * @param string $uri
+     * @return string
+     */
+    protected function prefix($uri) {
+        return trim(trim($this->getLastGroupPrefix(), '/') . '/' . trim($uri, '/'), '/') ?: '/';
+    }
+    /**
+     * @param string $uri
+     * @param mixed $action
+     * @return \Notadd\Foundation\Routing\Router
+     */
+    public function put($uri, $action) {
+        $this->addRoute('PUT', $uri, $action);
+        return $this;
+    }
+    /**
+     * @param string $path
+     * @param string $controller
+     * @param array $options
+     */
+    public function resource($path, $controller, array $options = []) {
+        if($this->container->bound(ResourceRegistrar::class)) {
+            $registrar = $this->container->make(ResourceRegistrar::class);
+        } else {
+            $registrar = new ResourceRegistrar($this->container, $this);
+        }
+        $registrar->register($path, $controller, $options);
+    }
+    /**
+     * @param array $middleware
+     * @return $this
+     */
+    public function routeMiddleware(array $middleware) {
+        $this->routeMiddleware = array_merge($this->routeMiddleware, $middleware);
+        return $this;
+    }
+    /**
+     * @param \FastRoute\Dispatcher $dispatcher
+     */
+    public function setDispatcher(RouteDispatcher $dispatcher) {
+        $this->dispatcher = $dispatcher;
+    }
+    /**
+     * @param array $middleware
+     * @param \Closure $then
+     * @return mixed
+     */
+    public function sendThroughPipeline(array $middleware, Closure $then) {
+        $shouldSkipMiddleware = $this->container->bound('middleware.disable') && $this->container->make('middleware.disable') === true;
+        if(count($middleware) > 0 && !$shouldSkipMiddleware) {
+            return (new Pipeline($this->container))->send($this->container->make(ServerRequestInterface::class))->through($middleware)->then($then);
+        }
+        return $then();
+    }
+    /**
+     * @param array $attributes
+     */
+    protected function updateGroupAttributes(array $attributes) {
+        if(!empty($this->groupAttributes)) {
+            $attributes = $this->mergeGroup($attributes, end($this->groupAttributes));
+        }
+        $this->groupAttributes[] = $attributes;
     }
 }

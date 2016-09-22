@@ -52,7 +52,6 @@ class RouteDispatcher implements MiddlewareInterface {
     public function __invoke(Request $request, Response $response, callable $out = null) {
         $this->router = $this->container->make('router');
         $this->events->fire(new RouteRegister($this->container, $this->router));
-        $this->container->alias('redirect', RedirectResponse::class);
         $this->container->instance(RedirectResponse::class, function() use($request) {
             $redirector = new RedirectResponse($request->getUri()->getHost());
             return $redirector;

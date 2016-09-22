@@ -144,7 +144,6 @@ abstract class AbstractServer {
         $handler->setFormatter(new LineFormatter(null, null, true, true));
         $logger->pushHandler($handler);
         $app->instance('log', $logger);
-        $app->alias('log', 'Psr\Log\LoggerInterface');
     }
     /**
      * @param string $path

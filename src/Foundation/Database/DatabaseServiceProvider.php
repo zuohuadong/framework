@@ -6,11 +6,8 @@
  * @datetime 2016-08-31 18:03
  */
 namespace Notadd\Foundation\Database;
-use Illuminate\Database\ConnectionInterface;
-use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\DatabaseServiceProvider as IlluminateDatabaseServiceProvider;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
-use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Notadd\Foundation\Database\Listeners\CommandRegister;
 use Notadd\Foundation\Database\Migrations\MigrationCreator;
 use Notadd\Foundation\Database\Migrations\Migrator;
@@ -30,9 +27,6 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider {
      */
     public function register() {
         parent::register();
-        $this->app->alias('db', ConnectionResolverInterface::class);
-        $this->app->alias('db.connection', ConnectionInterface::class);
-        $this->app->alias('migration.repository', MigrationRepositoryInterface::class);
         $this->app->singleton('migration.repository', function ($app) {
             $table = $app['config']['database.migrations'];
             return new DatabaseMigrationRepository($app['db'], $table);
