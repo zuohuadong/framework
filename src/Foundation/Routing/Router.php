@@ -11,7 +11,6 @@ use FastRoute\Dispatcher as RouteDispatcher;
 use FastRoute\RouteCollector;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use Notadd\Foundation\Http\Exceptions\MethodNotAllowedException;
 use Notadd\Foundation\Http\Exceptions\RouteNotFoundException;
@@ -52,6 +51,14 @@ class Router {
      * @var array
      */
     protected $middleware = [];
+    /**
+     * @var array
+     */
+    protected $middlewareGroups = [];
+    /**
+     * @var array
+     */
+    protected $middlewarePriority = [];
     /**
      * @var array
      */
@@ -187,15 +194,37 @@ class Router {
         return isset($old['namespace']) ? $old['namespace'] : null;
     }
     /**
-     * @param $middleware
+     * @param array $middleware
      * @return array
      */
-    public function gatherMiddlewareClassNames($middleware) {
-        $middleware = is_string($middleware) ? explode('|', $middleware) : (array)$middleware;
-        return array_map(function ($name) {
-            list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
-            return array_get($this->middleware, $name, $name) . ($parameters ? ':' . $parameters : '');
-        }, $middleware);
+    public function gatherMiddlewareClassNames(array $middleware) {
+        $middlewares = collect($middleware)->map(function ($name) {
+            $map = $this->middleware;
+            $result = null;
+            if($name instanceof Closure) {
+                $result = $name;
+            } elseif(isset($map[$name]) && $map[$name] instanceof Closure) {
+                $result = $map[$name];
+            } elseif(isset($this->middlewareGroups[$name])) {
+                $result = $this->parseMiddlewareGroup($name);
+            } else {
+                list($name, $parameters) = array_pad(explode(':', $name, 2), 2, null);
+                $result = (isset($map[$name]) ? $map[$name] : $name) . ($parameters !== null ? ':' . $parameters : '');
+            }
+            return (array)$result;
+        })->flatten();
+        $sorted = [];
+        $middlewares->each(function($middleware) use($middlewares, &$sorted) {
+            if(!in_array($middleware, $sorted)) {
+                if(($index = array_search($middleware, $this->middlewarePriority)) !== false) {
+                    $sorted = array_merge($sorted, array_filter(array_slice($this->middlewarePriority, 0, $index), function ($middleware) use ($middlewares, $sorted) {
+                        return $middlewares->contains($middleware) && !in_array($middleware, $sorted);
+                    }));
+                }
+                $sorted[] = $middleware;
+            }
+        });
+        return $sorted;
     }
     /**
      * @param string $uri
@@ -257,7 +286,7 @@ class Router {
         $this->currentRoute = $routeInfo;
         $action = $routeInfo[1];
         if(isset($action['middleware'])) {
-            $middleware = $this->gatherMiddlewareClassNames($action['middleware']);
+            $middleware = $this->gatherMiddlewareClassNames((array)$action['middleware']);
             return $this->sendThroughPipeline($middleware, function () use ($routeInfo) {
                 return $this->callActionOnArrayBasedRoute($routeInfo);
             });
@@ -364,6 +393,25 @@ class Router {
         return $action;
     }
     /**
+     * @param string $name
+     * @return array
+     */
+    protected function parseMiddlewareGroup($name) {
+        $results = [];
+        foreach($this->middlewareGroups[$name] as $middleware) {
+            if(isset($this->middlewareGroups[$middleware])) {
+                $results = array_merge($results, $this->parseMiddlewareGroup($middleware));
+                continue;
+            }
+            list($middleware, $parameters) = array_pad(explode(':', $middleware, 2), 2, null);
+            if(isset($this->middleware[$middleware])) {
+                $middleware = $this->middleware[$middleware];
+            }
+            $results[] = $middleware . ($parameters ? ':' . $parameters : '');
+        }
+        return $results;
+    }
+    /**
      * @param string $uri
      * @param mixed $action
      * @return \Notadd\Foundation\Routing\Router
@@ -416,6 +464,15 @@ class Router {
      */
     public function middleware(array $middleware) {
         $this->middleware = array_merge($this->middleware, $middleware);
+        return $this;
+    }
+    /**
+     * @param string $name
+     * @param array $middleware
+     * @return $this
+     */
+    public function middlewareGroup($name, array $middleware) {
+        $this->middlewareGroups[$name] = $middleware;
         return $this;
     }
     /**
