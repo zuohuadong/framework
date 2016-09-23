@@ -169,7 +169,7 @@ abstract class AbstractServer {
         if (Str::startsWith($key, 'base64:')) {
             $key = base64_decode(substr($key, 7));
         }
-        return new Encrypter($key, $config['cipher']);
+        return new Encrypter($key, $cipher);
     }
     /**
      * @return \Illuminate\Hashing\BcryptHasher
