@@ -19,7 +19,7 @@ trait CreatesUserProviders {
      */
     protected $customProviderCreators = [];
     /**
-     * @param  string $provider
+     * @param string $provider
      * @return \Illuminate\Contracts\Auth\UserProvider
      * @throws \InvalidArgumentException
      */
@@ -38,7 +38,7 @@ trait CreatesUserProviders {
         }
     }
     /**
-     * @param  array $config
+     * @param array $config
      * @return \Notadd\Foundation\Auth\Providers\DatabaseUserProvider
      */
     protected function createDatabaseProvider($config) {
@@ -46,7 +46,7 @@ trait CreatesUserProviders {
         return new DatabaseUserProvider($connection, $this->app['hash'], $config['table']);
     }
     /**
-     * @param  array $config
+     * @param array $config
      * @return \Notadd\Foundation\Auth\Providers\EloquentUserProvider
      */
     protected function createEloquentProvider($config) {

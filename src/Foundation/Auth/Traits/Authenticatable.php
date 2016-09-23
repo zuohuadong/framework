@@ -36,7 +36,7 @@ trait Authenticatable {
         return $this->{$this->getRememberTokenName()};
     }
     /**
-     * @param  string $value
+     * @param string $value
      * @return void
      */
     public function setRememberToken($value) {

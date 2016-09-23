@@ -42,7 +42,7 @@ class RequestGuard implements Guard {
         return $this->user = call_user_func($this->callback, $this->request);
     }
     /**
-     * @param  array $credentials
+     * @param array $credentials
      * @return bool
      */
     public function validate(array $credentials = []) {

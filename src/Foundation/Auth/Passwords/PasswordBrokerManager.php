@@ -31,7 +31,7 @@ class PasswordBrokerManager implements FactoryContract {
         $this->app = $app;
     }
     /**
-     * @param  string $name
+     * @param string $name
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
     public function broker($name = null) {
@@ -39,7 +39,7 @@ class PasswordBrokerManager implements FactoryContract {
         return isset($this->brokers[$name]) ? $this->brokers[$name] : $this->brokers[$name] = $this->resolve($name);
     }
     /**
-     * @param  string $name
+     * @param string $name
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      * @throws \InvalidArgumentException
      */
@@ -51,7 +51,7 @@ class PasswordBrokerManager implements FactoryContract {
         return new PasswordBroker($this->createTokenRepository($config), $this->app['auth']->createUserProvider($config['provider']));
     }
     /**
-     * @param  array $config
+     * @param array $config
      * @return \Notadd\Foundation\Auth\Contracts\TokenRepository
      */
     protected function createTokenRepository(array $config) {
@@ -63,7 +63,7 @@ class PasswordBrokerManager implements FactoryContract {
         return new DatabaseTokenRepository($this->app['db']->connection($connection), $config['table'], $key, $config['expire']);
     }
     /**
-     * @param  string $name
+     * @param string $name
      * @return array
      */
     protected function getConfig($name) {
@@ -76,15 +76,15 @@ class PasswordBrokerManager implements FactoryContract {
         return $this->app['config']['auth.defaults.passwords'];
     }
     /**
-     * @param  string $name
+     * @param string $name
      * @return void
      */
     public function setDefaultDriver($name) {
         $this->app['config']['auth.defaults.passwords'] = $name;
     }
     /**
-     * @param  string $method
-     * @param  array $parameters
+     * @param string $method
+     * @param array $parameters
      * @return mixed
      */
     public function __call($method, $parameters) {

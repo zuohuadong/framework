@@ -33,15 +33,15 @@ class EloquentUserProvider implements UserProvider {
         $this->hasher = $hasher;
     }
     /**
-     * @param  mixed $identifier
+     * @param mixed $identifier
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveById($identifier) {
         return $this->createModel()->newQuery()->find($identifier);
     }
     /**
-     * @param  mixed $identifier
-     * @param  string $token
+     * @param mixed $identifier
+     * @param string $token
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByToken($identifier, $token) {
@@ -49,8 +49,8 @@ class EloquentUserProvider implements UserProvider {
         return $model->newQuery()->where($model->getAuthIdentifierName(), $identifier)->where($model->getRememberTokenName(), $token)->first();
     }
     /**
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  string $token
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param string $token
      * @return void
      */
     public function updateRememberToken(UserContract $user, $token) {
@@ -58,7 +58,7 @@ class EloquentUserProvider implements UserProvider {
         $user->save();
     }
     /**
-     * @param  array $credentials
+     * @param array $credentials
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByCredentials(array $credentials) {
@@ -74,8 +74,8 @@ class EloquentUserProvider implements UserProvider {
         return $query->first();
     }
     /**
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  array $credentials
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param array $credentials
      * @return bool
      */
     public function validateCredentials(UserContract $user, array $credentials) {
@@ -96,7 +96,7 @@ class EloquentUserProvider implements UserProvider {
         return $this->hasher;
     }
     /**
-     * @param  \Illuminate\Contracts\Hashing\Hasher $hasher
+     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
      * @return $this
      */
     public function setHasher(HasherContract $hasher) {
@@ -110,7 +110,7 @@ class EloquentUserProvider implements UserProvider {
         return $this->model;
     }
     /**
-     * @param  string $model
+     * @param string $model
      * @return $this
      */
     public function setModel($model) {

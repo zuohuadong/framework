@@ -16,7 +16,7 @@ class Response {
      */
     protected $message;
     /**
-     * @param  string|null $message
+     * @param string|null $message
      */
     public function __construct($message = null) {
         $this->message = $message;

@@ -49,7 +49,7 @@ class GenericUser implements UserContract {
         return $this->attributes[$this->getRememberTokenName()];
     }
     /**
-     * @param  string $value
+     * @param string $value
      * @return void
      */
     public function setRememberToken($value) {
@@ -62,29 +62,29 @@ class GenericUser implements UserContract {
         return 'remember_token';
     }
     /**
-     * @param  string $key
+     * @param string $key
      * @return mixed
      */
     public function __get($key) {
         return $this->attributes[$key];
     }
     /**
-     * @param  string $key
-     * @param  mixed $value
+     * @param string $key
+     * @param mixed $value
      * @return void
      */
     public function __set($key, $value) {
         $this->attributes[$key] = $value;
     }
     /**
-     * @param  string $key
+     * @param string $key
      * @return bool
      */
     public function __isset($key) {
         return isset($this->attributes[$key]);
     }
     /**
-     * @param  string $key
+     * @param string $key
      * @return void
      */
     public function __unset($key) {

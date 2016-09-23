@@ -41,7 +41,7 @@ class DatabaseUserProvider implements UserProvider {
         $this->hasher = $hasher;
     }
     /**
-     * @param  mixed $identifier
+     * @param mixed $identifier
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveById($identifier) {
@@ -49,8 +49,8 @@ class DatabaseUserProvider implements UserProvider {
         return $this->getGenericUser($user);
     }
     /**
-     * @param  mixed $identifier
-     * @param  string $token
+     * @param mixed $identifier
+     * @param string $token
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByToken($identifier, $token) {
@@ -58,15 +58,15 @@ class DatabaseUserProvider implements UserProvider {
         return $this->getGenericUser($user);
     }
     /**
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  string $token
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param string $token
      * @return void
      */
     public function updateRememberToken(UserContract $user, $token) {
         $this->conn->table($this->table)->where('id', $user->getAuthIdentifier())->update(['remember_token' => $token]);
     }
     /**
-     * @param  array $credentials
+     * @param array $credentials
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByCredentials(array $credentials) {
@@ -80,7 +80,7 @@ class DatabaseUserProvider implements UserProvider {
         return $this->getGenericUser($user);
     }
     /**
-     * @param  mixed $user
+     * @param mixed $user
      * @return \Notadd\Foundation\Auth\GenericUser
      */
     protected function getGenericUser($user) {
@@ -89,8 +89,8 @@ class DatabaseUserProvider implements UserProvider {
         }
     }
     /**
-     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  array $credentials
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param array $credentials
      * @return bool
      */
     public function validateCredentials(UserContract $user, array $credentials) {
