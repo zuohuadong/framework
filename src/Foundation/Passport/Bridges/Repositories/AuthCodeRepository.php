@@ -5,10 +5,11 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:46
  */
-namespace Notadd\Foundation\Passport\Bridges;
+namespace Notadd\Foundation\Passport\Bridges\Repositories;
 use Illuminate\Database\Connection;
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use Notadd\Foundation\Passport\Bridges\AuthCode;
 use Notadd\Foundation\Passport\Traits\FormatsScopesForStorage;
 /**
  * Class AuthCodeRepository

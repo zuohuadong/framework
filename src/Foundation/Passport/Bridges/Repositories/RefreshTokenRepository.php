@@ -5,10 +5,11 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:53
  */
-namespace Notadd\Foundation\Passport\Bridges;
+namespace Notadd\Foundation\Passport\Bridges\Repositories;
 use Illuminate\Database\Connection;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use Notadd\Foundation\Passport\Bridges\RefreshToken;
 /**
  * Class RefreshTokenRepository
  * @package Notadd\Foundation\Passport\Bridges

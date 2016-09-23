@@ -6,6 +6,8 @@
  * @datetime 2016-09-23 17:33
  */
 namespace Notadd\Foundation\Passport;
+use Notadd\Foundation\Passport\Repositories\ClientRepository;
+use Notadd\Foundation\Passport\Repositories\TokenRepository;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 use Lcobucci\JWT\Parser as JwtParser;
@@ -20,11 +22,11 @@ class PersonalAccessTokenFactory {
      */
     protected $server;
     /**
-     * @var \Notadd\Foundation\Passport\ClientRepository
+     * @var \Notadd\Foundation\Passport\Repositories\ClientRepository
      */
     protected $clients;
     /**
-     * @var \Notadd\Foundation\Passport\TokenRepository
+     * @var \Notadd\Foundation\Passport\Repositories\TokenRepository
      */
     protected $tokens;
     /**
@@ -34,8 +36,8 @@ class PersonalAccessTokenFactory {
     /**
      * PersonalAccessTokenFactory constructor.
      * @param \League\OAuth2\Server\AuthorizationServer $server
-     * @param \Notadd\Foundation\Passport\ClientRepository $clients
-     * @param \Notadd\Foundation\Passport\TokenRepository $tokens
+     * @param \Notadd\Foundation\Passport\Repositories\ClientRepository $clients
+     * @param \Notadd\Foundation\Passport\Repositories\TokenRepository $tokens
      * @param \Lcobucci\JWT\Parser $jwt
      */
     public function __construct(AuthorizationServer $server, ClientRepository $clients, TokenRepository $tokens, JwtParser $jwt) {

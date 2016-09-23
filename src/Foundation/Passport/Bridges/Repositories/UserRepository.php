@@ -5,10 +5,11 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:56
  */
-namespace Notadd\Foundation\Passport\Bridges;
+namespace Notadd\Foundation\Passport\Bridges\Repositories;
 use Illuminate\Contracts\Hashing\Hasher;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
+use Notadd\Foundation\Passport\Bridges\User;
 use RuntimeException;
 /**
  * Class UserRepository

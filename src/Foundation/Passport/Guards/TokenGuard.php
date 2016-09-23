@@ -12,8 +12,8 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Encryption\Encrypter;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResourceServer;
-use Notadd\Foundation\Passport\ClientRepository;
-use Notadd\Foundation\Passport\TokenRepository;
+use Notadd\Foundation\Passport\Repositories\ClientRepository;
+use Notadd\Foundation\Passport\Repositories\TokenRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
 /**
  * Class TokenGuard
@@ -29,11 +29,11 @@ class TokenGuard {
      */
     protected $provider;
     /**
-     * @var \Notadd\Foundation\Passport\TokenRepository
+     * @var \Notadd\Foundation\Passport\Repositories\TokenRepository
      */
     protected $tokens;
     /**
-     * @var \Notadd\Foundation\Passport\ClientRepository
+     * @var \Notadd\Foundation\Passport\Repositories\ClientRepository
      */
     protected $clients;
     /**
@@ -44,8 +44,8 @@ class TokenGuard {
      * TokenGuard constructor.
      * @param \League\OAuth2\Server\ResourceServer $server
      * @param \Illuminate\Contracts\Auth\UserProvider $provider
-     * @param \Notadd\Foundation\Passport\TokenRepository $tokens
-     * @param \Notadd\Foundation\Passport\ClientRepository $clients
+     * @param \Notadd\Foundation\Passport\Repositories\TokenRepository $tokens
+     * @param \Notadd\Foundation\Passport\Repositories\ClientRepository $clients
      * @param \Illuminate\Contracts\Encryption\Encrypter $encrypter
      */
     public function __construct(ResourceServer $server, UserProvider $provider, TokenRepository $tokens, ClientRepository $clients, Encrypter $encrypter) {

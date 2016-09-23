@@ -5,12 +5,13 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:44
  */
-namespace Notadd\Foundation\Passport\Bridges;
+namespace Notadd\Foundation\Passport\Bridges\Repositories;
 use DateTime;
 use Illuminate\Database\Connection;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use Notadd\Foundation\Passport\Bridges\AccessToken;
 use Notadd\Foundation\Passport\Traits\FormatsScopesForStorage;
 /**
  * Class AccessTokenRepository

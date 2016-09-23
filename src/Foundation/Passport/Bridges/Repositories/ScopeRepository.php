@@ -5,9 +5,10 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:54
  */
-namespace Notadd\Foundation\Passport\Bridges;
+namespace Notadd\Foundation\Passport\Bridges\Repositories;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
+use Notadd\Foundation\Passport\Bridges\Scope;
 use Notadd\Foundation\Passport\Passport;
 /**
  * Class ScopeRepository

@@ -5,8 +5,9 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:49
  */
-namespace Notadd\Foundation\Passport\Bridges;
-use Notadd\Foundation\Passport\ClientRepository as ClientModelRepository;
+namespace Notadd\Foundation\Passport\Bridges\Repositories;
+use Notadd\Foundation\Passport\Bridges\Client;
+use Notadd\Foundation\Passport\Repositories\ClientRepository as ClientModelRepository;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 /**
  * Class ClientRepository
@@ -14,12 +15,12 @@ use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
  */
 class ClientRepository implements ClientRepositoryInterface {
     /**
-     * @var \Notadd\Foundation\Passport\ClientRepository
+     * @var \Notadd\Foundation\Passport\Repositories\ClientRepository
      */
     protected $clients;
     /**
      * ClientRepository constructor.
-     * @param \Notadd\Foundation\Passport\ClientRepository $clients
+     * @param \Notadd\Foundation\Passport\Repositories\ClientRepository $clients
      */
     public function __construct(ClientModelRepository $clients) {
         $this->clients = $clients;

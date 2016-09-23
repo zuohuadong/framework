@@ -5,7 +5,10 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:25
  */
-namespace Notadd\Foundation\Passport;
+namespace Notadd\Foundation\Passport\Repositories;
+use Notadd\Foundation\Passport\Client;
+use Notadd\Foundation\Passport\Passport;
+use Notadd\Foundation\Passport\PersonalAccessClient;
 /**
  * Class ClientRepository
  * @package Notadd\Foundation\Passport

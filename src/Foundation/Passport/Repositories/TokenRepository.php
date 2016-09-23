@@ -5,7 +5,8 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-23 17:39
  */
-namespace Notadd\Foundation\Passport;
+namespace Notadd\Foundation\Passport\Repositories;
+use Notadd\Foundation\Passport\Token;
 /**
  * Class TokenRepository
  * @package Notadd\Foundation\Passport
