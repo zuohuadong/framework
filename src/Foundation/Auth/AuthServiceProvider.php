@@ -5,13 +5,13 @@
  * @copyright (c) 2016, iBenchu.org
  * @datetime 2016-09-09 18:28
  */
-namespace Notadd\Auth;
-use Notadd\Foundation\Abstracts\AbstractServiceProvider;
+namespace Notadd\Foundation\Auth;
+use Illuminate\Support\ServiceProvider;
 /**
  * Class AuthServiceProvider
  * @package Notadd\Auth
  */
-class AuthServiceProvider extends AbstractServiceProvider {
+class AuthServiceProvider extends ServiceProvider  {
     /**
      * @return void
      */

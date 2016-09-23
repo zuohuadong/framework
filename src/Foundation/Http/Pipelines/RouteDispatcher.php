@@ -60,7 +60,6 @@ class RouteDispatcher implements MiddlewareInterface {
         $this->container->instance(Response::class, $response);
         $return = $this->router->dispatch($request);
         if($return instanceof View) {
-            $response = new DiactorosResponse();
             $response->getBody()->write($return);
             return $response;
         }
