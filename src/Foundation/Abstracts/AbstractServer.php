@@ -9,9 +9,11 @@ namespace Notadd\Foundation\Abstracts;
 use Illuminate\Bus\BusServiceProvider;
 use Illuminate\Cache\CacheServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Filesystem\FilesystemServiceProvider;
 use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Mail\MailServiceProvider;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
 use Monolog\Formatter\LineFormatter;
@@ -52,6 +54,7 @@ abstract class AbstractServer {
         date_default_timezone_set('UTC');
         $app = new Application($this->path);
         $app->instance('config', $config = $this->getIlluminateConfig($app));
+        $app->instance('encrypter', $this->getEncrypter());
         $app->instance('env', 'production');
         $this->registerLogger($app);
         $app->register(AuthServiceProvider::class);
@@ -154,5 +157,16 @@ abstract class AbstractServer {
      */
     public function setPath($path) {
         $this->path = $path;
+    }
+    /**
+     * @return \Illuminate\Encryption\Encrypter
+     */
+    protected function getEncrypter() {
+        $cipher = 'AES-256-CBC';
+        $key = 'base64:BlPAX+TJIJqw85JAFiTFOhw6sj9lLiR+l8Qvf6PHlAY=';
+        if (Str::startsWith($key, 'base64:')) {
+            $key = base64_decode(substr($key, 7));
+        }
+        return new Encrypter($key, $config['cipher']);
     }
 }
