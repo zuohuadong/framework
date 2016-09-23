@@ -11,6 +11,7 @@ use Illuminate\Cache\CacheServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Filesystem\FilesystemServiceProvider;
+use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Mail\MailServiceProvider;
 use Illuminate\Support\Str;
@@ -56,6 +57,7 @@ abstract class AbstractServer {
         $app->instance('config', $config = $this->getIlluminateConfig($app));
         $app->instance('encrypter', $this->getEncrypter());
         $app->instance('env', 'production');
+        $app->instance('hash', $this->getHashing());
         $this->registerLogger($app);
         $app->register(AuthServiceProvider::class);
         $app->register(BusServiceProvider::class);
@@ -168,5 +170,11 @@ abstract class AbstractServer {
             $key = base64_decode(substr($key, 7));
         }
         return new Encrypter($key, $config['cipher']);
+    }
+    /**
+     * @return \Illuminate\Hashing\BcryptHasher
+     */
+    protected function getHashing() {
+        return new BcryptHasher;
     }
 }
