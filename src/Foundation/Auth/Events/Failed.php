@@ -11,4 +11,20 @@ namespace Notadd\Foundation\Auth\Events;
  * @package Notadd\Foundation\Auth\Events
  */
 class Failed {
+    /**
+     * @var \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public $user;
+    /**
+     * @var array
+     */
+    public $credentials;
+    /**
+     * @param \Illuminate\Contracts\Auth\Authenticatable|null $user
+     * @param array $credentials
+     */
+    public function __construct($user, $credentials) {
+        $this->user = $user;
+        $this->credentials = $credentials;
+    }
 }

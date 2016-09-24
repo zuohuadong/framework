@@ -11,4 +11,26 @@ namespace Notadd\Foundation\Auth\Events;
  * @package Notadd\Foundation\Auth\Events
  */
 class Attempting {
+    /**
+     * @var array
+     */
+    public $credentials;
+    /**
+     * @var bool
+     */
+    public $remember;
+    /**
+     * @var bool
+     */
+    public $login;
+    /**
+     * @param array $credentials
+     * @param bool $remember
+     * @param bool $login
+     */
+    public function __construct($credentials, $remember, $login) {
+        $this->login = $login;
+        $this->remember = $remember;
+        $this->credentials = $credentials;
+    }
 }
