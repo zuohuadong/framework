@@ -103,6 +103,24 @@ abstract class AbstractServer {
      */
     protected function getIlluminateConfig(Application $app) {
         $data = [
+            'auth' => [
+                'defaults' => [
+                    'guard' => 'web',
+                    'passwords' => 'users',
+                ],
+                'guards' => [
+                    'web' => [
+                        'driver' => 'session',
+                        'provider' => 'users',
+                    ],
+                ],
+                'providers' => [
+                    'users' => [
+                        'driver' => 'eloquent',
+                        'model' => '',
+                    ],
+                ],
+            ],
             'cache' => [
                 'default' => 'file',
                 'stores' => [
