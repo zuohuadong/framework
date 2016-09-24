@@ -10,6 +10,7 @@ use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 use Notadd\Foundation\Http\Listeners\RouteRegister;
 use Notadd\Foundation\Http\Middlewares\AuthenticateWithSession;
 use Notadd\Foundation\Http\Middlewares\RememberFromCookie;
+use Notadd\Member\MemberServiceProvider;
 /**
  * Class HttpServiceProvider
  * @package Notadd\Foundation\Http
@@ -19,6 +20,7 @@ class HttpServiceProvider extends AbstractServiceProvider {
      * @return void
      */
     public function boot() {
+        $this->app->register(MemberServiceProvider::class);
         $this->events->subscribe(RouteRegister::class);
         $this->router->middlewareGroup('web', [
             RememberFromCookie::class,
