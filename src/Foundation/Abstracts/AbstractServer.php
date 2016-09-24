@@ -141,7 +141,7 @@ abstract class AbstractServer {
                 'driver' => 'file',
                 'lifetime' => 120,
                 'expire_on_close' => false,
-                'encrypt' => false,
+                'encrypt' => true,
                 'files' => storage_path('sessions'),
                 'store' => null,
                 'lottery' => [

@@ -6,7 +6,6 @@
  * @datetime 2016-09-24 15:53
  */
 namespace Notadd\Foundation\Session;
-use Illuminate\Session\EncryptedStore;
 use Illuminate\Session\SessionManager as IlluminateSessionManager;
 /**
  * Class SessionManager
