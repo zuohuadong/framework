@@ -310,6 +310,11 @@ class Application extends Container implements ApplicationContract {
                 'Illuminate\Contracts\Container\Container',
                 'Illuminate\Contracts\Foundation\Application'
             ],
+            'auth' => [
+                'Illuminate\Auth\AuthManager',
+                'Illuminate\Contracts\Auth\Factory'
+            ],
+            'auth.driver' => ['Illuminate\Contracts\Auth\Guard'],
             'blade.compiler' => 'Illuminate\View\Compilers\BladeCompiler',
             'cache' => [
                 'Illuminate\Cache\CacheManager',
