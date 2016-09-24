@@ -52,15 +52,14 @@ abstract class AbstractServer {
      * @return \Notadd\Foundation\Application
      */
     protected function getApp() {
-        date_default_timezone_set('UTC');
         $app = new Application($this->path);
         $app->instance('config', $config = $this->getIlluminateConfig($app));
         $app->instance('encrypter', $this->getEncrypter());
         $app->instance('env', 'production');
         $app->instance('hash', $this->getHashing());
         $this->registerLogger($app);
-        $app->register(AuthServiceProvider::class);
         $app->register(BusServiceProvider::class);
+        $app->register(AuthServiceProvider::class);
         $app->register(CacheServiceProvider::class);
         $app->register(DatabaseServiceProvider::class);
         $app->register(FilesystemServiceProvider::class);
@@ -73,6 +72,7 @@ abstract class AbstractServer {
         $app->register(SettingServiceProvider::class);
         if($app->isInstalled()) {
             $setting = $app->make(SettingsRepository::class);
+            date_default_timezone_set($setting->get('setting.timezone', 'UTC'));
             $config->set('mail.driver', $setting->get('mail.driver', 'smtp'));
             $config->set('mail.host', $setting->get('mail.host'));
             $config->set('mail.port', $setting->get('mail.port'));
@@ -100,48 +100,34 @@ abstract class AbstractServer {
      * @return \Illuminate\Config\Repository
      */
     protected function getIlluminateConfig(Application $app) {
-        return new ConfigRepository([
-            'view' => [
-                'paths' => [],
-                'compiled' => $app->storagePath() . '/views',
-            ],
+        $data = [
             'cache' => [
                 'default' => 'file',
                 'stores' => [
                     'file' => [
                         'driver' => 'file',
-                        'path' => $app->storagePath() . '/cache',
+                        'path' => $app->storagePath() . '/caches',
                     ],
                 ],
                 'prefix' => 'notadd',
-            ],
-            'database' => [
-                'fetch' => PDO::FETCH_OBJ,
-                'default' => 'mysql',
-                'connections' => [
-                    'mysql' => [
-                        'driver' => 'mysql',
-                        'host' => 'localhost',
-                        'port' => '3306',
-                        'database' => 'notadd.io',
-                        'username' => 'root',
-                        'password' => '123456789',
-                        'charset' => 'utf8',
-                        'collation' => 'utf8_unicode_ci',
-                        'prefix' => 'pre_',
-                        'strict' => true,
-                        'engine' => null,
-                    ],
-                ],
-                'migrations' => 'migrations'
             ],
             'filesystems' => [
                 'default' => 'local',
             ],
             'mail' => [
                 'driver' => 'mail',
-            ]
-        ]);
+            ],
+            'view' => [
+                'paths' => [],
+                'compiled' => $app->storagePath() . '/views',
+            ],
+        ];
+        $file = storage_path('notadd') . DIRECTORY_SEPARATOR . 'config.php';
+        if(file_exists($file)) {
+            $extend = include $file;
+            $data = array_merge($data, (array)$extend);
+        }
+        return new ConfigRepository($data);
     }
     /**
      * @param Application $app
