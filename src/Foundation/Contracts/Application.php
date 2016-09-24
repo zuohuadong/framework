@@ -11,5 +11,5 @@ use Illuminate\Contracts\Foundation\Application as ApplicationContract;
  * Interface Application
  * @package Notadd\Foundation\Contracts
  */
-interface Application extends ApplicationContract{
+interface Application extends ApplicationContract {
 }

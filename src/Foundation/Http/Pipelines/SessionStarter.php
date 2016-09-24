@@ -99,7 +99,7 @@ class SessionStarter implements MiddlewareInterface {
     private function startSession(Request $request) {
         $session = $this->manager->driver();
         $session->setId(collect($request->getCookieParams())->get($session->getName()));
-        $session->setRequestOnHandler($request);
+        $session->setPsrRequestOnHandler($request);
         $session->start();
         return $session;
     }

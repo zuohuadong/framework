@@ -19,4 +19,12 @@ class SessionServiceProvider extends IlluminateSessionServiceProvider {
         $this->registerSessionManager();
         $this->registerSessionDriver();
     }
+    /**
+     * @return void
+     */
+    protected function registerSessionManager() {
+        $this->app->singleton('session', function ($app) {
+            return new SessionManager($app);
+        });
+    }
 }

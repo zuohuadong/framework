@@ -119,6 +119,23 @@ abstract class AbstractServer {
             'mail' => [
                 'driver' => 'mail',
             ],
+            'session' => [
+                'driver' => 'file',
+                'lifetime' => 120,
+                'expire_on_close' => false,
+                'encrypt' => false,
+                'files' => storage_path('sessions'),
+                'store' => null,
+                'lottery' => [
+                    2,
+                    100
+                ],
+                'cookie' => 'notadd_session',
+                'path' => '/',
+                'domain' => null,
+                'secure' => false,
+                'http_only' => true,
+            ],
             'view' => [
                 'paths' => [],
                 'compiled' => $app->storagePath() . '/views',
