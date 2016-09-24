@@ -30,6 +30,7 @@
         "illuminate/hashing": "5.3.*",
         "illuminate/mail": "5.3.*",
         "illuminate/queue": "5.3.*",
+        "illuminate/session": "5.3.*",
         "illuminate/support": "5.3.*",
         "illuminate/validation": "5.3.*",
         "illuminate/view": "5.3.*",
@@ -48,7 +49,7 @@
         "symfony/var-dumper": "3.1.*",
         "tobscure/json-api": "^0.2.0",
         "zendframework/zend-diactoros": "^1.2",
-        "zendframework/zend-stratigility": "^1.2"
+        "zendframework/zend-stratigility": "^1.2",
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

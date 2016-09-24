@@ -8,11 +8,12 @@
 namespace Notadd\Foundation\Http\Pipelines;
 use Dflydev\FigCookies\FigResponseCookies;
 use Dflydev\FigCookies\SetCookie;
-use Illuminate\Support\Str;
+use Illuminate\Session\CookieSessionHandler;
+use Illuminate\Session\SessionInterface;
+use Illuminate\Session\SessionManager;
+use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zend\Stratigility\MiddlewareInterface;
 /**
  * Class SessionStarter
@@ -20,42 +21,103 @@ use Zend\Stratigility\MiddlewareInterface;
  */
 class SessionStarter implements MiddlewareInterface {
     /**
+     * @var \Illuminate\Session\SessionManager
+     */
+    protected $manager;
+    /**
+     * @var bool
+     */
+    protected $sessionHandled = false;
+    /**
+     * SessionStarter constructor.
+     * @param \Illuminate\Session\SessionManager $manager
+     */
+    public function __construct(SessionManager $manager) {
+        $this->manager = $manager;
+    }
+    /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable|null $out
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function __invoke(Request $request, Response $response, callable $out = null) {
-        $session = $this->startSession();
-        $request = $request->withAttribute('session', $session);
-        $response = $out ? $out($request, $response) : $response;
-        $response = $this->withCsrfTokenHeader($response, $session);
-        return $this->withSessionCookie($response, $session);
-    }
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Session
-     */
-    private function startSession() {
-        $session = new Session;
-        $session->setName('notadd_session');
-        $session->start();
-        if(!$session->has('csrf_token')) {
-            $session->set('csrf_token', Str::random(40));
+        $this->sessionHandled = true;
+        if($this->sessionConfigured()) {
+            $session = $this->startSession($request);
+            $request = $request->withAttribute('session', $session);
         }
-        return $session;
-    }
-    /**
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    private function withCsrfTokenHeader(Response $response, SessionInterface $session) {
-        if($session->has('csrf_token')) {
-            $response = $response->withHeader('X-CSRF-Token', $session->get('csrf_token'));
+        $response = $out ? $out($request, $response) : $response;
+        if($this->sessionConfigured()) {
+            $response = $this->withSessionCookie($response, $session);
         }
         return $response;
     }
-    private function withSessionCookie(Response $response, SessionInterface $session) {
+    /**
+     * @param \Illuminate\Session\SessionInterface $session
+     */
+    protected function collectGarbage(SessionInterface $session) {
+        $config = $this->manager->getSessionConfig();
+        if($this->configHitsLottery($config)) {
+            $session->getHandler()->gc($this->getSessionLifetimeInSeconds());
+        }
+    }
+    /**
+     * @param array $config
+     * @return bool
+     */
+    protected function configHitsLottery(array $config) {
+        return random_int(1, $config['lottery'][1]) <= $config['lottery'][0];
+    }
+    /**
+     * @return mixed
+     */
+    protected function getSessionLifetimeInSeconds() {
+        return Arr::get($this->manager->getSessionConfig(), 'lifetime') * 60;
+    }
+    /**
+     * @return bool
+     */
+    protected function sessionConfigured() {
+        return !is_null(Arr::get($this->manager->getSessionConfig(), 'driver'));
+    }
+    /**
+     * @param array|null $config
+     * @return bool
+     */
+    protected function sessionIsPersistent(array $config = null) {
+        $config = $config ?: $this->manager->getSessionConfig();
+        return !in_array($config['driver'], [
+            null,
+            'array'
+        ]);
+    }
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Illuminate\Session\SessionInterface
+     */
+    private function startSession(Request $request) {
+        $session = $this->manager->driver();
+        $session->setId(collect($request->getCookieParams())->get($session->getName()));
+        $session->setRequestOnHandler($request);
+        $session->start();
+        return $session;
+    }
+    /**
+     * @return bool
+     */
+    protected function usingCookieSessions() {
+        if(!$this->sessionConfigured()) {
+            return false;
+        }
+        return $this->manager->driver()->getHandler() instanceof CookieSessionHandler;
+    }
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Illuminate\Session\SessionInterface $session
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function withSessionCookie(Response $response, SessionInterface $session) {
         return FigResponseCookies::set($response, SetCookie::create($session->getName(), $session->getId())->withPath('/')->withHttpOnly(true));
     }
 }

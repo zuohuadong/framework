@@ -347,6 +347,11 @@ class Application extends Container implements ApplicationContract {
             'redirect' => RedirectResponse::class,
             'router' => Router::class,
             SettingsRepository::class => 'setting',
+            'session' => ['Illuminate\Session\SessionManager'],
+            'session.store' => [
+                'Illuminate\Session\Store',
+                'Symfony\Component\HttpFoundation\Session\SessionInterface'
+            ],
             'url' => UrlGenerator::class,
             'validator' => [
                 'Illuminate\Validation\Factory',

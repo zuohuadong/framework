@@ -75,8 +75,8 @@ class AuthManager implements FactoryContract {
     }
     /**
      * Call a custom driver creator.
-     * @param  string $name
-     * @param  array $config
+     * @param string $name
+     * @param array $config
      * @return mixed
      */
     protected function callCustomCreator($name, array $config) {
