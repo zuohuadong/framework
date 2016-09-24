@@ -45,6 +45,10 @@ class Application extends Container implements ApplicationContract {
      */
     protected $bootedCallbacks = [];
     /**
+     * @var bool
+     */
+    protected $debug = false;
+    /**
      * @var array
      */
     protected $serviceProviders = [];
@@ -190,7 +194,7 @@ class Application extends Container implements ApplicationContract {
      * @return bool
      */
     public function inDebugMode() {
-        return true;
+        return $this->debug;
     }
     /**
      * @return bool
@@ -388,6 +392,12 @@ class Application extends Container implements ApplicationContract {
         $this->basePath = rtrim($basePath, '\/');
         $this->bindPathsInContainer();
         return $this;
+    }
+    /**
+     * @param bool $debug
+     */
+    public function setDebugMode(bool $debug) {
+        $this->debug = $debug;
     }
     /**
      * @return string

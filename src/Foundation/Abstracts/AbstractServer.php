@@ -75,6 +75,7 @@ abstract class AbstractServer {
         if($app->isInstalled()) {
             $setting = $app->make(SettingsRepository::class);
             date_default_timezone_set($setting->get('setting.timezone', 'UTC'));
+            $app->setDebugMode($setting->get('setting.debug', true));
             $config->set('mail.driver', $setting->get('mail.driver', 'smtp'));
             $config->set('mail.host', $setting->get('mail.host'));
             $config->set('mail.port', $setting->get('mail.port'));
@@ -87,6 +88,8 @@ abstract class AbstractServer {
             $app->register(ApiServiceProvider::class);
             $app->register(AdminServiceProvider::class);
             $app->register(ExtensionServiceProvider::class);
+        } else {
+            $app->setDebugMode(true);
         }
         $app->boot();
         return $app;
