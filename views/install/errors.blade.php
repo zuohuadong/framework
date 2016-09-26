@@ -1,15 +1,36 @@
 @extends('install::layout')
 @section('content')
-    <h2>Hold Up!</h2>
-    <p>These errors must be resolved before you can continue the installation. If you're having trouble, get help on the <a href="http://flarum.org/docs/installation" target="_blank">Flarum website</a>.</p>
-    <div class="Errors">
-        @foreach($errors as $error)
-        <div class="Error">
-            <h3 class="Error-message">{{ $error['message'] }}</h3>
-            @if(!empty($error['detail']))
-                <p class="Error-detail">{{ $error['detail'] }}</p>
-            @endif
-        </div>
-        @endforeach
+    <div class="main-viewport test-error">
+        <header>
+            <div class="container">
+                <img class="success-logo" src="{{ asset('assets/install/images/test-error.svg') }}" alt="">
+                <h1 class="error-title">环境检测</h1>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="error-panel">
+                    @foreach($errors as $error)
+                    <div class="error-box">
+                        <div class="error-detail">
+                            <span class="btn btn-default btn-error">错误提示</span>
+                            <div class="detail">
+                                <p>{{ $error['message'] }}</p>
+                            </div>
+                        </div>
+                        <div class="error-fix">
+                            <span class="btn btn-default btn-fix">解决办法</span>
+                            <div class="detail">
+                                <p>{{ $error['detail'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </main>
     </div>
+@endsection
+@section('sheets')
+    <link href="{{ asset('assets/install/sheets/install.css') }}" rel="stylesheet">
 @endsection
