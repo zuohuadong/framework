@@ -21,16 +21,15 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Notadd\Admin\AdminServiceProvider;
-use Notadd\Api\ApiServiceProvider;
 use Notadd\Extension\ExtensionServiceProvider;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Auth\AuthServiceProvider;
 use Notadd\Foundation\Database\DatabaseServiceProvider;
 use Notadd\Foundation\Http\HttpServiceProvider;
-use Notadd\Foundation\Passport\PassportServiceProvider;
 use Notadd\Foundation\Routing\RouterServiceProvider;
 use Notadd\Foundation\Session\SessionServiceProvider;
 use Notadd\Member\Models\Member;
+use Notadd\Passport\PassportServiceProvider;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Notadd\Setting\SettingServiceProvider;
 use PDO;
@@ -86,7 +85,6 @@ abstract class AbstractServer {
             $config->set('mail.username', $setting->get('mail.username'));
             $config->set('mail.password', $setting->get('mail.password'));
             $app->register(HttpServiceProvider::class);
-            $app->register(ApiServiceProvider::class);
             $app->register(AdminServiceProvider::class);
             $app->register(ExtensionServiceProvider::class);
         } else {
