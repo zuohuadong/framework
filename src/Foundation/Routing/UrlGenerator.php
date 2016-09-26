@@ -104,7 +104,6 @@ class UrlGenerator {
         return $parameters;
     }
     /**
-     * Get the base URL for the request.
      * @param string $scheme
      * @param string $root
      * @return string
@@ -112,9 +111,10 @@ class UrlGenerator {
     protected function getRootUrl($scheme, $root = null) {
         if(is_null($root)) {
             if(is_null($this->cachedRoot)) {
-                $this->cachedRoot = $this->container->make('request')->root();
+                $request = $this->container->make(ServerRequestInterface::class);
+                $this->cachedRoot = $scheme . $request->getUri()->getHost() . $request->getUri()->getPath();
             }
-            $root = $this->cachedRoot;
+            $root = rtrim($this->cachedRoot, '/');
         }
         $start = starts_with($root, 'http://') ? 'http://' : 'https://';
         return preg_replace('~' . $start . '~', $scheme, $root, 1);
@@ -129,7 +129,6 @@ class UrlGenerator {
         return trim($root . '/' . trim($path . '/' . $tail, '/'), '/');
     }
     /**
-     * Generate a secure, absolute URL to the given path.
      * @param string $path
      * @param array $parameters
      * @return string
@@ -138,7 +137,6 @@ class UrlGenerator {
         return $this->to($path, $parameters, true);
     }
     /**
-     * Generate a URL to an application asset.
      * @param string $path
      * @param bool|null $secure
      * @return string
@@ -147,28 +145,20 @@ class UrlGenerator {
         if($this->isValidUrl($path)) {
             return $path;
         }
-        // Once we get the root URL, we will check to see if it contains an index.php
-        // file in the paths. If it does, we will remove it since it is not needed
-        // for asset paths, but only for routes to endpoints in the application.
         $root = $this->getRootUrl($this->getScheme($secure));
         return $this->removeIndex($root) . '/' . trim($path, '/');
     }
     /**
-     * Generate a URL to an application asset from a root domain such as CDN etc.
      * @param string $root
      * @param string $path
      * @param bool|null $secure
      * @return string
      */
     public function assetFrom($root, $path, $secure = null) {
-        // Once we get the root URL, we will check to see if it contains an index.php
-        // file in the paths. If it does, we will remove it since it is not needed
-        // for asset paths, but only for routes to endpoints in the application.
         $root = $this->getRootUrl($this->getScheme($secure), $root);
         return $this->removeIndex($root) . '/' . trim($path, '/');
     }
     /**
-     * Remove the index.php file from a path.
      * @param string $root
      * @return string
      */
@@ -177,7 +167,6 @@ class UrlGenerator {
         return str_contains($root, $i) ? str_replace('/' . $i, '', $root) : $root;
     }
     /**
-     * Generate a URL to a secure asset.
      * @param string $path
      * @return string
      */
@@ -185,7 +174,6 @@ class UrlGenerator {
         return $this->asset($path, true);
     }
     /**
-     * Get the scheme for a raw URL.
      * @param bool|null $secure
      * @return string
      */
