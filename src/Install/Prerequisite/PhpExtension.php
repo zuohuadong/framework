@@ -30,7 +30,8 @@ class PhpExtension extends AbstractPrerequisite {
         foreach($this->extensions as $extension) {
             if(!extension_loaded($extension)) {
                 $this->errors[] = [
-                    'message' => "The PHP extension '$extension' is required.",
+                    'message' => "The PHP extension '{$extension}' is required.",
+                    'detail' => "The PHP extension '{$extension}' is required.",
                 ];
             }
         }

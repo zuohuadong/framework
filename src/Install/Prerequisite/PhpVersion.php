@@ -29,7 +29,7 @@ class PhpVersion extends AbstractPrerequisite {
     public function check() {
         if(version_compare(PHP_VERSION, $this->minVersion, '<')) {
             $this->errors[] = [
-                'message' => "PHP $this->minVersion is required.",
+                'message' => "PHP {$this->minVersion} is required.",
                 'detail' => 'You are running version ' . PHP_VERSION . '. Talk to your hosting provider about upgrading to the latest PHP version.',
             ];
         }
