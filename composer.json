@@ -40,6 +40,7 @@
         "league/oauth2-server": "^5.1",
         "monolog/monolog": "^1.18.0",
         "nikic/fast-route": "^1.0.0",
+        "phpseclib/phpseclib": "^2.0",
         "psr/http-message": "^1.0",
         "symfony/console": "3.1.*",
         "symfony/http-foundation": "3.1.*",
@@ -49,7 +50,7 @@
         "symfony/var-dumper": "3.1.*",
         "tobscure/json-api": "^0.2.0",
         "zendframework/zend-diactoros": "^1.2",
-        "zendframework/zend-stratigility": "^1.2",
+        "zendframework/zend-stratigility": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
