@@ -84,7 +84,7 @@ class ControllerDispatcher {
     public function dispatch(array $routeInfo) {
         list($class, $method) = explode('@', $routeInfo[1]['uses']);
         if(!method_exists($instance = $this->container->make($class), $method)) {
-            throw new MethodNotFoundException('Controller method not found.');
+            throw new MethodNotFoundException("Controller method not found: {$class}@{$method}.");
         }
         if($instance instanceof ControllerContract) {
             return $this->callNotaddController($instance, $method, $routeInfo);
