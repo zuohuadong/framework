@@ -7,6 +7,7 @@
  */
 namespace Notadd\Install\Listeners;
 use Notadd\Foundation\Routing\Abstracts\AbstractRouteRegister;
+use Notadd\Install\Controllers\InstallController;
 /**
  * Class RouteRegister
  * @package Notadd\Install\Listeners
@@ -16,5 +17,6 @@ class RouteRegister extends AbstractRouteRegister {
      * @return void
      */
     public function handle() {
+        $this->router->resource('/', InstallController::class);
     }
 }
