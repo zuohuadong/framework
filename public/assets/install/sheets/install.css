@@ -1,8 +1,13 @@
-/*common css*/
-*{margin: 0;padding: 0;}
-html {font-size: 20px;height: 100%;}
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    font-size: 20px;
+    height: 100%;
+}
 body {
-    font-family: "Microsoft YaHei",sans-serif;
+    font-family: "Microsoft YaHei", sans-serif;
     font-size: .7rem;
     color: #666;
     background-color: #fff;
@@ -23,9 +28,9 @@ body {
     text-align: center;
 }
 a:hover {
-    color: #1BC9A8;
+    color: #1bc9a8;
 }
-a:hover,a:focus,a:visited {
+a:hover, a:focus, a:visited {
     text-decoration: none;
 }
 @media (min-width: 1200px) {
@@ -37,19 +42,18 @@ a:hover,a:focus,a:visited {
     display: none;
     transition: display 10s linear;
 }
-/* test-error */
 .main-viewport {
     width: 100%;
     height: auto;
     min-height: 100vh;
 }
-header{
+header {
     height: 15rem;
     text-align: center;
     margin-bottom: 4rem;
 }
 .test-error header {
-    background-color: #FF6E42;
+    background-color: #ff6e42;
 }
 .test-error header img {
     width: 6rem;
@@ -69,13 +73,13 @@ header{
 .test-error .error-panel .error-box {
     padding-top: 1rem;
 }
-.test-error .error-box .error-detail,.error-box .error-fix {
+.test-error .error-box .error-detail, .error-box .error-fix {
     margin-bottom: 2rem;
     position: relative;
 }
 .test-error .error-box .detail {
     margin-left: 6rem;
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     padding: .4rem .6rem;
     line-height: 1.25rem;
     border-radius: 5px;
@@ -83,7 +87,7 @@ header{
 .test-error .error-box .detail p {
     margin-bottom: 0;
 }
-.btn-default:hover, .btn-default:focus, .btn-default:active,.btn-default:active:focus,.btn-default:active:hover {
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default:active:focus, .btn-default:active:hover {
     background-color: #fff;
     outline: 0;
     box-shadow: none;
@@ -95,12 +99,12 @@ header{
     line-height: 1.9rem;
     padding: 0;
     font-size: .7rem;
-    border: .05rem solid #FC5555;
-    color: #FC5555;
+    border: .05rem solid #fc5555;
+    color: #fc5555;
 }
-.btn-error:hover,.btn-error:focus,.btn-error:active,.btn-error:active:hover,.btn-error:active:focus {
-    border-color: #FC5555;
-    color: #FC5555;
+.btn-error:hover, .btn-error:focus, .btn-error:active, .btn-error:active:hover, .btn-error:active:focus {
+    border-color: #fc5555;
+    color: #fc5555;
 }
 .btn-fix {
     position: absolute;
@@ -109,16 +113,15 @@ header{
     line-height: 1.9rem;
     padding: 0;
     font-size: .7rem;
-    border: .05rem solid #1BC9A8;
-    color: #1BC9A8;
+    border: .05rem solid #1bc9a8;
+    color: #1bc9a8;
 }
-.btn-fix:hover,.btn-fix:focus,.btn-fix:active,.btn-fix:active:hover,.btn-fix:active:focus {
-    border-color: #1BC9A8;
-    color: #1BC9A8;
+.btn-fix:hover, .btn-fix:focus, .btn-fix:active, .btn-fix:active:hover, .btn-fix:active:focus {
+    border-color: #1bc9a8;
+    color: #1bc9a8;
 }
-/* test-success */
 .test-success header {
-    background-color: #37ADCF;
+    background-color: #37adcf;
 }
 .test-success header img {
     max-width: 6rem;
@@ -130,7 +133,7 @@ header{
     line-height: 6.5rem;
     font-size: 2.4rem;
     margin: 0;
-    font-family: "Microsoft YaHei",sans-serif;
+    font-family: "Microsoft YaHei", sans-serif;
 }
 .test-success .error-panel {
     width: 25rem;
@@ -142,7 +145,7 @@ form .content {
     padding: 0 1rem;
 }
 .form-group {
-    margin: 2rem 0 0 0;
+    margin: 1.5rem 0 0 0;
 }
 .form-control {
     height: 2rem;
@@ -157,8 +160,8 @@ form .content {
     margin: 0;
     line-height: 27px;
 }
-.form-group label.error{
-    color:red;
+.form-group label.error {
+    color: red;
     font-size: .7rem;
 }
 .form-group.label-floating:not(.is-empty) label.control-label {
@@ -172,8 +175,8 @@ form .content {
     width: 25rem;
     max-width: 100%;
     height: 2.5rem;
-    background-color: #E5E5E5;
-    margin: 4.5rem 0 4rem;
+    background-color: #e5e5e5;
+    margin: 2rem 0;
     color: #666;
     list-style: none;
     position: relative;
@@ -182,7 +185,7 @@ form .content {
 }
 .sql-group .btn-sql {
     float: left;
-    color: #666;
+    color: #666666;
     width: calc(33.33333333333333333333%);
     font-weight: normal;
     padding: 0;
@@ -191,7 +194,7 @@ form .content {
     background-color: #d8d8d8;
 }
 .sql-group li.active .btn-sql {
-    background-color: #1BC9A8;
+    background-color: #1bc9a8;
     color: #fff;
     font-weight: normal;
 }
@@ -206,26 +209,26 @@ form .content {
     margin-right: 0;
 }
 .data {
-    margin-bottom: 6rem;
+    margin-bottom: 3rem;
 }
 .form-group input.submit {
     width: 27rem;
     max-width: 100%;
     height: 2.5rem;
-    background-color: #1BC9A8;
+    background-color: #1bc9a8;
     text-align: center;
     color: #fff;
     font-size: .9rem;
     line-height: .9rem;
     border: 0;
     outline: 0;
-    margin: 5rem 0;
+    margin: 3rem 0 5rem;
 }
 .form-group.is-focused .form-control {
-    background-image: linear-gradient(#1BC9A8, #1BC9A8), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#1bc9a8, #1bc9a8), linear-gradient(#d2d2d2, #d2d2d2);
 }
 .form-group.is-focused label, .form-group.is-focused label.control-label {
-    color: #1BC9A8;
+    color: #1bc9a8;
 }
 .form-group.label-floating label.control-label {
     font-size: .9rem;
@@ -238,11 +241,10 @@ form .content {
     background-color: rgba(0, 150, 136, 0.5);
 }
 .togglebutton label input[type=checkbox]:checked + .toggle:after {
-    background-color: #1BC9A8;
+    background-color: #1bc9a8;
 }
-/* install-error */
 .install-error header {
-    background-color: #FC5555;
+    background-color: #fc5555;
     margin-bottom: 4rem;
 }
 .install-error header img {
@@ -268,13 +270,12 @@ form .content {
     margin: 0 0 4rem;
 }
 .install-error .error-panel p {
-    color: #666;
+    color: #666666;
     font-size: .9rem;
     margin: 0;
 }
-/* install-success */
 .install-success header {
-    background-color: #32C379;
+    background-color: #32c379;
 }
 .install-success header img {
     max-width: 6rem;
@@ -300,13 +301,13 @@ form .content {
     width: 6.5rem;
     height: 2.5rem;
     line-height: 2.5rem;
-    color: #666;
+    color: #666666;
     font-size: .9rem;
     font-weight: normal;
     text-align: left;
     margin-bottom: 0;
 }
-.install-success ul.install-info li span{
+.install-success ul.install-info li span {
     display: inline-block;
     width: 20rem;
     max-width: calc(100%);
@@ -316,17 +317,17 @@ form .content {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    color: #666;
+    color: #666666;
     font-size: .9rem;
     text-align: left;
     padding: 0 1rem;
 }
 .install-success ul.install-info li #address, #index {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
 }
-.install-success ul.install-info li #address:hover, #index:hover{
-    background-color: #1BC9A8;
-    color: #fff;
+.install-success ul.install-info li #address:hover, #index:hover {
+    background-color: #1bc9a8;
+    color: #ffffff;
 }
 @media (max-width: 767px) {
     header {
@@ -340,7 +341,7 @@ form .content {
     }
     .install-success ul.install-info li #address:hover, #index:hover {
         background-color: transparent;
-        color: #666;
+        color: #666666;
     }
     .install-success ul.install-info li label {
         text-align: left;
@@ -379,18 +380,15 @@ form .content {
         line-height: 2rem;
         font-weight: normal;
     }
-    .install-success ul.install-info li a {
-        /*display: block;*/
-    }
     .btn-error {
         display: block;
         position: static;
-        margin:0 0 1rem;
+        margin: 0 0 1rem;
     }
     .btn-fix {
         display: block;
         position: static;
-        margin:0 0 1rem;
+        margin: 0 0 1rem;
     }
     .test-error .error-box .detail {
         margin-left: 0;
@@ -415,24 +413,3 @@ form .content {
         margin: 2rem 0 3rem;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
