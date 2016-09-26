@@ -28,10 +28,6 @@ abstract class AbstractController implements ControllerContract {
      */
     protected $config;
     /**
-     * @var \Illuminate\Database\ConnectionInterface
-     */
-    protected $db;
-    /**
      * @var \Illuminate\Events\Dispatcher
      */
     protected $events;
@@ -60,13 +56,9 @@ abstract class AbstractController implements ControllerContract {
      */
     protected $response;
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
+     * @var \Notadd\Foundation\Session\Contracts\Session
      */
     protected $session;
-    /**
-     * @var \Notadd\Setting\Contracts\SettingsRepository
-     */
-    protected $setting;
     /**
      * @var \Illuminate\Contracts\View\Factory
      */
@@ -77,7 +69,6 @@ abstract class AbstractController implements ControllerContract {
     public function __construct() {
         $this->container = Container::getInstance();
         $this->config = $this->container->make('config');
-        $this->db = $this->container->make('db');
         $this->events = $this->container->make('events');
         $this->log = $this->container->make('log');
         $this->mailer = $this->container->make('mailer');
@@ -85,7 +76,6 @@ abstract class AbstractController implements ControllerContract {
         $this->request = $this->container->make(ServerRequestInterface::class);
         $this->response = $this->container->make(ResponseInterface::class);
         $this->session = $this->request->getAttribute('session');
-        $this->setting = $this->container->make(SettingsRepository::class);
         $this->view = $this->container->make('view');
     }
     /**
