@@ -212,7 +212,16 @@ class Application extends Container implements ApplicationContract {
      * @return bool
      */
     public function isInstalled() {
-        return true;
+        if($this->bound('installed')) {
+            return true;
+        } else {
+            if(file_exists(storage_path('notadd') . DIRECTORY_SEPARATOR . 'config.php')) {
+                $this->instance('installed', true);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
     /**
      * @return bool
