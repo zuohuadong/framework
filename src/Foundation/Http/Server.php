@@ -6,7 +6,6 @@
  * @datetime 2016-08-20 00:51
  */
 namespace Notadd\Foundation\Http;
-use Illuminate\Session\SessionManager;
 use Notadd\Foundation\Abstracts\AbstractServer;
 use Notadd\Foundation\Application;
 use Notadd\Foundation\Http\Events\PipelineInjection;

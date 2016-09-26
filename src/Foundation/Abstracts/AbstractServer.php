@@ -30,6 +30,7 @@ use Notadd\Foundation\Http\HttpServiceProvider;
 use Notadd\Foundation\Passport\PassportServiceProvider;
 use Notadd\Foundation\Routing\RouterServiceProvider;
 use Notadd\Foundation\Session\SessionServiceProvider;
+use Notadd\Member\Models\Member;
 use Notadd\Setting\Contracts\SettingsRepository;
 use Notadd\Setting\SettingServiceProvider;
 use PDO;
@@ -120,7 +121,7 @@ abstract class AbstractServer {
                 'providers' => [
                     'users' => [
                         'driver' => 'eloquent',
-                        'model' => '',
+                        'model' => Member::class,
                     ],
                 ],
             ],

@@ -6,16 +6,16 @@
  * @datetime 2016-08-27 18:36
  */
 namespace Notadd\Install\Controllers;
-use Zend\Diactoros\Response;
+use Notadd\Foundation\Routing\Abstracts\AbstractController;
 /**
  * Class InstallController
  * @package Notadd\Install\Controllers
  */
-class InstallController {
+class InstallController extends AbstractController {
     /**
-     * @return \Zend\Diactoros\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function handle() {
-        return new Response($body);
+    public function index() {
+        return $this->view('install::install');
     }
 }
