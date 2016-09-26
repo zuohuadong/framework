@@ -10,7 +10,7 @@ namespace Notadd\Install\Contracts;
  * Interface PrerequisiteContract
  * @package Notadd\Install\Contracts
  */
-interface PrerequisiteContract {
+interface Prerequisite {
     /**
      * @return void
      */

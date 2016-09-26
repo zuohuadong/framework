@@ -6,12 +6,12 @@
  * @datetime 2016-08-27 17:03
  */
 namespace Notadd\Install\Abstracts;
-use Notadd\Install\Contracts\PrerequisiteContract;
+use Notadd\Install\Contracts\Prerequisite;
 /**
  * Class AbstractPrerequisite
  * @package Notadd\Install\Abstracts
  */
-abstract class AbstractPrerequisite implements PrerequisiteContract {
+abstract class AbstractPrerequisite implements Prerequisite {
     /**
      * @var array
      */

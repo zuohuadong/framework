@@ -7,7 +7,7 @@
  */
 namespace Notadd\Install;
 use Notadd\Foundation\Abstracts\AbstractServiceProvider;
-use Notadd\Install\Contracts\PrerequisiteContract;
+use Notadd\Install\Contracts\Prerequisite;
 use Notadd\Install\Listeners\RouteRegister;
 use Notadd\Install\Prerequisite\PhpExtension;
 use Notadd\Install\Prerequisite\PhpVersion;
@@ -27,7 +27,7 @@ class InstallServiceProvider extends AbstractServiceProvider {
      * @return void
      */
     public function register() {
-        $this->app->bind(PrerequisiteContract::class, function () {
+        $this->app->bind(Prerequisite::class, function () {
             return new Composite(
                 new PhpVersion('5.5.0'),
                 new PhpExtension([

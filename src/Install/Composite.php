@@ -6,21 +6,21 @@
  * @datetime 2016-08-27 18:48
  */
 namespace Notadd\Install;
-use Notadd\Install\Contracts\PrerequisiteContract;
+use Notadd\Install\Contracts\Prerequisite;
 /**
  * Class Composite
  * @package Notadd\Install
  */
-class Composite implements PrerequisiteContract {
+class Composite implements Prerequisite {
     /**
      * @var array
      */
     protected $prerequisites = [];
     /**
      * Composite constructor.
-     * @param \Notadd\Install\Contracts\PrerequisiteContract $first
+     * @param \Notadd\Install\Contracts\Prerequisite $first
      */
-    public function __construct(PrerequisiteContract $first) {
+    public function __construct(Prerequisite $first) {
         foreach(func_get_args() as $prerequisite) {
             $this->prerequisites[] = $prerequisite;
         }
@@ -29,7 +29,7 @@ class Composite implements PrerequisiteContract {
      * @return mixed
      */
     public function check() {
-        return array_reduce($this->prerequisites, function ($previous, PrerequisiteContract $prerequisite) {
+        return array_reduce($this->prerequisites, function ($previous, Prerequisite $prerequisite) {
             return $prerequisite->check() && $previous;
         }, true);
     }
@@ -37,7 +37,7 @@ class Composite implements PrerequisiteContract {
      * @return array
      */
     public function getErrors() {
-        return collect($this->prerequisites)->map(function (PrerequisiteContract $prerequisite) {
+        return collect($this->prerequisites)->map(function (Prerequisite $prerequisite) {
             return $prerequisite->getErrors();
         })->reduce('array_merge', []);
     }
