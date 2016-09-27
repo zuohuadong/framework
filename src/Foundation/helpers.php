@@ -48,6 +48,22 @@ if(!function_exists('base_path')) {
         return app()->basePath() . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }
+if (!function_exists('config')) {
+    /**
+     * @param array|string  $key
+     * @param mixed  $default
+     * @return mixed
+     */
+    function config($key = null, $default = null) {
+        if (is_null($key)) {
+            return app('config');
+        }
+        if (is_array($key)) {
+            return app('config')->set($key);
+        }
+        return app('config')->get($key, $default);
+    }
+}
 if(!function_exists('event')) {
     /**
      * @param string|object $event
