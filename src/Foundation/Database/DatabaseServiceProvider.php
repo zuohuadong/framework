@@ -20,6 +20,7 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider {
      * @return void
      */
     public function boot() {
+        parent::boot();
         $this->app->make('events')->subscribe(CommandRegister::class);
     }
     /**
