@@ -7,11 +7,11 @@
  */
 namespace Notadd\Foundation\Routing\Abstracts;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Support\Str;
 use Notadd\Foundation\Console\Application;
 use Notadd\Foundation\Routing\Contracts\Controller as ControllerContract;
 use Notadd\Foundation\Routing\Responses\RedirectResponse;
-use Notadd\Setting\Contracts\SettingsRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 /**
@@ -85,6 +85,13 @@ abstract class AbstractController implements ControllerContract {
         return Application::getInstance($this->container);
     }
     /**
+     * @param string $name
+     * @return \Symfony\Component\Console\Command\Command
+     */
+    public function getCommand($name) {
+        return $this->getConsole()->find($name);
+    }
+    /**
      * @param string $method
      * @return array
      */
@@ -100,6 +107,12 @@ abstract class AbstractController implements ControllerContract {
             $middleware[] = $name;
         }
         return $middleware;
+    }
+    /**
+     * @return \Illuminate\Contracts\Validation\Factory|mixed
+     */
+    protected function getValidationFactory() {
+        return $this->container->make(ValidationFactory::class);
     }
     /**
      * @param string $middleware
