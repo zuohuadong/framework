@@ -23,8 +23,9 @@
                                 <input class="form-control" type="text" name="website">
                             </div>
                             <ul class="sql-group">
-                                <li class="active" id="pgsql"><a href="javascript:void(0)" class="btn-sql">PostgreSQL</a></li>
-                                <li id="mysql"><a href="javascript:void(0)" class="btn-sql">MySQL</a></li>
+                                <input type="hidden" name="type" value="mysql">
+                                <li id="mysql" class="active"><a href="javascript:void(0)" class="btn-sql">MySQL</a></li>
+                                <li id="pgsql"><a href="javascript:void(0)" class="btn-sql">PostgreSQL</a></li>
                                 <li id="sqlite"><a href="javascript:void(0)" class="btn-sql">SQLite3</a></li>
                             </ul>
                             <div class="data" id="data">
@@ -84,27 +85,23 @@
     <script src="{{ asset('assets/install/scripts/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/install/scripts/messages_zh.js') }}"></script>
     <script>
-        window.onload = function () {
-            var aLi = document.getElementsByClassName("sql-group")[0].getElementsByTagName("li");
-            var oData = document.getElementsByClassName("data")[0];
-            for (var i = 0; i < aLi.length; i++) {
-                aLi[i].index = i;
-                aLi[i].onclick = function () {
-                    for (var n = 0; n < aLi.length; n++) {
-                        aLi[n].className = "";
-                    }
-                    aLi[this.index].className = "active";
-                }
-            }
-        };
         $(document).ready(function () {
             $("#sqlite").click(function () {
+                $(this).parent("ul").find("input[name=type]").val("sqlite");
+                $(this).parent("ul").find("li").removeClass("active");
+                $(this).addClass("active");
                 $("#data").fadeOut();
             });
             $("#mysql").click(function () {
+                $(this).parent("ul").find("input[name=type]").val("mysql");
+                $(this).parent("ul").find("li").removeClass("active");
+                $(this).addClass("active");
                 $("#data").fadeIn("slow");
             });
             $("#pgsql").click(function () {
+                $(this).parent("ul").find("input[name=type]").val("pgsql");
+                $(this).parent("ul").find("li").removeClass("active");
+                $(this).addClass("active");
                 $("#data").fadeIn("slow");
             });
         });
