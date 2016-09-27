@@ -50,6 +50,6 @@ class Client extends Model {
      * @return bool
      */
     public function firstParty() {
-        return $this->personal_access_client || $this->password_client;
+        return $this->getAttribute('personal_access_client') || $this->getAttribute('password_client');
     }
 }
