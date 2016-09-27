@@ -8,6 +8,7 @@
 namespace Notadd\Install;
 use Notadd\Foundation\Abstracts\AbstractServiceProvider;
 use Notadd\Install\Contracts\Prerequisite;
+use Notadd\Install\Listeners\CommandRegister;
 use Notadd\Install\Listeners\RouteRegister;
 use Notadd\Install\Prerequisite\PhpExtension;
 use Notadd\Install\Prerequisite\PhpVersion;
@@ -21,6 +22,7 @@ class InstallServiceProvider extends AbstractServiceProvider {
      * @return void
      */
     public function boot() {
+        $this->events->subscribe(CommandRegister::class);
         $this->events->subscribe(RouteRegister::class);
     }
     /**

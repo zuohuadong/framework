@@ -23,45 +23,49 @@
                                 <input class="form-control" type="text" name="website">
                             </div>
                             <ul class="sql-group">
-                                <input type="hidden" name="type" value="mysql">
+                                <input type="hidden" name="driver" value="mysql">
                                 <li id="mysql" class="active"><a href="javascript:void(0)" class="btn-sql">MySQL</a></li>
                                 <li id="pgsql"><a href="javascript:void(0)" class="btn-sql">PostgreSQL</a></li>
                                 <li id="sqlite"><a href="javascript:void(0)" class="btn-sql">SQLite3</a></li>
                             </ul>
                             <div class="data" id="data">
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="dataAddress">数据库地址</label>
-                                    <input class="form-control" id="dataAddress" type="text" name="dataAddress">
+                                    <label class="control-label">数据库地址</label>
+                                    <input class="form-control" name="database_host" type="text">
                                 </div>
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="dataUserName">数据库用户名</label>
-                                    <input class="form-control" id="dataUserName" type="text" name="dataUserName">
+                                    <label class="control-label">数据库名</label>
+                                    <input class="form-control" name="database" type="text">
                                 </div>
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="dataPassword">数据库密码</label>
-                                    <input class="form-control" id="dataPassword" type="password" name="dataPassword">
+                                    <label class="control-label">数据库用户名</label>
+                                    <input class="form-control" name="database_username" type="text">
                                 </div>
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="dataName">数据库名</label>
-                                    <input class="form-control" id="dataName" type="text" name="dataName">
+                                    <label class="control-label">数据库密码</label>
+                                    <input class="form-control" name="database_password" type="password">
+                                </div>
+                                <div class="form-group label-floating">
+                                    <label class="control-label">表前缀(如：pre_)</label>
+                                    <input class="form-control" name="database_prefix" type="text" value="pre_">
                                 </div>
                             </div>
                             <div class="user">
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="userAccount">管理员账号</label>
-                                    <input class="form-control" id="userAccount" type="text" name="userAccount">
+                                    <label class="control-label">管理员账号</label>
+                                    <input class="form-control" name="admin_account" type="text">
                                 </div>
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="userEmail">管理员邮箱</label>
-                                    <input class="form-control" id="userEmail" type="text" name="userEmail">
+                                    <label class="control-label">管理员邮箱</label>
+                                    <input class="form-control" name="admin_email" type="text">
                                 </div>
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="userPassword">管理员密码</label>
-                                    <input class="form-control" id="userPassword" type="password" name="userPassword">
+                                    <label class="control-label">管理员密码</label>
+                                    <input class="form-control" name="admin_password" type="password">
                                 </div>
                                 <div class="form-group label-floating">
-                                    <label class="control-label" for="userConfPwd">再次输入密码</label>
-                                    <input class="form-control" id="userConfPwd" type="password" name="userConfPwd">
+                                    <label class="control-label">再次输入密码</label>
+                                    <input class="form-control" name="admin_password_confirmation" type="password">
                                 </div>
                             </div>
                         </div>
@@ -87,19 +91,19 @@
     <script>
         $(document).ready(function () {
             $("#sqlite").click(function () {
-                $(this).parent("ul").find("input[name=type]").val("sqlite");
+                $(this).parent("ul").find("input[name=driver]").val("sqlite");
                 $(this).parent("ul").find("li").removeClass("active");
                 $(this).addClass("active");
                 $("#data").fadeOut();
             });
             $("#mysql").click(function () {
-                $(this).parent("ul").find("input[name=type]").val("mysql");
+                $(this).parent("ul").find("input[name=driver]").val("mysql");
                 $(this).parent("ul").find("li").removeClass("active");
                 $(this).addClass("active");
                 $("#data").fadeIn("slow");
             });
             $("#pgsql").click(function () {
-                $(this).parent("ul").find("input[name=type]").val("pgsql");
+                $(this).parent("ul").find("input[name=driver]").val("pgsql");
                 $(this).parent("ul").find("li").removeClass("active");
                 $(this).addClass("active");
                 $("#data").fadeIn("slow");
@@ -120,42 +124,46 @@
                             required: true,
                             noSpace: true
                         },
-                        dataAddress: {
+                        database_host: {
                             required: true,
                             noSpace: true
                         },
-                        dataUserName: {
+                        database_username: {
                             required: true,
                             noSpace: true
                         },
-                        dataPassword: {
+                        database_password: {
                             required: true,
                             noSpace: true,
                             minlength: 6
                         },
-                        dataName: {
+                        database: {
                             required: true,
                             noSpace: true
                         },
-                        userAccount: {
+                        database_prefix: {
                             required: true,
                             noSpace: true
                         },
-                        userEmail: {
+                        admin_account: {
+                            required: true,
+                            noSpace: true
+                        },
+                        admin_email: {
                             required: true,
                             noSpace: true,
                             email: true
                         },
-                        userPassword: {
+                        admin_password: {
                             required: true,
                             noSpace: true,
                             minlength: 6
                         },
-                        userConfPwd: {
+                        admin_password_confirmation: {
                             required: true,
                             noSpace: true,
                             minlength: 6,
-                            equalTo: "#userPassword"
+                            equalTo: "input[name=admin_password]"
                         },
                         success: "valid",
                         errorClass: "error",
@@ -168,38 +176,42 @@
                             required: "请输入网站名称",
                             noSpace: "请勿输入空白字符"
                         },
-                        dataAddress: {
+                        database_host: {
                             required: "请输入数据库地址",
                             noSpace: "请勿输入空白字符"
                         },
-                        dataUserName: {
+                        database_username: {
                             required: "请输入数据库地址",
                             noSpace: "请勿输入空白字符"
                         },
-                        dataPassword: {
+                        database_password: {
                             required: "请输入数据库密码",
                             minlength: "数据库密码至少为6位",
                             noSpace: "请勿输入空白字符"
                         },
-                        dataName: {
+                        database: {
                             required: "请输入数据名",
                             noSpace: "请勿输入空白字符"
                         },
-                        userAccount: {
+                        database_prefix: {
+                            required: "请输入数据表前缀",
+                            noSpace: "请勿输入空白字符"
+                        },
+                        admin_account: {
                             required: "请输入管理员账号",
                             noSpace: "请勿输入空白字符"
                         },
-                        userEmail: {
+                        admin_email: {
                             required: "请输入管理员邮箱",
                             emaill: "请输入正确的管理员邮箱",
                             noSpace: "请勿输入空白字符"
                         },
-                        userPassword: {
+                        admin_password: {
                             noSpace: "请勿输入空白字符",
                             required: "请输入管理员密码",
                             minlength: "管理员密码至少为6位"
                         },
-                        userConfPwd: {
+                        admin_password_confirmation: {
                             noSpace: "请勿输入空白字符",
                             required: "请再次输入管理员密码",
                             minlength: "管理员密码至少为6位",
