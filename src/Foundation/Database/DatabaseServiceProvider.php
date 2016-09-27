@@ -29,7 +29,7 @@ class DatabaseServiceProvider extends IlluminateDatabaseServiceProvider {
     public function register() {
         parent::register();
         $this->app->singleton('migration.repository', function ($app) {
-            $table = $app['config']['database.migrations'];
+            $table = 'migrations';
             return new DatabaseMigrationRepository($app['db'], $table);
         });
         $this->app->singleton('migrator', function ($app) {
