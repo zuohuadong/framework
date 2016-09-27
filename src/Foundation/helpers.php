@@ -48,6 +48,16 @@ if(!function_exists('base_path')) {
         return app()->basePath() . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }
+if (! function_exists('bcrypt')) {
+    /**
+     * @param string $value
+     * @param array  $options
+     * @return string
+     */
+    function bcrypt($value, $options = []) {
+        return app('hash')->make($value, $options);
+    }
+}
 if (!function_exists('config')) {
     /**
      * @param array|string  $key
