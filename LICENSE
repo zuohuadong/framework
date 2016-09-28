@@ -61,7 +61,10 @@ http://www.apache.org/licenses/
 
 要对您的作品应用 Apache 许可，添加下面的样本声明，用你自己的区别性信息替换括号封闭的字段。（不要包含括号！）。这段文本应该用文件格式的合适的注释语法封闭起来。我还推荐在与版权声明相同的“打印页”上包含一个文件或者类名及用途说明，更容易在第三方文件之内区分。.
 
-   版权所有 [ibenchu.com] [陕西本初网络科技有限公司]     根据 Apache 许可证2.0 版（以下简称“许可证”）授权；    除非遵守本许可，否则您不能使用这个文件。    您可一获得该许可的副本，在         http://www.apache.org/licenses/LICENSE-2.0     除非适用法律需要或者书面同意，按本许可分发的软件要按“原样”分发，没有任何形式的，明确或隐    含的担保条款。参见按照本许可控制许可权限及限制的特定语言的许可证。
+   版权所有 ibenchu.com 陕西本初网络科技有限公司     根据 Apache 许可证2.0 版（以下简称“许可证”）授权；    
+   除非遵守本许可，否则您不能使用这个文件。    您可一获得该许可的副本，在         http://www.apache.org/licenses/LICENSE-2.0     
+   除非适用法律需要或者书面同意，按本许可分发的软件要按“原样”分发，没有任何形式的，明确或隐    含的担保条款。
+   参见按照本许可控制许可权限及限制的特定语言的许可证。
 
 
 
@@ -122,7 +125,7 @@ END OF TERMS AND CONDITIONS
 APPENDIX: HOW TO APPLY THE APACHE LICENSE TO YOUR WORK
 To apply the Apache License to your work, attach the following boilerplate notice, with the fields enclosed by brackets "[]" replaced with your own identifying information. (Don't include the brackets!) The text should be enclosed in the appropriate comment syntax for the file format. We also recommend that a file or class name and description of purpose be included on the same "printed page" as the copyright notice for easier identification within third-party archives.
 
-Copyright [ibenchu.com] [Shaanxi ibenchu Network Technology Co., Ltd.]
+Copyright ibenchu.com Shaanxi ibenchu Network Technology Co., Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
